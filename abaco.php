@@ -13,9 +13,13 @@ require_once __DIR__ . '/utility.php';
 require_once __DIR__ . '/inc/contact-forms/contact-form.php';
 
 // Activation
-register_activation_hook(__FILE__, function() {
+function abaco_activate_plugin () {
+    if (!is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+        wp_die(__('Contact Form 7 plugin is needed to run this plugin.', 'abaco'));
+    }
     abaco_participant_db_table()->create();
-});
+}
+register_activation_hook(__FILE__, 'abaco_activate_plugin');
 
 // Init
 add_action('init', function() {
