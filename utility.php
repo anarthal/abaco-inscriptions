@@ -41,9 +41,9 @@ function abaco_parse_bool($value) {
 
 // unserializes array and performs error checking
 function abaco_parse_array($value) {
-    $res = unserialize($value);
+    $res = @unserialize($value);
     if (!is_array($res)) {
-        throw new Exception('abaco_parse_array');
+        throw new InvalidArgumentException('abaco_parse_array');
     }
     return $res;
 }

@@ -57,3 +57,42 @@ class ParserTest extends WP_UnitTestCase {
         ];
     }
 }
+
+// Functions declared in utility but related to parsing
+class ParseArrayTest extends WP_UnitTestCase {
+    /**
+     * @dataProvider good_provider
+     */
+    function test_parses_serialized_array($value) {
+        $res = abaco_parse_array($value);
+        $this->assertEquals($res, unserialize($value));
+    }
+    
+    /**
+     * @dataProvider bad_provider
+     */
+    function test_throws_no_serialized_array($value) {
+        $this->expectException(InvalidArgumentException::class);
+        abaco_parse_array($value);
+    }
+    
+    function good_provider() {
+        return [
+            [serialize(['hola', 5])],
+            [serialize([])]
+        ];
+    }
+    
+    function bad_provider() {
+        return [
+            [''],
+            [[]],
+            ['invalid'],
+            [new stdClass()],
+            [90],
+            [serialize('hola')],
+            [serialize(80)],
+            [serialize(new stdClass())]
+        ];
+    }
+}
