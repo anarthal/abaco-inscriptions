@@ -23,6 +23,12 @@ interface ABACO_Validator {
 }
 
 abstract class ABACO_DataField extends ABACO_Field implements ABACO_Validator {
+    /**
+     * Validates the actual input of the field
+     * @param mixed $input The field's value. May be null.
+     * @return mixed The processed value on success, an instance of \Exception
+     *  on failure. Will return an empty string when input is null.
+     */
     public final function validate($input) {
         try {
             if (!isset($input)) {

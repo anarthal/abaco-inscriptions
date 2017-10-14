@@ -18,3 +18,4 @@ class FieldEscapeTest extends WP_UnitTestCase {
         $this->assertFalse(count($res) === 0);
     }
 }
+
