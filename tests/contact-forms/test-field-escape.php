@@ -17,5 +17,10 @@ class FieldEscapeTest extends WP_UnitTestCase {
         $this->assertFalse(strpos($res, '"'));
         $this->assertFalse(count($res) === 0);
     }
+    function test_escape_escapes_html_tags() {
+        $unscaped = '<script>Hola</script>';
+        $res = ABACO_Field::escape($unscaped);
+        $this->assertEquals($res, esc_html($unscaped));
+    }
 }
 

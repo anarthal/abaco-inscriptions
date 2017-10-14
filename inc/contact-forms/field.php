@@ -89,7 +89,10 @@ class ABACO_FieldParams {
         return $this->mandatory ? '*' : '';
     }
     public function label_asterisk() {
-        return $this->asterisk ? ' <span style="color:red">[*]</span>' : '';
+        return $this->asterisk ? ' ' . self::label_asterisk_html() : '';
+    }
+    public static function label_asterisk_html() {
+        return '<span style="color:red">[*]</span>';
     }
 }
 
