@@ -289,7 +289,7 @@ class ABACO_SubmitField extends ABACO_Field {
     }
     public function code() {
         return '<label>[submit "' .
-            self::escape('Submit') .
+            self::escape(__('Submit', 'abaco')) .
             '"]</label>';
     }
 }
