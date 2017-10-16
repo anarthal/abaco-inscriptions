@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class TextFieldTest extends WP_UnitTestCase {
+class TextareaFieldTest extends WP_UnitTestCase {
     /**
      * @dataProvider data_provider
      */
@@ -19,11 +19,13 @@ class TextFieldTest extends WP_UnitTestCase {
     
     function data_provider() {
         return [
-            [new ABACO_TextField('name', 'display', true), ' test ', 'test'],
-            [new ABACO_TextField('name', 'display', true),
+            [new ABACO_TextareaField('name', 'display', true), ' test ', 'test'],
+            [new ABACO_TextareaField('name', 'display', true),
                 '<script>a</script>content', 'content'],
-            [new ABACO_TextField('name', 'display', true, false), 'TEst', 'TEst'],
-            [new ABACO_TextField('name', 'display', true, true), 'TEst', 'test']
+            [new ABACO_TextareaField('name', 'display', true, false),
+                'test[gallery]', 'test[gallery]'],
+            [new ABACO_TextareaField('name', 'display', true, true),
+                'test[gallery]', 'test']
         ];
     }
 }
