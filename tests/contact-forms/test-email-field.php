@@ -9,14 +9,20 @@
 _abaco_require('inc/contact-forms/field.php');
 
 class EmailFieldTest extends WP_UnitTestCase {
-    function test_whitespace_trim_returns_empty() {
+    /**
+     * @dataProvider data_provider
+     */
+    function test_trim($input, $expected) {
         $field = new ABACO_EmailField('name', 'display', true);
-        $res = unprotect($field)->m_trim('   ');
-        $this->assertEquals('', $res);
+        $res = unprotect($field)->m_trim($input);
+        $this->assertEquals($expected, $res);
     }
-    function test_invalid_trim_returns_empty() {
-        $field = new ABACO_EmailField('name', 'display', true);
-        $res = unprotect($field)->m_trim('invalid');
-        $this->assertEquals($res, '');
+    
+    function data_provider() {
+        return [
+            ['  ', ''],
+            ['invalid', ''],
+            [' test@gmail.com ', 'test@gmail.com']
+        ];
     }
 }

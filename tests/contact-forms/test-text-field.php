@@ -8,6 +8,20 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-/*class TextFieldTest extends WP_UnitTestCase {
-    function test_
-}*/
+class TextFieldTest extends WP_UnitTestCase {
+    /**
+     * @dataProvider data_provider
+     */
+    function test_trim($field, $input, $expected) {
+        $res = unprotect($field)->m_trim($input);
+        $this->assertEquals($expected, $res);
+    }
+    
+    function data_provider() {
+        return [
+            [new ABACO_TextField('name', 'display', true), ' test ', 'test'],
+            [new ABACO_TextField('name', 'display', true, false), 'TEst', 'TEst'],
+            [new ABACO_TextField('name', 'display', true, true), 'TEst', 'test']
+        ];
+    }
+}
