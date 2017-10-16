@@ -9,14 +9,14 @@
 _abaco_require('inc/contact-forms/field.php');
 
 class EmailFieldTest extends WP_UnitTestCase {
-    function test_empty_mandatory_validation_fails() {
+    function test_whitespace_trim_returns_empty() {
         $field = new ABACO_EmailField('name', 'display', true);
-        $res = $field->validate('   ');
-        $this->assertInstanceOf(Exception::class, $res);
+        $res = unprotect($field)->m_trim('   ');
+        $this->assertEquals('', $res);
     }
-    function test_invalid_mandatory_validation_fails() {
+    function test_invalid_trim_returns_empty() {
         $field = new ABACO_EmailField('name', 'display', true);
-        $res = $field->validate('invalid');
-        $this->assertInstanceOf(Exception::class, $res);
+        $res = unprotect($field)->m_trim('invalid');
+        $this->assertEquals($res, '');
     }
 }

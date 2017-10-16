@@ -10,6 +10,33 @@ function _abaco_require($file) {
     require_once _ABACO_PLUGIN_DIR . '/' . $file;
 }
 
+/*function invoke_method($obj, $method, $args) {
+    $field = new ABACO_EmailField('name', 'display', true);
+    $class = new ReflectionClass('ABACO_EmailField');
+    $method = $class->getMethod('m_trim');
+    $method->setAccessible(true);
+    $res = $method->invokeArgs($field, ['invalid']);
+    $this->assertEquals($res, '');
+}*/
+class _Unprotecter {
+    public function __construct($obj) {
+        $this->obj = $obj;
+    }
+    public function __call($name, $args) {
+        $method = new ReflectionMethod(get_class($this->obj), $name);
+        $method->setAccessible(true);
+        try {
+            return $method->invokeArgs($this->obj, $args);
+        } finally {
+            $method->setAccessible(false);
+        }
+        
+    }
+}
+function unprotect($obj) {
+    return new _Unprotecter($obj);
+}
+
 $_tests_dir = getenv('WP_TESTS_DIR');
 if (!$_tests_dir) {
     $_tests_dir = '/tmp/wordpress-tests-lib';
