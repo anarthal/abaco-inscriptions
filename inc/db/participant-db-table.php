@@ -6,6 +6,18 @@
  * and open the template in the editor.
  */
 
+require_once __DIR__ . '/parser.php';
+
+class ABACO_ParticipantParser extends ABACO_Parser {
+    public function __construct() {
+        parent::__construct([
+            'id' => 'intval',
+            'booking_days' => 'abaco_parse_array',
+            'yes_info' => 'abaco_parse_bool'
+        ]);
+    }
+}
+
 class ABACO_ParticipantDbTable {
     // Singleton management
     private static $m_instance;
@@ -31,12 +43,12 @@ class ABACO_ParticipantDbTable {
     public function drop() {
         global $wpdb;
         $table_name = $this->name();
-        $sql = "DROP TABLE $table_name IF EXISTS;";
+        $sql = "DROP TABLE IF EXISTS $table_name;";
         $wpdb->query($sql);
     }
     
     // Query functions
-    public function query_all($fields) { // fields must be string
+    public function query_all($fields = '*') { // fields must be string
         global $wpdb;
         $table = $this->name();
         $sql = "SELECT $fields FROM $table;";
@@ -92,12 +104,7 @@ class ABACO_ParticipantDbTable {
     private $m_parser;
     protected function parse($record) {
         if (!$this->m_parser) {
-            require_once __DIR__ . '/parser.php';
-            $this->m_parser = new ABACO_Parser([
-                'id' => 'intval',
-                'booking_days' => 'abaco_parse_array',
-                'yes_info' => 'abaco_parse_bool'
-            ]);
+            $this->m_parser = new ABACO_ParticipantParser();
         }
         return $this->m_parser->parse($record);
     }
