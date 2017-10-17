@@ -246,11 +246,12 @@ class ABACO_CheckboxField extends ABACO_DataField {
     }
     public function code() {
         $elm_id = $this->m_params->element_id;
+        $opts = $this->m_params->cf7_options;
         return '<p' .
             ($elm_id !== '' ? " id=\"$elm_id\"" : '') . '>' .
             '[checkbox ' .
-            $this->name . ' ' . $this->m_params->cf7_options .
-            ' "' . self::escape($this->m_params->display_name) . '"] </p>';
+            $this->name . ($opts === '' ? '' : ' ' . $opts) .
+            ' "' . self::escape($this->m_params->display_name) . '"]</p>';
     }
 }
 
@@ -273,12 +274,13 @@ class ABACO_MulticheckboxField extends ABACO_DataField {
     }
     public function code() {
         $elm_id = $this->m_params->element_id;
+        $opts = $this->m_params->cf7_options;
         return '<p' .
             ($elm_id !== '' ? " id=\"$elm_id\"" : '') . '>' .
             self::escape($this->m_params->display_name) .
             $this->m_params->label_asterisk() .
             '<br />[checkbox' . $this->m_params->tag_asterisk() .
-            ' ' . $this->name . ' ' . $this->m_params->cf7_options .
+            ' ' . $this->name . ($opts === '' ? '' : (' ' . $opts)) .
             ']</p>';
     }
 }

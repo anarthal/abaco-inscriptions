@@ -1,2 +1,3 @@
 *.mo
 *~
+bin/install-tests.sh
