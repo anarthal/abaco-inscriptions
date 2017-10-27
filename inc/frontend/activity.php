@@ -10,10 +10,10 @@
 // They will have no effect when using ther themes
 class ABACO_NirvanaActivity {
     // Add featured image to activity single view
-    public static function single_show_img($content) {
+    public static function show_img($content) {
         global $post;
         $img_html = '';
-        if (is_single() &&
+        if ((is_single() || is_archive()) &&
             $post->post_type === ABACO_ACTIVITY_POST_TYPE_NAME &&
             function_exists('nirvana_set_featured_thumb')) {
             ob_start();
@@ -49,7 +49,7 @@ class ABACO_NirvanaActivity {
     
     // Registers the above functions as hooks
     public static function register_hooks() {
-        add_filter('the_content', [__CLASS__, 'single_show_img']);
+        add_filter('the_content', [__CLASS__, 'show_img']);
         add_action('cryout_before_content_hook',
             [__CLASS__, 'remove_unwanted_meta_data']);
         add_action('cryout_post_meta_hook', 
