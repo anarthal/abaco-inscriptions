@@ -97,6 +97,12 @@ class ABACO_ActivityDbTable {
         $wpdb->query($sql);
         wp_cache_flush();
     }
+    
+    public function remove_upload_dir() {
+        WP_Filesystem();
+        global $wp_filesystem;
+        $wp_filesystem->rmdir(abaco_full_upload_dir(), true);
+    }
 
     // Parsing
     private $m_parser;
@@ -213,10 +219,8 @@ class ABACO_ActivityDbTable {
 
     protected function upload_img($post_id, $img) {
         require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-        $upload_dir = wp_upload_dir()['basedir'];
         $fname = sanitize_file_name(basename($img));
-        $destination_dir = $upload_dir . '/' . ABACO_UPLOAD_DIR . '/' . $post_id;
+        $destination_dir = abaco_full_upload_dir() . '/' . $post_id;
         $fname_full = $destination_dir . '/' . $fname;
         if (!wp_mkdir_p($destination_dir)) {
             throw new Exception("Error creating upload dir");

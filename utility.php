@@ -47,3 +47,7 @@ function abaco_parse_array($value) {
     }
     return $res;
 }
+
+function abaco_full_upload_dir() {
+    return wp_upload_dir()['basedir'] . '/' . ABACO_UPLOAD_DIR;
+}

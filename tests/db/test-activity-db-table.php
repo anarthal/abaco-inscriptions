@@ -74,6 +74,13 @@ class ActivityDbTableTest extends WP_UnitTestCase {
         $this->assertEquals('value', $value);
     }
     
+    function test_remove_upload_dir() {
+        $this->table->insert($this->act_data); // will force to create the folder
+        $this->table->remove_upload_dir();
+        $this->assertFalse(is_dir(abaco_full_upload_dir()));
+        $this->assertTrue(is_dir(wp_upload_dir()['basedir']));
+    }
+    
     // Query by ID
     function test_query_by_id_record_exists_returns_it() {
         $res = $this->table->query_by_id($this->act_id, ['observations','kind']);
@@ -210,7 +217,7 @@ class ActivityDbTableTest extends WP_UnitTestCase {
         $id = $this->table->insert($this->act_data);
         $thumb_id = get_post_thumbnail_id($id);
         $path = get_attached_file($thumb_id);
-        $expected_path = wp_upload_dir()['basedir'] . '/' . ABACO_UPLOAD_DIR
+        $expected_path = abaco_full_upload_dir()
             . '/' . (string)$id .  '/test-image.jpg';
         $this->assertEquals($expected_path, $path);
         $this->assertEquals(IMAGETYPE_JPEG, exif_imagetype($path));

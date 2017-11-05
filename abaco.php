@@ -21,6 +21,13 @@ function abaco_activate_plugin () {
 }
 register_activation_hook(__FILE__, 'abaco_activate_plugin');
 
+// Uninstall
+function abaco_uninstall_plugin() {
+    abaco_participant_db_table()->drop();
+    abaco_activity_db_table()->drop();
+    abaco_activity_db_table()->remove_upload_dir();
+}
+
 // Init
 add_action('init', function() {
    register_post_type(ABACO_ACTIVITY_POST_TYPE_NAME,
