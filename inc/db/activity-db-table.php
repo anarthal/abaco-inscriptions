@@ -84,6 +84,19 @@ class ABACO_ActivityDbTable {
         }
         return $post_id;
     }
+    
+    // Drop (for uninstall): this will delete all activities and images
+    public function drop() {
+        $ids_clause = implode(', ', $this->get_post_ids_to_remove());
+        global $wpdb;
+        $post_table = $wpdb->prefix . 'posts';
+        $meta_table = $wpdb->prefix . 'postmeta';
+        $sql = "DELETE posts, meta FROM $post_table posts " .
+            "LEFT JOIN $meta_table meta ON (posts.ID = meta.post_id) " .
+            "WHERE posts.ID IN ($ids_clause);";
+        $wpdb->query($sql);
+        wp_cache_flush();
+    }
 
     // Parsing
     private $m_parser;
@@ -110,6 +123,24 @@ class ABACO_ActivityDbTable {
             throw new Exception('Bad participant id');
         }
         return $res;
+    }
+    
+    // Drop helpers
+    protected function get_post_ids_to_remove() {
+        $acts_query = new WP_Query([
+            'post_type' => ABACO_ACTIVITY_POST_TYPE_NAME,
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'post_status' => get_post_stati()
+        ]);
+        $imgs_query = new WP_Query([
+            'post_type' => 'attachment',
+            'posts_per_page' => -1,
+            'post_parent__in' => $acts_query->posts,
+            'fields' => 'ids',
+            'post_status' => get_post_stati()
+        ]);
+        return array_merge($acts_query->posts, $imgs_query->posts);
     }
 
     // Export query helpers
@@ -214,5 +245,4 @@ class ABACO_ActivityDbTable {
             throw new Exception("Error setting thumbnail");
         }
     }
-
 }

@@ -53,6 +53,27 @@ class ActivityDbTableTest extends WP_UnitTestCase {
         ]);
     }
     
+    // Drop
+    function test_drop_removes_activities_attachments_metas() {
+        $this->insert_image();
+        $attach_id = get_post_thumbnail_id($this->act_id);
+        $this->table->drop();
+        $this->assertNull(get_post($this->act_id));
+        $this->assertNull(get_post($attach_id));
+        $this->assertEquals([], get_post_meta($this->act_id));
+        $this->assertEquals([], get_post_meta($attach_id));
+    }
+    
+    function test_drop_does_not_remove_other_posts_or_metas() {
+        $id = $this->factory->post->create(['title' => 'other']);
+        update_post_meta($id, 'key', 'value');
+        $this->table->drop();
+        $post = get_post($id);
+        $this->assertInstanceOf(WP_Post::class, $post);
+        $value = get_post_meta($id, 'key', true);
+        $this->assertEquals('value', $value);
+    }
+    
     // Query by ID
     function test_query_by_id_record_exists_returns_it() {
         $res = $this->table->query_by_id($this->act_id, ['observations','kind']);
