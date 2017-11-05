@@ -37,12 +37,12 @@ class ABACO_ActivityDbTable {
     public function get_image_url($id) {
         $thumb_id_str = get_post_thumbnail_id($id);
         if ($thumb_id_str === '') {
-            wp_die(__FUNCTION__ . ': error getting thumbnail ID');
+            return null;
         }
         $thumbnail_id = intval($thumb_id_str);
         $img = wp_get_attachment_url($thumbnail_id);
         if ($img === false) {
-            wp_die(__FUNCTION__ . ': error getting image URL');
+            return null;
         }
         return $img;
     }
@@ -82,6 +82,7 @@ class ABACO_ActivityDbTable {
             wp_delete_post($post_id, true);
             wp_die($ex->getMessage());
         }
+        return $post_id;
     }
 
     // Parsing
@@ -119,13 +120,15 @@ class ABACO_ActivityDbTable {
                 return "'" . $elm . "'";
             }, ABACO_ACTIVITY_META_FIELDS));
         $post_type = ABACO_ACTIVITY_POST_TYPE_NAME;
+        $meta_table = $wpdb->prefix . 'postmeta';
+        $post_table = $wpdb->prefix . 'posts';
         $sql = "SELECT meta.meta_key AS 'key',
             meta.meta_value AS 'value',
             meta.post_id AS 'post_id'
-            FROM wp_postmeta meta INNER JOIN wp_posts ON meta.post_id = wp_posts.ID
-            WHERE wp_posts.post_type = '$post_type'
+            FROM $meta_table meta INNER JOIN $post_table posts ON meta.post_id = posts.ID
+            WHERE posts.post_type = '$post_type'
                 AND meta.meta_key IN ($meta_keys)
-                AND wp_posts.post_status = 'publish';";
+                AND posts.post_status = 'publish';";
         $res = $wpdb->get_results($sql, OBJECT);
         if ($res === null) {
             wp_die('Database error.');
@@ -136,10 +139,11 @@ class ABACO_ActivityDbTable {
     protected function get_all_bare() {
         global $wpdb;
         $post_type = ABACO_ACTIVITY_POST_TYPE_NAME;
+        $post_table = $wpdb->prefix . 'posts';
         $sql = "SELECT ID AS id,
                 post_title AS name_,
                 post_content AS description
-                FROM wp_posts
+                FROM $post_table
                 WHERE post_type = '$post_type'
                 AND post_status = 'publish';";
         $activities = $wpdb->get_results($sql, ARRAY_A);
@@ -156,7 +160,7 @@ class ABACO_ActivityDbTable {
         foreach ($activities as $activity) {
             foreach (ABACO_ACTIVITY_META_FIELDS as $key) {
                 if (!isset($activity[$key])) {
-                    $title = $activity['post_title'];
+                    $title = $activity['name_'];
                     wp_die("Activity $title: missing meta: $key");
                 }
             }
@@ -169,7 +173,7 @@ class ABACO_ActivityDbTable {
         $res = [];
         foreach (ABACO_ACTIVITY_META_FIELDS as $field) {
             if (!isset($data[$field])) {
-                throw new Exception('Activity DB insert: missing metadata field');
+                wp_die('Activity DB insert: missing metadata field');
             }
             $res[$field] = $data[$field];
         }
