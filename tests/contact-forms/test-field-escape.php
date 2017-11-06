@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class FieldEscapeTest extends WP_UnitTestCase {
+class FieldEscapeTest extends PHPUnit_Framework_TestCase {
     function test_escape_removes_cf7_control_characters() {
         $unescaped = 'pre[inject]"attack';
         $res = ABACO_Field::escape($unescaped);

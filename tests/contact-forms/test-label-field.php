@@ -18,7 +18,7 @@ class ABACO_MockLabelField extends ABACO_LabelField {
     }
 }
 
-class LabelFieldCodeTest extends WP_UnitTestCase {
+class LabelFieldCodeTest extends PHPUnit_Framework_TestCase {
     function match($code) {
         $pat = '@<label>(.*)<br />\[([a-zA-Z0-9_]+)(\*)? ([a-zA-Z0-9_]+) ?(.*)?\]</label>@';
         $matches = [];

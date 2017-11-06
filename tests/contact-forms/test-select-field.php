@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class SelectFieldTest extends WP_UnitTestCase {
+class SelectFieldTest extends PHPUnit_Framework_TestCase {
     function test_validate_valid_option_returns_same() {
         $field = new ABACO_SelectField('name', 'display', ['opt1', 'opt2']);
         $res = $field->validate('opt1');

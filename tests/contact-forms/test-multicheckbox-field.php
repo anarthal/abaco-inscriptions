@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class MulticheckboxFieldTest extends WP_UnitTestCase {
+class MulticheckboxFieldTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider validate_cases

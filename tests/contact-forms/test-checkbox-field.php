@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class CheckboxFieldTest extends WP_UnitTestCase {
+class CheckboxFieldTest extends PHPUnit_Framework_TestCase {
 
     function test_validate_not_array_returns_exception() {
         $field = new ABACO_CheckboxField('name', 'display');

@@ -18,7 +18,7 @@ class ABACO_MockStringField extends ABACO_StringField {
     }
 }
 
-class StringFieldValidateTest extends WP_UnitTestCase {
+class StringFieldValidateTest extends PHPUnit_Framework_TestCase {
     function test_no_string_validation_fails() {
         $field = new ABACO_MockStringField('name', 'display', true);
         $res = $field->validate(['hola', 'mundo']);

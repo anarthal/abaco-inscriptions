@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class FieldParamsTest extends WP_UnitTestCase {
+class FieldParamsTest extends PHPUnit_Framework_TestCase {
     function test_constructor_options_takes_defaults_if_not_given() {
         $res = new ABACO_FieldParams('name', true, ['cf7_options' => 'test']);
         $this->assertEquals($res->display_name, 'name');

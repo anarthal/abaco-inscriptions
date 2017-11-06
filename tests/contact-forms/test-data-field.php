@@ -22,7 +22,7 @@ class ABACO_MockDataField extends ABACO_DataField {
     }
 }
 
-class DataFieldValidateTest extends WP_UnitTestCase {
+class DataFieldValidateTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->field = new ABACO_MockDataField('myname');
     }

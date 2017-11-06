@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class NumberFieldTest extends WP_UnitTestCase {
+class NumberFieldTest extends PHPUnit_Framework_TestCase {
  
     /**
      * @dataProvider validation_cases

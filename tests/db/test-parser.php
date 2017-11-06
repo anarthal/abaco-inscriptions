@@ -7,7 +7,7 @@
 
 _abaco_require('inc/db/parser.php');
 
-class ParserTest extends WP_UnitTestCase {
+class ParserTest extends PHPUnit_Framework_TestCase {
     function setUp() {
         $this->functors = [
             'f1' => 'intval',
@@ -59,7 +59,7 @@ class ParserTest extends WP_UnitTestCase {
 }
 
 // Functions declared in utility but related to parsing
-class ParseArrayTest extends WP_UnitTestCase {
+class ParseArrayTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider good_provider
      */

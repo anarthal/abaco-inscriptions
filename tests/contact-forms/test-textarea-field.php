@@ -8,7 +8,7 @@
 
 _abaco_require('inc/contact-forms/field.php');
 
-class TextareaFieldTest extends WP_UnitTestCase {
+class TextareaFieldTest extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider data_provider
      */
