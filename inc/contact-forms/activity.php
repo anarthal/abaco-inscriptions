@@ -13,14 +13,6 @@ class ABACO_ActivityForm extends ABACO_ContactFormImpl {
     private $m_participant_table;
     private $m_activity_table;
     
-    public function selects() {
-        return array(
-            'kind' => abaco_activity_kind_options(),
-            'duration' => abaco_activity_duration_options(),
-            'requested_time' => abaco_activity_requested_time_options()
-        );
-    }
-    
     public function __construct($participant_table, $activity_table) {
         parent::__construct(self::make_field_list());
         $this->add_validator('organizer_nif', array($this, 'validate_nif'));

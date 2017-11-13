@@ -8,7 +8,6 @@
 
 interface ABACO_ContactForm {
     public function code();
-    public function selects(); // array<name => array<option value => label>>
     public function setup_data(array $data);
     public function validate($result, $form_tags);
     public function insert();
@@ -16,9 +15,9 @@ interface ABACO_ContactForm {
 
 class ABACO_ContactFormManager {
     private static $m_instance;
-    private $m_form_factories = array();
-    private $m_forms = array();
-    private $m_selects = array();
+    private $m_form_factories = [];
+    private $m_forms = [];
+    private $m_selects = [];
     
     // Construction & singleton management
     public static function get_instance() {
@@ -41,14 +40,20 @@ class ABACO_ContactFormManager {
         } else if (isset($this->m_form_factories[$title])) {
             $form = call_user_func($this->m_form_factories[$title]);
             $this->m_forms[$title] = $form;
-            $selects = $form->selects();
-            foreach ($selects as $name => $select) {
-                $this->m_selects[$name] = $select;
-            }
             return $form;
         } else {
-            return false;
+            return null;
         }
+    }
+    public function add_selects($selects) {
+        $this->m_selects = array_merge($this->m_selects, $selects);
+    }
+    public function get_select($name) {
+        if (!isset($this->m_selects[$name])) {
+            return null;
+        }
+        $values = $this->m_selects[$name];
+        return call_user_func($values);
     }
     
     // Hooks
@@ -62,10 +67,10 @@ class ABACO_ContactFormManager {
     }
     public function select_hook($form_tag) {
         $name = $form_tag['name'];
-        if (isset($this->m_selects[$name])) {
-            $elm = $this->m_selects[$name];
-            $form_tag['values'] = array_keys($elm);
-            $form_tag['labels'] = array_values($elm);
+        $values = $this->get_select($name);
+        if (isset($values)) {
+            $form_tag['values'] = array_keys($values);
+            $form_tag['labels'] = array_values($values);
         }
         return $form_tag;
     }

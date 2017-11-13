@@ -12,12 +12,6 @@ require_once __DIR__ . '/field.php';
 class ABACO_CompanyForm extends ABACO_ContactFormImpl {
     private $m_participant_table;
     
-    public function selects() {
-        return array(
-            'province' => abaco_province_options()
-        );
-    }
-    
     public function __construct(ABACO_ParticipantDbTable $participant_table) {
         parent::__construct(self::make_field_list());
         $this->add_validator('nif', array($this, 'validate_nif'));

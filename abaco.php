@@ -64,6 +64,15 @@ add_action('plugins_loaded', function() {
                 abaco_activity_db_table());
         }
     );
+    $manager->add_selects([
+        'gender' => 'abaco_gender_options',
+        'document_type' => 'abaco_document_type_options',
+        'province' => 'abaco_province_options',
+        'booking_days' => 'abaco_booking_days_select_options',
+        'kind' => 'abaco_activity_kind_options',
+        'duration' => 'abaco_activity_duration_options',
+        'requested_time' => 'abaco_activity_requested_time_options'
+    ]);
 });
 
 // Admin panels

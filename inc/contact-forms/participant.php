@@ -11,15 +11,6 @@ require_once __DIR__ . '/field.php';
 
 class ABACO_ParticipantForm extends ABACO_ContactFormImpl {
     private $m_participant_table;
-    
-    public function selects() {
-        return array(
-            'gender' => abaco_gender_options(),
-            'document_type' => abaco_document_type_options(),
-            'province' => abaco_province_options(),
-            'booking_days' => abaco_booking_days_select_options()
-        );
-    }
   
     // Construction
     public function __construct($participant_table) {
