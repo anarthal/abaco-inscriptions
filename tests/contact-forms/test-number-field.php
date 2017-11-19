@@ -16,10 +16,11 @@ class NumberFieldTest extends PHPUnit_Framework_TestCase {
      */
     function test_validate($input, $expected) {
         $field = new ABACO_NumberField('name', 'display', true);
-        $res = $field->validate($input);
         if (is_null($expected)) {
-            $this->assertInstanceof(Exception::class, $res);
+            $this->expectException(ABACO_ValidationError::class);
+            $field->validate($input);
         } else {
+            $res = $field->validate($input);
             $this->assertEquals($expected, $res);
         }
     }

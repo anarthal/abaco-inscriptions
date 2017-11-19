@@ -19,15 +19,15 @@ class ABACO_MockStringField extends ABACO_StringField {
 }
 
 class StringFieldValidateTest extends PHPUnit_Framework_TestCase {
-    function test_no_string_validation_fails() {
+    function test_no_string_validate_throws_validation_error() {
         $field = new ABACO_MockStringField('name', 'display', true);
-        $res = $field->validate(['hola', 'mundo']);
-        $this->assertInstanceOf(Exception::class, $res);
+        $this->expectException(ABACO_ValidationError::class);
+        $field->validate(['hola', 'mundo']);
     }
     function test_mandatory_mtrim_result_empty_validation_fails() {
         $field = new ABACO_MockStringField('name', 'display', true);
+        $this->expectException(ABACO_ValidationError::class);
         $res = $field->validate('     ');
-        $this->assertInstanceOf(Exception::class, $res);
     }
     function test_mandatory_mtrim_result_not_empty_returns_result() {
         $field = new ABACO_MockStringField('name', 'display', true);

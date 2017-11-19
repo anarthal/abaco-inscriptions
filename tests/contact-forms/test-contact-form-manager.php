@@ -8,22 +8,13 @@
 
 _abaco_require('inc/contact-forms/contact-form.php');
 
-class ABACO_MockContactForm implements ABACO_ContactForm {
-    public $data;
-    public $validate_result, $validate_form_tag;
-    public $inserts = 0;
-    public function code() {
-        return 'code';
+class ABACO_MockContactForm extends ABACO_ContactForm {
+    public $insert_data;
+    public function __construct() {
+        parent::__construct([], []);
     }
-    public function setup_data(array $data) {
-        $this->data = $data;
-    }
-    public function validate($result, $form_tag) {
-        $this->validate_result = $result;
-        $this->validate_form_tag = $form_tag;
-    }
-    public function insert() {
-        $this->inserts += 1;
+    public function insert(array $data) {
+        $this->insert_data = $data;
     }
 }
 
@@ -50,20 +41,21 @@ class ContactFormManagerTest extends PHPUnit_Framework_TestCase {
         }]);
     }
     
-    // get_form
-    function test_get_form_registered_returns_new() {
-        $form = $this->manager->get_form('registered');
-        $this->assertInstanceOf(ABACO_MockContactForm::class, $form);
+    // get_submission
+    function test_get_submission_registered_returns_new() {
+        $res = $this->manager->get_submission('registered');
+        $this->assertInstanceOf(ABACO_Submission::class, $res);
+        $this->assertInstanceOf(ABACO_MockContactForm::class, $res->contact_form);
     }
     
-    function test_get_form_cached_returns_existing() {
-        $form0 = $this->manager->get_form('registered');
-        $form1 = $this->manager->get_form('registered');
-        $this->assertTrue($form0 === $form1);
+    function test_get_submission_cached_returns_existing() {
+        $form0 = $this->manager->get_submission('registered');
+        $form1 = $this->manager->get_submission('registered');
+        $this->assertEquals($form0, $form1);
     }
     
-    function test_get_form_not_registered_returns_null() {
-        $form = $this->manager->get_form('other');
+    function test_get_submission_not_registered_returns_null() {
+        $form = $this->manager->get_submission('other');
         $this->assertNull($form);
     }
     
@@ -78,20 +70,7 @@ class ContactFormManagerTest extends PHPUnit_Framework_TestCase {
         $select = $this->manager->get_select('non_existent');
         $this->assertNull($select);
     }
-    
-    // code_hook
-    function test_form_code_hook_registered_sets_code() {
-        $cf7_form = new ABACO_MockCf7Form('registered');
-        $this->manager->form_code_hook($cf7_form);
-        $this->assertEquals(['form' => 'code'], $cf7_form->props);
-    }
-    
-    function test_form_code_hook_not_registered_does_nothing() {
-        $cf7_form = new ABACO_MockCf7Form('other');
-        $this->manager->form_code_hook($cf7_form);
-        $this->assertNull($cf7_form->props);
-    }
-    
+       
     // select_hook
     function test_select_hook_registered_sets_values_and_labels() {
         $mock_select = ['name' => 'myselect'];
@@ -106,4 +85,17 @@ class ContactFormManagerTest extends PHPUnit_Framework_TestCase {
         $res = $this->manager->select_hook($mock_select);
         $this->assertEquals($mock_select, $res);
     }
+    
+    // code_hook
+    /*function test_form_code_hook_registered_sets_code() {
+        $cf7_form = new ABACO_MockCf7Form('registered');
+        $this->manager->form_code_hook($cf7_form);
+        $this->assertEquals(['form' => 'code'], $cf7_form->props);
+    }
+    
+    function test_form_code_hook_not_registered_does_nothing() {
+        $cf7_form = new ABACO_MockCf7Form('other');
+        $this->manager->form_code_hook($cf7_form);
+        $this->assertNull($cf7_form->props);
+    }*/
 }

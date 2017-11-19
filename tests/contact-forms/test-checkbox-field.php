@@ -10,10 +10,10 @@ _abaco_require('inc/contact-forms/field.php');
 
 class CheckboxFieldTest extends PHPUnit_Framework_TestCase {
 
-    function test_validate_not_array_returns_exception() {
+    function test_validate_not_array_throws_validation_error() {
         $field = new ABACO_CheckboxField('name', 'display');
+        $this->expectException(ABACO_ValidationError::class);
         $res = $field->validate('invalid');
-        $this->assertInstanceof(Exception::class, $res);
     }
     
     /**

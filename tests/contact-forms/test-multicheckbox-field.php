@@ -16,10 +16,11 @@ class MulticheckboxFieldTest extends PHPUnit_Framework_TestCase {
     function test_validate($input, $expected, $mandatory = false) {
         $field = new ABACO_MulticheckboxField('name', 'display', $mandatory,
             ['opt1', 'opt2']);
-        $res = $field->validate($input);
         if (is_null($expected)) {
-            $this->assertInstanceof(Exception::class, $res);
+            $this->expectException(ABACO_ValidationError::class);
+            $field->validate($input);
         } else {
+            $res = $field->validate($input);
             $this->assertEquals($expected, $res);
         }
     }

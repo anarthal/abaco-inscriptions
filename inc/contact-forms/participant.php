@@ -7,95 +7,93 @@
  */
 
 require_once __DIR__ . '/contact-form.php';
-require_once __DIR__ . '/field.php';
 
-class ABACO_ParticipantForm extends ABACO_ContactFormImpl {
+class ABACO_ParticipantForm extends ABACO_ContactForm {
     private $m_participant_table;
   
     // Construction
     public function __construct($participant_table) {
-        parent::__construct(self::make_field_list());
-        $this->add_validator('document_type', array($this, 'validate_document_type'));
-        $this->add_validator('nif', array($this, 'validate_nif'));
-        $this->add_validator('tutor_nif', array($this, 'validate_tutor'));
+        $validators = [
+            'document_type' => [$this, 'validate_document_type'],
+            'nif' => [$this, 'validate_nif'],
+            'tutor_nif' => [$this, 'validate_tutor']
+        ];
+        parent::__construct(
+            self::make_field_list(),
+            $validators
+        );
         $this->m_participant_table = $participant_table;
     }
     
-    // Accessors
-    public function birth_date() {
-        return $this->data['birth_date'];
-    }
-    public function age() {
-        return self::compute_age($this->birth_date());
-    }
-    public function document_type() {
-        return $this->data['document_type'];
-    }
-    public function nif() {
-        return $this->data['nif'];
-    }
-    public function set_nif($value) {
-        $this->data['nif'] = $value;
-    }
-    public function booking_days() {
-        return $this->data['booking_days'];
-    }
-    
     // Validate functions
-    protected function validate_document_type($value) {
-        if ($value === 'UUID' && $this->age() >= ABACO_NIF_MANDATORY_AGE) {
-            throw new Exception(__("You are eager enough to have a NIF.", 'abaco'));
+    protected function validate_document_type($data) {
+        $doctype = $data['document_type'];
+        $age = self::compute_age($data['birth_date']);
+        if ($doctype === 'UUID' && $age >= ABACO_NIF_MANDATORY_AGE) {
+            throw new ABACO_ValidationError(
+                __('You are eager enough to have a NIF.', 'abaco')
+            );
         }
+        return $data;
     }
-    protected function validate_nif($nif) {
-        if ($this->document_type() === 'UUID') {
-            $this->set_nif(uniqid());
-            return;
+    protected function validate_nif($data) {
+        $doctype = $data['document_type'];
+        if ($doctype === 'UUID') {
+            $data['nif'] = uniqid();
+            return $data;
         }
-        if ($nif === '') {
-            throw new Exception(__('This field is mandatory.', 'abaco'));
-        }
+        $nif = $data['nif'];
         if (!$this->m_participant_table->is_nif_available($nif)) {
-            throw new Exception(__('This document has already been registered.',
-                'abaco'));
+            throw new ABACO_ValidationError(
+                __('This document has already been registered.', 'abaco')
+            );
         }
+        return $data;
     }
-    protected function validate_tutor($tutor_nif) {
+    protected function validate_tutor($data) {
         // Check if it's minor
-        if ($this->age() >= ABACO_MINORITY_AGE) {
-            return;
+        $age = self::compute_age($data['birth_date']);
+        if ($age >= ABACO_MINORITY_AGE) {
+            return $data;
         }
         
         // Check field is set
+        $tutor_nif = $data['tutor_nif'];
         if ($tutor_nif === "") {
-            throw new Exception(
-                __("This field is required because you are under age.", 'abaco'));
+            throw new ABACO_ValidationError(
+                __('This field is required because you are under age.', 'abaco')
+            );
         }
         
         // Get info about tutor
         $tutor = $this->m_participant_table->query_by_id('nif', $tutor_nif,
             'birth_date, booking_days');
         if ($tutor === null) {
-            $msg = __("Your tutor must be inscribed in the event. Please check her document is correct.", 'abaco');
-            throw new Exception($msg);
+            throw new ABACO_ValidationError(
+                __('Your tutor must be inscribed in the event. Please check her document is correct.', 'abaco')
+            );
         }
 
         // Check if tutor is over age
         $tutor_age = self::compute_age(new DateTime($tutor->birth_date));
         if ($tutor_age < ABACO_MINORITY_AGE) {
-            throw new Exception(__('Your tutor must be an adult.', 'abaco'));
+            throw new ABACO_ValidationError(
+                __('Your tutor must be an adult.', 'abaco')
+            );
         }
 
         // Check booking days for tutor
         if (!self::booking_days_include($this->booking_days(), $tutor->booking_days)) {
-            throw new Exception(
-                __('Your tutor must stay at least the same days as you.', 'abaco'));
+            throw new ABACO_ValidationError(
+                __('Your tutor must stay at least the same days as you.', 'abaco')
+            );
         }
+        
+        return $data;
     }
     
     // Insertion functions
-    public function insert() {
-        $data = $this->data;
+    public function insert($data) {
         $data['birth_date'] = $data['birth_date']->format('Y-m-d');
         if ($data['tutor_nif'] === '') {
             unset($data['tutor_nif']);

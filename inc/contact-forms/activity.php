@@ -7,43 +7,48 @@
  */
 
 require_once __DIR__ . '/contact-form.php';
-require_once __DIR__ . '/field.php';
 
-class ABACO_ActivityForm extends ABACO_ContactFormImpl {
+class ABACO_ActivityForm extends ABACO_ContactForm {
     private $m_participant_table;
     private $m_activity_table;
     
     public function __construct($participant_table, $activity_table) {
-        parent::__construct(self::make_field_list());
-        $this->add_validator('organizer_nif', array($this, 'validate_nif'));
-        $this->add_validator(
-            'participants_total',
-            array($this, 'validate_participant_number')
-        );
+        $validators = [
+            'organizer_nif' => [$this, 'validate_nif'],
+            'participants_total' => [$this, 'validate_participant_number']
+        ];
+        parent::__construct(self::make_field_list(), $validators);
         $this->m_participant_table = $participant_table;
         $this->m_activity_table = $activity_table;
-    } 
+    }
     
     // Validation
-    protected function validate_nif($value) {
-        $id = $this->m_participant_table->nif_to_id($value);
+    protected function validate_nif($data) {
+        $nif = $data['nif'];
+        $id = $this->m_participant_table->nif_to_id($nif);
         if ($id === null) {
-            throw new Exception(__("You must be inscribed before registering activities.", "abaco"));
+            throw new ABACO_ValidationError(
+                __('You must be inscribed before registering activities.', 'abaco')
+            );
         }
-        $this->data['participant_id'] = $id;
+        $data['participant_id'] = $id;
+        return $data;
     }
-    protected function validate_participant_number($total) {
-        $males = $this->data['participants_male'];
-        $females = $this->data['participants_female'];
+    protected function validate_participant_number($data) {
+        $total = $data['participants_total'];
+        $males = $data['participants_male'];
+        $females = $data['participants_female'];
         $indifferent = $total - $males - $females;
         if ($indifferent < 0) {
-            throw new Exception(self::negative_participants_message());
+            throw new ABACO_ValidationError(
+                abaco_negative_participants_message()
+            );
         }
     }
     
     // Insertion
-    public function insert() {
-        $this->m_activity_table->insert($this->data);
+    public function insert($data) {
+        $this->m_activity_table->insert($data);
     }
     
     // Helpers

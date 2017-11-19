@@ -7,26 +7,29 @@
  */
 
 require_once __DIR__ . '/contact-form.php';
-require_once __DIR__ . '/field.php';
 
-class ABACO_CompanyForm extends ABACO_ContactFormImpl {
+class ABACO_CompanyForm extends ABACO_ContactForm {
     private $m_participant_table;
     
     public function __construct(ABACO_ParticipantDbTable $participant_table) {
-        parent::__construct(self::make_field_list());
-        $this->add_validator('nif', array($this, 'validate_nif'));
+        $validators = [
+            'nif', [$this, 'validate_nif']
+        ];
+        parent::__construct(self::make_field_list(), $validators);
         $this->m_participant_table = $participant_table;
     }
     
-    public function validate_nif($nif) {
+    public function validate_nif($data) {
+        $nif = $data['nif'];
         if (!$this->m_participant_table->is_nif_available($nif)) {
-            throw new Exception(__('This NIF has already been registered.',
-                'abaco'));
+            throw new ABACO_ValidationError(
+                __('This NIF has already been registered.','abaco')
+            );
         }
+        return $data;
     }
     
-    public function insert() {
-        $data = $this->data;
+    public function insert($data) {
         $data['document_type'] = 'NIF';
         $data['gender'] = 'NONBINARY';
         $data['booking_days'] = [];

@@ -14,9 +14,9 @@ class SelectFieldTest extends PHPUnit_Framework_TestCase {
         $res = $field->validate('opt1');
         $this->assertEquals('opt1', $res);
     }
-    function test_validate_invalid_option_returns_exception() {
+    function test_validate_invalid_option_throws_validation_error() {
         $field = new ABACO_SelectField('name', 'display', ['opt1', 'opt2']);
+        $this->expectException(ABACO_ValidationError::class);
         $res = $field->validate('other');
-        $this->assertInstanceof(Exception::class, $res);
     }
 }

@@ -6,10 +6,15 @@
  * and open the template in the editor.
  */
 
+class ABACO_ValidationError extends Exception {}
+
 abstract class ABACO_Field {
     public $name;
     public function __construct($name) {
         $this->name = $name;
+    }
+    public static function error($msg) {
+        throw new ABACO_ValidationError($msg);
     }
     public abstract function code();
     
@@ -24,32 +29,25 @@ interface ABACO_Validator {
 
 abstract class ABACO_DataField extends ABACO_Field implements ABACO_Validator {
     /**
-     * Validates the actual input of the field
-     * @param mixed $input The field's value. May be null.
-     * @return mixed The processed value on success, an instance of \Exception
-     *  on failure. Will return an empty string when input is null.
+     * Validates the actual input of the field.
+     * Must throw ABACO_ValidationError on failure.
+     * @param mixed $input The field value. May be null.
+     * @return mixed A processed value.
      */
     public final function validate($input) {
-        try {
-            if (!isset($input)) {
-                $input = '';
-            }
-            return $this->m_validate($input);
-        } catch (Exception $ex) {
-            return $ex;
-        }
+        return $this->m_validate(isset($input) ? $input : '');
     }
     protected abstract function m_validate($input);
     
     // Helpers
     protected static function check_string($input) {
         if (!is_string($input)) {
-            throw new Exception("Invalid type");
+            self::error('Invalid type');
         }
     }
     protected static function check_array($input) {
         if (!is_array($input)) {
-            throw new Exception("Invalid type");
+            self::error('Invalid type');
         }
     }
 }
@@ -122,7 +120,7 @@ abstract class ABACO_StringField extends ABACO_LabelField {
         self::check_string($input);
         $res = $this->m_trim($input);
         if ($this->params->mandatory && $res === '') {
-            throw new Exception(__("This field is mandatory.", "abaco"));
+            self::error(__('This field is mandatory.', 'abaco'));
         }
         return $res;
     }
@@ -191,7 +189,7 @@ class ABACO_NumberField extends ABACO_LabelField {
     public function m_validate($input) {
         self::check_string($input);
         if (!is_numeric($input)) {
-            throw new Exception(__("This field must be a number.", "abaco"));
+            self::error(__('This field must be a number.', 'abaco'));
         }
         return intval($input);
     }
@@ -211,7 +209,7 @@ class ABACO_SelectField extends ABACO_LabelField {
     protected function m_validate($input) {
         self::check_string($input);
         if (!in_array($input, $this->m_select_opts, true)) {
-            throw new Exception(__("An invalid option was selected.", "abaco"));
+            self::error(__('An invalid option was selected.', 'abaco'));
         }
         return $input;
     }
@@ -268,7 +266,7 @@ class ABACO_MulticheckboxField extends ABACO_DataField {
         self::check_array($input);
         $res = array_intersect($this->m_select_opts, $input);
         if ($this->m_params->mandatory && empty($res)) {
-            throw new Exception(__('This field is mandatory.', 'abaco'));
+            self::error(__('This field is mandatory.', 'abaco'));
         }
         return $res;
     }
