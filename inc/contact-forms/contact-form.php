@@ -38,16 +38,38 @@ class ABACO_Submission {
     public function __construct(ABACO_ContactForm $form) {
         $this->contact_form = $form;
     }
+    public function data() {
+        return $this->m_data;
+    }
+    
     public function code() {
         $res = array_map(function($field) {
             return $field->code();
         }, $this->contact_form->fields);
         return implode('<br /><br />', $res);
     }
+    
     public function setup_data(array $raw_data, $result) {
-        $data = $this->basic_validation($raw_data, $result);
-        if ($data !== null) {
-            $this->m_data = $this->custom_validation($data, $result);
+        $data = [];
+        $name = null;
+        try {
+            // Basic validation
+            foreach ($this->contact_form->fields as $field) {
+                if (!$field instanceof ABACO_DataField) {
+                    continue;
+                }
+                $name = $field->name;
+                $value = isset($raw_data[$name]) ? $raw_data[$name] : '';
+                $data[$name] = $field->validate($value);
+            }
+            // Custom validation
+            foreach ($this->contact_form->custom_validators as $name_ => $validator) {
+                $name = $name_;
+                $data = call_user_func($validator, $data);
+            }
+            $this->m_data = $data;
+        } catch (ABACO_ValidationError $err) {
+            $result->invalidate($name, $err->getMessage());
         }
     }
 
@@ -55,36 +77,6 @@ class ABACO_Submission {
         $this->contact_form->insert($this->m_data);
     }
     
-    // Helpers
-    private function basic_validation(array $data, $result) {
-        $res = [];
-        foreach ($this->contact_form->fields as $field) {
-            if (!$field instanceof ABACO_DataField) {
-                continue;
-            }
-            $name = $field->name;
-            try {
-                $value = isset($data[$name]) ? $data[$name] : '';
-                $res[$name] = $field->validate($value);
-            } catch (ABACO_ValidationError $err) {
-                $result->invalidate($name, $err->getMessage());
-                return null;
-            }
-        }
-        return $res;
-    }
-    
-    private function custom_validation(array $data, $result) {
-        foreach ($this->contact_form->custom_validators as $name => $validator) {
-            try {
-                $data = call_user_func($validator, $data);
-            } catch (ABACO_ValidationError $err) {
-                $result->invalidate($name, $err->getMessage());
-                return null;
-            }
-        }
-        return $data;
-    }
 }
 
 class ABACO_ContactFormManager {
