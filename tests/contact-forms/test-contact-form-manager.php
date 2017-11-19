@@ -8,10 +8,12 @@
 
 _abaco_require('inc/contact-forms/contact-form.php');
 
-class ABACO_MockContactForm extends ABACO_ContactForm {
+class ABACO_ManagerMockContactForm extends ABACO_ContactForm {
     public $insert_data;
     public function __construct() {
-        parent::__construct([], []);
+        parent::__construct([
+            new ABACO_TextField('myname', 'display', true)
+        ], []);
     }
     public function insert(array $data) {
         $this->insert_data = $data;
@@ -35,7 +37,7 @@ class ContactFormManagerTest extends PHPUnit_Framework_TestCase {
     function setUp() {
         $this->manager = new ABACO_ContactFormManager();
         $this->manager->add_form('registered',
-            function() { return new ABACO_MockContactForm(); });
+            function() { return new ABACO_ManagerMockContactForm(); });
         $this->manager->add_selects(['myselect' => function() {
             return ['k1' => 'v1', 'k2' => 'v2'];
         }]);
@@ -45,7 +47,7 @@ class ContactFormManagerTest extends PHPUnit_Framework_TestCase {
     function test_get_submission_registered_returns_new() {
         $res = $this->manager->get_submission('registered');
         $this->assertInstanceOf(ABACO_Submission::class, $res);
-        $this->assertInstanceOf(ABACO_MockContactForm::class, $res->contact_form);
+        $this->assertInstanceOf(ABACO_ManagerMockContactForm::class, $res->contact_form);
     }
     
     function test_get_submission_cached_returns_existing() {
@@ -87,15 +89,18 @@ class ContactFormManagerTest extends PHPUnit_Framework_TestCase {
     }
     
     // code_hook
-    /*function test_form_code_hook_registered_sets_code() {
+    function test_form_code_hook_registered_sets_code() {
         $cf7_form = new ABACO_MockCf7Form('registered');
         $this->manager->form_code_hook($cf7_form);
-        $this->assertEquals(['form' => 'code'], $cf7_form->props);
+        $code = $this->manager->get_submission('registered')->code();
+        $this->assertEquals(['form' => $code], $cf7_form->props);
     }
     
     function test_form_code_hook_not_registered_does_nothing() {
         $cf7_form = new ABACO_MockCf7Form('other');
         $this->manager->form_code_hook($cf7_form);
         $this->assertNull($cf7_form->props);
-    }*/
+    }
+    
+    // validation_hook: cannot test; it depends on CF7 singletons
 }
