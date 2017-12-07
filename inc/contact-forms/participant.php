@@ -26,23 +26,34 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     }
     
     // Validate functions
-    protected function validate_document_type($data) {
+    public function validate_document_type($data) {
         $doctype = $data['document_type'];
-        $age = self::compute_age($data['birth_date']);
-        if ($doctype === 'UUID' && $age >= ABACO_NIF_MANDATORY_AGE) {
+        if ($doctype === 'UUID' &&
+            self::compute_age($data['birth_date']) >= ABACO_NIF_MANDATORY_AGE) {
             throw new ABACO_ValidationError(
                 __('You are eager enough to have a NIF.', 'abaco')
             );
         }
         return $data;
     }
-    protected function validate_nif($data) {
+    public function validate_nif($data) {
+        // If we have UUID (minor without NIF), generate UUID and return
         $doctype = $data['document_type'];
         if ($doctype === 'UUID') {
             $data['nif'] = uniqid();
             return $data;
         }
+        
         $nif = $data['nif'];
+        
+        // NIF is not actually mandatory because of the UUID possibility
+        if ($nif === '') {
+            throw new ABACO_ValidationError(
+                __('This field is mandatory.', 'abaco')
+            );
+        }
+        
+        // Check if already registered
         if (!$this->m_participant_table->is_nif_available($nif)) {
             throw new ABACO_ValidationError(
                 __('This document has already been registered.', 'abaco')
@@ -50,7 +61,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         }
         return $data;
     }
-    protected function validate_tutor($data) {
+    public function validate_tutor($data) {
         // Check if it's minor
         $age = self::compute_age($data['birth_date']);
         if ($age >= ABACO_MINORITY_AGE) {
@@ -93,7 +104,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     }
     
     // Insertion functions
-    public function insert($data) {
+    public function insert(array $data) {
         $data['birth_date'] = $data['birth_date']->format('Y-m-d');
         if ($data['tutor_nif'] === '') {
             unset($data['tutor_nif']);
