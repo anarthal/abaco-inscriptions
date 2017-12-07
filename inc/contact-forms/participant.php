@@ -128,7 +128,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     }
     
     private static function make_field_list() {
-        return array(
+        return [
             new ABACO_TextField('first_name', __('First name', 'abaco'), true),
             new ABACO_TextField('last_name', __('Last name', 'abaco'), true),
             new ABACO_TextField('alias', __('Alias', 'abaco'), false),
@@ -148,7 +148,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             new ABACO_EchoField('tutor_nif_after', '<hr /></div>'),
             new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco'), ['cf7_options' => 'default:1']),
             new ABACO_SubmitField()
-        );
+        ];
     }
         
     private static function tutor_nif_before_html() {

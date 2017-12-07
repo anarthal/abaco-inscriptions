@@ -163,4 +163,6 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $res = $this->form->validate_tutor($data);
         $this->assertEquals($data, $res);
     }
+    
+    // insert: better tested in system tests
 }

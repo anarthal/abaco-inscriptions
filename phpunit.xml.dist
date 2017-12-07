@@ -12,4 +12,18 @@
             <directory prefix="test-" suffix=".php">./tests/*/</directory>
         </testsuite>
     </testsuites>
+    <!--filter>
+        <whitelist>
+            <directory suffix=".php">.</directory>
+            <exclude>
+                <directory suffix=".php">./tests/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="./log/codeCoverage" charset="UTF-8"
+            yui="true" highlight="true"
+            lowUpperBound="50" highLowerBound="80"/>
+    </logging-->
 </phpunit>
