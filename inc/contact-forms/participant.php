@@ -94,7 +94,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         }
 
         // Check booking days for tutor
-        if (!self::booking_days_include($this->booking_days(), $tutor->booking_days)) {
+        if (!self::booking_days_include($data['booking_days'], $tutor->booking_days)) {
             throw new ABACO_ValidationError(
                 __('Your tutor must stay at least the same days as you.', 'abaco')
             );
