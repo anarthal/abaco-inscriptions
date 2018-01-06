@@ -272,7 +272,7 @@ class ABACO_MulticheckboxField extends ABACO_DataField {
     }
     protected function m_validate($input) {
         self::check_array($input);
-        $res = array_intersect($this->m_select_opts, $input);
+        $res = array_values(array_intersect($this->m_select_opts, $input));
         if ($this->m_params->mandatory && empty($res)) {
             self::error(__('This field is mandatory.', 'abaco'));
         }

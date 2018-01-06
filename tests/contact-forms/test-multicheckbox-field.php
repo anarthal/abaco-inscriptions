@@ -30,7 +30,10 @@ class MulticheckboxFieldTest extends PHPUnit_Framework_TestCase {
             [[''], []],
             [['opt1'], ['opt1']],
             [['opt1', 'opt2'], ['opt1', 'opt2']],
+            [['opt2'], ['opt2']],
             [['opt1', 'invalid'], ['opt1']],
+            [['invalid', 'opt1'], ['opt1']],
+            [['invalid', 'opt2'], ['opt2']],
             [['opt1'], ['opt1'], true],
             [[''], null, true],
             [['invalid'], null, true]
