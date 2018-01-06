@@ -220,7 +220,15 @@ class ABACO_SelectField extends ABACO_LabelField {
 
 class ABACO_DateField extends ABACO_LabelField {
     protected function m_validate($input) {
-        return new DateTime($input);
+        self::check_string($input);
+        if ($this->params->mandatory && $input === '') {
+            self::error(__('This field is mandatory.', 'abaco'));
+        }
+        $res = date_create($input);
+        if (!$res) {
+            self::error(__('Invalid date format.', 'abaco'));
+        }
+        return $res;
     }
     public function tag_type() {
         return 'date';
