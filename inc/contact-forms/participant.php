@@ -86,7 +86,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         }
 
         // Check if tutor is over age
-        $tutor_age = self::compute_age(new DateTime($tutor->birth_date));
+        $tutor_age = self::compute_age($tutor->birth_date);
         if ($tutor_age < ABACO_MINORITY_AGE) {
             throw new ABACO_ValidationError(
                 __('Your tutor must be an adult.', 'abaco')

@@ -13,7 +13,10 @@ class ABACO_ParticipantParser extends ABACO_Parser {
         parent::__construct([
             'id' => 'intval',
             'booking_days' => 'abaco_parse_array',
-            'yes_info' => 'abaco_parse_bool'
+            'yes_info' => 'abaco_parse_bool',
+            'birth_date' => function($value) {
+                return new DateTime($value);
+            }
         ]);
     }
 }

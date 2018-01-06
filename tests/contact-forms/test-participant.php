@@ -207,7 +207,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->input['booking_days'] = []; // not interfere with current test
         $this->input['tutor_nif'] = 'tutor';
         $this->table->method('query_by_id')->willReturn((object)[
-            'birth_date' => make_birth_date_string(17),
+            'birth_date' => make_birth_date(17),
             'booking_days' => ['THU', 'FRI']
         ]);
         $this->do_test_invalid('tutor_nif');
@@ -218,7 +218,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->input['booking_days'] = ['THU', 'FRI'];
         $this->input['tutor_nif'] = 'tutor';
         $this->table->method('query_by_id')->willReturn((object)[
-            'birth_date' => make_birth_date_string(17),
+            'birth_date' => make_birth_date(17),
             'booking_days' => ['FRI', 'SAT']
         ]);
         $this->do_test_invalid('tutor_nif');
@@ -246,7 +246,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $expected['tutor_nif'] = '678';
         $expected['booking_days'] = ['SAT'];
         $this->table->method('query_by_id')->willReturn((object)[
-            'birth_date' => make_birth_date_string(19),
+            'birth_date' => make_birth_date(19),
             'booking_days' => ['FRI', 'SAT']
         ]);
         $this->do_test_valid($expected);
@@ -265,7 +265,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $expected['booking_days'] = ['SAT'];
         unset($expected['nif']);
         $this->table->method('query_by_id')->willReturn((object)[
-            'birth_date' => make_birth_date_string(19),
+            'birth_date' => make_birth_date(19),
             'booking_days' => ['FRI', 'SAT']
         ]);
         $this->sub->setup_data($this->input, $this->result);

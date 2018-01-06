@@ -56,12 +56,14 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
         $this->insertParticipant([
             'nif' => '123',
             'booking_days' => serialize([$day]),
-            'yes_info' => false
+            'yes_info' => false,
+            'birth_date' => '2010-10-20'
         ]);
-        $res = $this->table->query_all('id, booking_days, yes_info')[0];
+        $res = $this->table->query_all('id, booking_days, yes_info,birth_date')[0];
         $this->assertTrue(is_int($res['id']));
         $this->assertEquals([$day], $res['booking_days']);
         $this->assertTrue(is_bool($res['yes_info']));
+        $this->assertEquals($res['birth_date'], new DateTime('2010-10-20'));
     }
     
     // Query by ID
