@@ -17,7 +17,11 @@ abstract class ABACO_ContactForm {
     public abstract function insert(array $data);
 }
 
-class ABACO_ResultHelper {
+interface ABACO_InvalidatableResult {
+    function invalidate($name, $message);
+}
+
+class ABACO_ResultHelper implements ABACO_InvalidatableResult {
     private $m_result;
     private $m_tags = [];
     public function __construct($result, $form_tags) {
