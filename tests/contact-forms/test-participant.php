@@ -7,9 +7,11 @@
  */
 
 _abaco_require('inc/contact-forms/participant.php');
+_abaco_require('inc/db/participant-db-table.php');
 
 function make_birth_date($age) {
-    return (new DateTime())->sub(new DateInterval("P${age}Y"));
+    $res = (new DateTime())->sub(new DateInterval("P${age}Y"));
+    return new DateTime($res->format('Y-01-01'));
 }
 
 function make_birth_date_string($age) {
@@ -41,7 +43,11 @@ class ABACO_MockParticipantTable {
 
 class ParticipantTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->table = new ABACO_MockParticipantTable();
+        $this->table = $this->createMock(ABACO_ParticipantDbTable::class);
+        $this->table->method('is_nif_available')
+                    ->will($this->returnCallback(function($value) {
+                        return $value !== 'existent';
+                    }));
         $this->form = new ABACO_ParticipantForm($this->table);
         $this->sub = new ABACO_Submission($this->form);
         $this->result = $this->getMockBuilder(ABACO_InvalidatableResult::class)
@@ -67,18 +73,37 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         ];
     }
     
-    function expect_invalid($field_name) {
-        $this->result->expects($this->once())
-                     ->method('invalidate')
-                     ->with($this->equalTo($field_name), $this->anything());
-    }
-    function do_test() {
-        $this->sub->setup_data($this->input, $this->result);
+    function get_expected() {
+        return [
+            'first_name' => 'my_first_name',
+            'last_name' => 'my_last_name',
+            'alias' => 'my_alias',
+            'birth_date' => make_birth_date(19),
+            'document_type' => 'NIF',
+            'nif' => '123',
+            'gender' => 'MALE',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'group' => 'mygroup',
+            'province' => 'NAVARRA',
+            'city' => 'pamplona',
+            'observations' => 'myobs',
+            'booking_days' => ['THU', 'FRI'],
+            'tutor_nif' => '',
+            'yes_info' => true
+        ];
     }
     
     function do_test_invalid($field_name) {
-        $this->expect_invalid($field_name);
-        $this->do_test();
+        $this->result->expects($this->once())
+                     ->method('invalidate')
+                     ->with($this->equalTo($field_name), $this->anything());
+        $this->sub->setup_data($this->input, $this->result);
+    }
+    
+    function do_test_valid($expected) {
+        $this->sub->setup_data($this->input, $this->result);
+        $this->assertEquals($expected, $this->sub->data());
     }
     
     // Invalid first_name
@@ -129,6 +154,11 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('nif');
     }
     
+    function test_existing_nif_invalid() {
+        $this->input['nif'] = 'existent';
+        $this->do_test_invalid('nif');
+    }
+    
     // Invalid gender
     function test_invalid_gender_invalid() {
         $this->input['gender'] = 'invalid';
@@ -157,121 +187,91 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('city');
     }
     
-    // validate_document_type
-    /*function test_validate_document_type_uuid_under_nif_age_ok() {
-        $data = [
-            'document_type' => 'UUID',
-            'birth_date' => make_birth_date(13)
-        ];
-        $res = $this->form->validate_document_type($data);
-        $this->assertEquals($data, $res);
+    // Invalid tutor_nif
+    function test_minor_missing_tutor_nif_invalid() {
+        $this->input['birth_date'] = make_birth_date_string(17);
+        $this->input['tutor_nif'] = '';
+        $this->do_test_invalid('tutor_nif');
     }
     
-
-    
-    function test_validate_document_type_nif_ok() {
-        $data = ['document_type' => 'NIF'];
-        $res = $this->form->validate_document_type($data);
-        $this->assertEquals($data, $res);
+    function test_minor_tutor_does_not_exist_invalid() {
+        $this->input['birth_date'] = make_birth_date_string(17);
+        $this->input['booking_days'] = [];
+        $this->input['tutor_nif'] = 'tutor';
+        $this->table->method('query_by_id')->willReturn(null);
+        $this->do_test_invalid('tutor_nif');
     }
     
-    function test_validate_document_type_passport_ok() {
-        $data = ['document_type' => 'NIF'];
-        $res = $this->form->validate_document_type($data);
-        $this->assertEquals($data, $res);
+    function test_minor_tutor_under_age_invalid() {
+        $this->input['birth_date'] = make_birth_date_string(17);
+        $this->input['booking_days'] = []; // not interfere with current test
+        $this->input['tutor_nif'] = 'tutor';
+        $this->table->method('query_by_id')->willReturn((object)[
+            'birth_date' => make_birth_date_string(17),
+            'booking_days' => ['THU', 'FRI']
+        ]);
+        $this->do_test_invalid('tutor_nif');
     }
     
-    // validate_nif
-    function test_validate_nif_does_not_exist_ok() {
-        $data = [
-            'document_type' => 'NIF',
-            'nif' => 'non_existent'
-        ];
-        $res = $this->form->validate_nif($data);
-        $this->assertEquals($data, $res);
+    function test_minor_tutor_booking_days_mismatch_invalid() {
+        $this->input['birth_date'] = make_birth_date_string(17);
+        $this->input['booking_days'] = ['THU', 'FRI'];
+        $this->input['tutor_nif'] = 'tutor';
+        $this->table->method('query_by_id')->willReturn((object)[
+            'birth_date' => make_birth_date_string(17),
+            'booking_days' => ['FRI', 'SAT']
+        ]);
+        $this->do_test_invalid('tutor_nif');
     }
     
-    function test_validate_nif_exists_throw() {
-        $data = [
-            'document_type' => 'NIF',
-            'nif' => 'existent'
-        ];
-        $this->expectException(ABACO_ValidationError::class);
-        $this->form->validate_nif($data);
+    // Valid cases
+    function test_trivial_valid() {
+        $expected = $this->get_expected();
+        $this->do_test_valid($expected);
     }
     
-    function test_validate_nif_uuid_generates() {
-        $data = ['document_type' => 'UUID'];
-        $res = $this->form->validate_nif($data);
-        $this->assertNotEmpty($res['nif']); // an UUID was generated
-        $this->assertEquals(2, count($res)); // no additional fields
-        $this->assertEquals('UUID', $res['document_type']); // unmodified
+    function test_document_type_passport_nif_present_valid() {
+        $this->input['document_type'] = 'PASSPORT';
+        $expected = $this->get_expected();
+        $expected['document_type'] = 'PASSPORT';
+        $this->do_test_valid($expected);
     }
     
-    function test_validate_nif_not_uuid_missing_nif_throws() {
-        $data = ['document_type' => 'NIF', 'nif' => ''];
-        $this->expectException(ABACO_ValidationError::class);
-        $this->form->validate_nif($data);
+    function test_minor_valid() {
+        $this->input['birth_date'] = make_birth_date_string(ABACO_MINORITY_AGE - 3);
+        $this->input['tutor_nif'] = '678';
+        $this->input['booking_days'] = ['SAT'];
+        $expected = $this->get_expected();
+        $expected['birth_date'] = make_birth_date(ABACO_MINORITY_AGE - 3);
+        $expected['tutor_nif'] = '678';
+        $expected['booking_days'] = ['SAT'];
+        $this->table->method('query_by_id')->willReturn((object)[
+            'birth_date' => make_birth_date_string(19),
+            'booking_days' => ['FRI', 'SAT']
+        ]);
+        $this->do_test_valid($expected);
     }
     
-    // validate_tutor
-    function test_validate_tutor_over_age_ok() {
-        $data = [
-            'birth_date' => make_birth_date(18),
-            'tutor_nif' => ''
-        ];
-        $res = $this->form->validate_tutor($data);
-        $this->assertEquals($res, $data);
-        $mitest = ['hola' => null];
-        $this->assertNull($mitest['hola']);
+    function test_nif_uuid_valid() {
+        $this->input['document_type'] = 'UUID';
+        $this->input['nif'] = '';
+        $this->input['birth_date'] = make_birth_date_string(ABACO_NIF_MANDATORY_AGE - 3);
+        $this->input['tutor_nif'] = '678';
+        $this->input['booking_days'] = ['SAT'];
+        $expected = $this->get_expected();
+        $expected['document_type'] = 'UUID';
+        $expected['birth_date'] = make_birth_date(ABACO_NIF_MANDATORY_AGE - 3);
+        $expected['tutor_nif'] = '678';
+        $expected['booking_days'] = ['SAT'];
+        unset($expected['nif']);
+        $this->table->method('query_by_id')->willReturn((object)[
+            'birth_date' => make_birth_date_string(19),
+            'booking_days' => ['FRI', 'SAT']
+        ]);
+        $this->sub->setup_data($this->input, $this->result);
+        $data = $this->sub->data();
+        $this->assertNotEmpty($data['nif']);
+        unset($data['nif']);
+        $this->assertEquals($expected, $data);
     }
-    
-    function test_validate_tutor_under_age_tutor_nif_empty_throws() {
-        $data = [
-            'birth_date' => make_birth_date(17),
-            'tutor_nif' => ''
-        ];
-        $this->expectException(ABACO_ValidationError::class);
-        $this->form->validate_tutor($data);
-    }
-    
-    function test_validate_tutor_under_age_tutor_does_not_exist_throws() {
-        $data = [
-            'birth_date' => make_birth_date(17),
-            'tutor_nif' => 'non_existent'
-        ];
-        $this->expectException(ABACO_ValidationError::class);
-        $this->form->validate_tutor($data);
-    }
-    
-    function test_validate_tutor_under_age_tutor_under_age_throws() {
-        $data = [
-            'birth_date' => make_birth_date(17),
-            'tutor_nif' => 'under_age'
-        ];
-        $this->expectException(ABACO_ValidationError::class);
-        $this->form->validate_tutor($data);
-    }
-    
-    function test_validate_tutor_under_age_booking_day_mismatch_throws() {
-        $data = [
-            'birth_date' => make_birth_date(17),
-            'tutor_nif' => 'under_age',
-            'booking_days' => ['THU', 'SAT']
-        ];
-        $this->expectException(ABACO_ValidationError::class);
-        $this->form->validate_tutor($data);
-    }
-    
-    function test_validate_tutor_under_age_ok() {
-        $data = [
-            'birth_date' => make_birth_date(17),
-            'tutor_nif' => 'over_age',
-            'booking_days' => ['THU']
-        ];
-        $res = $this->form->validate_tutor($data);
-        $this->assertEquals($data, $res);
-    }*/
-    
-    // insert: better tested in system tests
 }
