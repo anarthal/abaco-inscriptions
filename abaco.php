@@ -1,11 +1,27 @@
 <?php
 /*
  * Plugin name: ABACO Inscriptions
- * Description: Manage ABACO inscriptions.
- * Author: AnarThal
- * Version: 0.0.0
+ * Description: Manages inscriptions for ABACO events.
+ * Author: Anarthal
+ * Author URI: https://github.com/anarthal
+ * Version: 0.1.0
  * Text Domain: abaco
  * Domain Path: /languages
+ * License: GPL2
+ * 
+ * ABACO Inscriptions is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
+ * 
+ * ABACO Inscriptions is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with ABACO Inscriptions. If not, see
+ * https://www.gnu.org/licenses/gpl-2.0.html.
  */
 
 require_once __DIR__ . '/config.php';
