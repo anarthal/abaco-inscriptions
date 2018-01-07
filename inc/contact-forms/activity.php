@@ -23,8 +23,8 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
     }
     
     // Validation
-    protected function validate_nif($data) {
-        $nif = $data['nif'];
+    public function validate_nif($data) {
+        $nif = $data['organizer_nif'];
         $id = $this->m_participant_table->nif_to_id($nif);
         if ($id === null) {
             throw new ABACO_ValidationError(
@@ -34,7 +34,7 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
         $data['participant_id'] = $id;
         return $data;
     }
-    protected function validate_participant_number($data) {
+    public function validate_participant_number($data) {
         $total = $data['participants_total'];
         $males = $data['participants_male'];
         $females = $data['participants_female'];
@@ -44,10 +44,11 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
                 abaco_negative_participants_message()
             );
         }
+        return $data;
     }
     
     // Insertion
-    public function insert($data) {
+    public function insert(array $data) {
         $this->m_activity_table->insert($data);
     }
     
