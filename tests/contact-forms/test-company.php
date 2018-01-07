@@ -57,6 +57,12 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('nif');
     }
     
+    // Invalid phone
+    function test_missing_phone_invalid() {
+        $this->input['phone'] = '';
+        $this->do_test_invalid('phone');
+    }
+    
     // Invalid email
     function test_missing_email_invalid() {
         $this->input['email'] = '';
@@ -80,5 +86,43 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('city');
     }
     
-    // TODO: valid cases
+    function test_trivial_valid() {
+        $this->sub->setup_data($this->input, $this->result);
+        $expected = [
+            'first_name' => 'my_first_name',
+            'nif' => '123',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'pamplona',
+            'observations' => 'myobs',
+            'yes_info' => true
+        ];
+        $this->assertEquals($expected, $this->sub->data());
+    }
+    
+    function test_optional_fields_missing_valid() {
+        $data = [
+            'first_name' => 'my_first_name',
+            'nif' => '123',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'Pamplona',
+            'observations' => '',
+            'yes_info' => []
+        ];
+        $expected = [
+            'first_name' => 'my_first_name',
+            'nif' => '123',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'pamplona',
+            'observations' => '',
+            'yes_info' => false
+        ];
+        $this->sub->setup_data($data, $this->result);
+        $this->assertEquals($expected, $this->sub->data());
+    }
 }
