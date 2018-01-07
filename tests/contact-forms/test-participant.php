@@ -287,3 +287,76 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $data);
     }
 }
+
+class ParticipantInsertTest extends PHPUnit_Framework_TestCase {
+    function setUp() {
+        $this->table = $this->getMockBuilder(ABACO_ParticipantDbTable::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['insert'])
+                            ->getMock();
+        $this->form = new ABACO_ParticipantForm($this->table);
+    }
+    
+    function test_all_fields_not_empty_forwards_to_table_insert() {
+        $data = [
+            'first_name' => 'my_first_name',
+            'last_name' => 'my_last_name',
+            'alias' => 'my_alias',
+            'birth_date' => make_birth_date_string(19),
+            'document_type' => 'NIF',
+            'nif' => '123',
+            'gender' => 'MALE',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'group' => 'mygroup',
+            'province' => 'NAVARRA',
+            'city' => 'Pamplona',
+            'observations' => 'myobs',
+            'booking_days' => ['THU', 'FRI'],
+            'tutor_nif' => '900',
+            'yes_info' => ['yes_info']
+        ];
+        $this->table->expects($this->once())
+             ->method('insert')
+             ->with($this->equalTo($data));
+        $this->form->insert($data);
+    }
+    
+    function test_empty_optional_fields_unsets_them() {
+        $data = [
+            'first_name' => 'my_first_name',
+            'last_name' => 'my_last_name',
+            'alias' => '',
+            'birth_date' => make_birth_date_string(19),
+            'document_type' => 'NIF',
+            'nif' => '123',
+            'gender' => 'MALE',
+            'phone' => '',
+            'email' => 'test@test.com',
+            'group' => '',
+            'province' => 'NAVARRA',
+            'city' => 'Pamplona',
+            'observations' => '',
+            'booking_days' => ['THU', 'FRI'],
+            'tutor_nif' => '',
+            'yes_info' => ['yes_info']
+        ];
+        $expected = [
+            'first_name' => 'my_first_name',
+            'last_name' => 'my_last_name',
+            'birth_date' => make_birth_date_string(19),
+            'document_type' => 'NIF',
+            'nif' => '123',
+            'gender' => 'MALE',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'Pamplona',
+            'booking_days' => ['THU', 'FRI'],
+            'yes_info' => ['yes_info']
+        ];
+        $this->table->expects($this->once())
+             ->method('insert')
+             ->with($this->equalTo($expected));
+        $this->form->insert($data);
+    }
+}

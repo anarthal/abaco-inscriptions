@@ -105,6 +105,13 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     
     // Insertion functions
     public function insert(array $data) {
+        $fields_to_clear = ['alias', 'phone', 'group',
+            'observations', 'tutor_nif'];
+        foreach ($fields_to_clear as $field) {
+            if ($data[$field] == null) {
+                unset($data[$field]);
+            }
+        }
         $this->m_participant_table->insert($data);
     }
     

@@ -104,6 +104,9 @@ class ABACO_ParticipantDbTable {
     
     // Insert functions
     public function insert($data) {
+        if (isset($data['last_name']) && $data['last_name'] === '') {
+            $data['last_name'] = null;
+        }
         $data['booking_days'] = serialize($data['booking_days']);
         $data['birth_date'] = $data['birth_date']->format('Y-m-d');
         if (!$this->m_db->insert($this->name(), $data)) {
@@ -125,16 +128,16 @@ class ABACO_ParticipantDbTable {
             `nif` varchar(20) NOT NULL,
             `document_type` ENUM ($document_type_options) NOT NULL,
             `first_name` varchar(50) NOT NULL,
-            `last_name` varchar(100) DEFAULT '',
-            `alias` varchar(50) DEFAULT '',
+            `last_name` varchar(100) DEFAULT NULL,
+            `alias` varchar(50) DEFAULT NULL,
             `birth_date` date DEFAULT NULL,
-            `phone` varchar(50) DEFAULT '',
+            `phone` varchar(50) DEFAULT NULL,
             `email` varchar(50) NOT NULL,
             `gender` ENUM ($gender_options) NOT NULL,
-            `group` varchar(50) DEFAULT '',
+            `group` varchar(50) DEFAULT NULL,
             `province` ENUM ($province_options) NOT NULL,
             `city` varchar(25) NOT NULL,
-            `observations` varchar(140),
+            `observations` varchar(140) DEFAULT NULL,
             `booking_days` varchar(100) DEFAULT '$booking_days_default',
             `tutor_nif` varchar(20) DEFAULT NULL,
             `inscription_day` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
