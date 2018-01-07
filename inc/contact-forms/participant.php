@@ -135,7 +135,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             new ABACO_TextField('first_name', __('First name', 'abaco'), true),
             new ABACO_TextField('last_name', __('Last name', 'abaco'), true),
             new ABACO_TextField('alias', __('Alias', 'abaco'), false),
-            new ABACO_DateField('birth_date', __('Birth date (aaaa-mm-dd)', 'abaco'), true, ['cf7_options' => 'max:2017-01-01 id:booking-birth-date']),
+            new ABACO_DateField('birth_date', __('Birth date (aaaa-mm-dd)', 'abaco'), true, ['cf7_options' => 'id:booking-birth-date']),
             new ABACO_SelectField('document_type', __('Identifier document type', 'abaco'), array_keys(abaco_document_type_options()), ['cf7_options' => 'id:document-type']),
             new ABACO_TextField('nif', __('Identifier document', 'abaco'), false, true, ['cf7_options' => 'id:nif', 'asterisk' => true]),
             new ABACO_SelectField('gender', __('Gender', 'abaco'), array_keys(abaco_gender_options())),

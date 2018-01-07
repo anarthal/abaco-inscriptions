@@ -165,7 +165,10 @@ $(document).ready(function() {
     BookingDaysController.create();
     var ageController = AgeController.create();
     ageController.dateInput.datepicker({
-        dateFormat: 'yy-mm-dd'
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0
     });
     ActivityController.createDefault();
     new DocumentTypeController();

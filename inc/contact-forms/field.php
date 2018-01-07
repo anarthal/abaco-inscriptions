@@ -231,7 +231,7 @@ class ABACO_DateField extends ABACO_LabelField {
         return $res;
     }
     public function tag_type() {
-        return 'date';
+        return 'text';
     }
 }
 
