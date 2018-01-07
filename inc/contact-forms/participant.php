@@ -79,7 +79,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         // Get info about tutor
         $tutor = $this->m_participant_table->query_by_id('nif', $tutor_nif,
             ['birth_date', 'booking_days']);
-        if ($tutor === null) {
+        if ($tutor === null || $tutor->birth_date === null) {
             throw new ABACO_ValidationError(
                 __('Your tutor must be inscribed in the event. Please check her document is correct.', 'abaco')
             );

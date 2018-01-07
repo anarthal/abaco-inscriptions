@@ -224,6 +224,18 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('tutor_nif');
     }
     
+    function test_minor_tutor_nif_null_birth_date_invalid() {
+        // This will happen if tutor_nif points to a company
+        $this->input['birth_date'] = make_birth_date_string(17);
+        $this->input['booking_days'] = [];
+        $this->input['tutor_nif'] = 'tutor';
+        $this->table->method('query_by_id')->willReturn((object)[
+            'birth_date' => null,
+            'booking_days' => ['FRI', 'SAT']
+        ]);
+        $this->do_test_invalid('tutor_nif');
+    }
+    
     // Valid cases
     function test_trivial_valid() {
         $expected = $this->get_expected();
