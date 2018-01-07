@@ -18,29 +18,6 @@ function make_birth_date_string($age) {
     return make_birth_date($age)->format('Y-m-d');
 }
 
-class ABACO_MockParticipantTable {
-    public function is_nif_available($nif) {
-        return $nif !== 'existent';
-    }
-    public function query_by_id($id_type, $id, $fields) {
-        if ($id_type !== 'nif') {
-            return null;
-        }
-        if ($id === 'under_age') {
-            return (object)[
-                'birth_date' => make_birth_date(17)->format('Y-m-d'),
-                'booking_days' => ['THU', 'FRI']
-            ];
-        } else if ($id === 'over_age') {
-            return (object)[
-                'birth_date' => make_birth_date(19)->format('Y-m-d'),
-                'booking_days' => ['THU', 'FRI']
-            ];
-        }
-        return null;
-    }
-}
-
 class ParticipantTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->table = $this->createMock(ABACO_ParticipantDbTable::class);
