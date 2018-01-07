@@ -126,3 +126,62 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->sub->data());
     }
 }
+
+class CompanyInsertTest extends PHPUnit_Framework_TestCase {
+    function setUp() {
+        $this->table = $this->getMockBuilder(ABACO_ParticipantDbTable::class)
+                            ->disableOriginalConstructor()
+                            ->setMethods(['insert'])
+                            ->getMock();
+        $this->form = new ABACO_CompanyForm($this->table);
+    }
+    
+    function test_trivial_fills_missing_company_fields() {
+        $input = [
+            'first_name' => 'my_first_name',
+            'nif' => '123',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'pamplona',
+            'observations' => 'myobs',
+            'yes_info' => true
+        ];
+        $expected = [
+            'first_name' => 'my_first_name',
+            'document_type' => 'NIF',
+            'nif' => '123',
+            'gender' => 'NONBINARY',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'pamplona',
+            'observations' => 'myobs',
+            'booking_days' => [],
+            'yes_info' => true
+        ];
+        $this->table->expects($this->once())
+                    ->method('insert')
+                    ->with($this->equalTo($expected));
+        $this->form->insert($input);
+    }
+    
+   function test_empty_optional_fields_unsets_them() {
+        $input = [
+            'first_name' => 'my_first_name',
+            'nif' => '123',
+            'phone' => '670',
+            'email' => 'test@test.com',
+            'province' => 'NAVARRA',
+            'city' => 'pamplona',
+            'observations' => '',
+            'yes_info' => true
+        ];
+        $this->table->expects($this->once())
+                    ->method('insert')
+                    ->with($this->callback(function($value) {
+                        return !isset($value['observations']);
+                    }));
+        $this->form->insert($input);
+    }
+}

@@ -33,6 +33,9 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
         $data['document_type'] = 'NIF';
         $data['gender'] = 'NONBINARY';
         $data['booking_days'] = [];
+        if ($data['observations'] === '') {
+            unset($data['observations']);
+        }
         $this->m_participant_table->insert($data);
     }
     
