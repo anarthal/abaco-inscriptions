@@ -131,7 +131,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('nif');
     }
     
-    function test_existing_nif_invalid() {
+    function test_existent_nif_invalid() {
         $this->input['nif'] = 'existent';
         $this->do_test_invalid('nif');
     }

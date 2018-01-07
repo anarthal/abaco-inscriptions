@@ -13,7 +13,7 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
     
     public function __construct(ABACO_ParticipantDbTable $participant_table) {
         $validators = [
-            'nif', [$this, 'validate_nif']
+            'nif' => [$this, 'validate_nif']
         ];
         parent::__construct(self::make_field_list(), $validators);
         $this->m_participant_table = $participant_table;
@@ -29,7 +29,7 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
         return $data;
     }
     
-    public function insert($data) {
+    public function insert(array $data) {
         $data['document_type'] = 'NIF';
         $data['gender'] = 'NONBINARY';
         $data['booking_days'] = [];
