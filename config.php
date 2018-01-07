@@ -29,8 +29,7 @@ function abaco_booking_days() {
     return array(
         'THU' => __('Thursday', 'abaco'),
         'FRI' => __('Friday', 'abaco'),
-        'SAT' => __('Saturday', 'abaco'),
-        'SUN' => __('Sunday', 'abaco')
+        'SAT' => __('Saturday', 'abaco')
     );
 }
 
