@@ -22,7 +22,7 @@ class ABACO_AdminActivityController {
             $this->organizer = $participant_table->query_by_id(
                 'id',
                 $this->activity->participant_id,
-                'id, first_name, last_name, email'
+                ['id', 'first_name', 'last_name', 'email']
             );
         }
     }

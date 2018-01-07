@@ -12,7 +12,8 @@ class ABACO_AdminParticipantTableController {
     public $data;
     public function __construct(ABACO_ParticipantDbTable $part_table) {
         $this->data = $part_table->query_all(
-            'id, nif, first_name, last_name, alias, email, booking_days');
+            ['id', 'nif', 'first_name', 'last_name', 'alias', 
+                'email', 'booking_days']);
     }
     public function booking_data_per_day() {
         $res = [];

@@ -8,18 +8,62 @@
 
 _abaco_require('inc/db/participant-db-table.php');
 
+// Test with real DB
 class ParticipantDbTableTest extends WP_UnitTestCase {
     function setUp() {
         parent::setUp();
-        $this->table = new ABACO_ParticipantDbTable();
-        $this->table->create();
         global $wpdb;
         $this->db = $wpdb;
+        $this->parser = new ABACO_ParticipantParser();
+        $this->table = new ABACO_ParticipantDbTable($this->db, $this->parser);
+        $this->table->create();
     }
     
     function tearDown() {
         $this->table->drop();
         parent::tearDown();
+    }
+    
+    function get_raw_record() {
+        return [
+            'nif' => '123',
+            'document_type' => 'PASSPORT',
+            'first_name' => 'myname',
+            'last_name' => 'mylastname',
+            'alias' => 'myalias',
+            'birth_date' => '2010-10-20',
+            'phone' => '901020',
+            'email' => 'test@gmail.com',
+            'gender' => 'MALE',
+            'group' => 'mygroup',
+            'province' => 'NAVARRA',
+            'city' => 'mycity',
+            'observations' => 'myobs',
+            'booking_days' => serialize(['THU', 'SAT']),
+            'tutor_nif' => '456',
+            'yes_info' => 0
+        ];
+    }
+    
+    function get_parsed_record() {
+        return [
+            'nif' => '123',
+            'document_type' => 'PASSPORT',
+            'first_name' => 'myname',
+            'last_name' => 'mylastname',
+            'alias' => 'myalias',
+            'birth_date' => new DateTime('2010-10-20'),
+            'phone' => '901020',
+            'email' => 'test@gmail.com',
+            'gender' => 'MALE',
+            'group' => 'mygroup',
+            'province' => 'NAVARRA',
+            'city' => 'mycity',
+            'observations' => 'myobs',
+            'booking_days' => ['THU', 'SAT'],
+            'tutor_nif' => '456',
+            'yes_info' => false
+        ];
     }
     
     function insertParticipant($data) {
@@ -32,69 +76,75 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
         $this->assertEquals($res, []);
     }
     
-    function test_query_all_returns_all_records() {
-        $this->insertParticipant(['nif' => '123', 'document_type' => 'UUID']);
-        $this->insertParticipant(['nif' => '456', 'document_type' => 'NIF']);
+    function test_query_all_returns_all_records_and_parses() {
+        $data1 = $this->get_raw_record();
+        $this->insertParticipant($data1);
+        $data2 = $data1;
+        $data2['nif'] = '456';
+        $this->insertParticipant($data2);
         $res = $this->table->query_all();
         $this->assertEquals(2, count($res));
-        $this->assertEquals($res[0]['nif'], '123');
-        $this->assertEquals($res[0]['document_type'], 'UUID');
-        $this->assertEquals($res[1]['nif'], '456');
-        $this->assertEquals($res[1]['document_type'], 'NIF');
+        $expected1 = $this->get_parsed_record();
+        $this->assertArraySubset($expected1, $res[0]);
+        $expected2 = $expected1;
+        $expected2['nif'] = '456';
+        $this->assertArraySubset($expected2, $res[1]);
     }
     
     function test_query_all_with_fields_returns_only_specified_fields() {
-        $this->insertParticipant(['nif' => '123', 'document_type' => 'UUID']);
-        $res = $this->table->query_all('nif, document_type');
-        $this->assertEquals(count($res[0]), 2);
-        $this->assertEquals($res[0]['nif'], '123');
-        $this->assertEquals($res[0]['document_type'], 'UUID');
-    }
-    
-    function test_query_all_applies_parser() {
-        $day = array_keys(abaco_booking_days())[0];
-        $this->insertParticipant([
+        $this->insertParticipant($this->get_raw_record());
+        $res = $this->table->query_all(['nif', 'booking_days']);
+        $expected = [
             'nif' => '123',
-            'booking_days' => serialize([$day]),
-            'yes_info' => false,
-            'birth_date' => '2010-10-20'
-        ]);
-        $res = $this->table->query_all('id, booking_days, yes_info,birth_date')[0];
-        $this->assertTrue(is_int($res['id']));
-        $this->assertEquals([$day], $res['booking_days']);
-        $this->assertTrue(is_bool($res['yes_info']));
-        $this->assertEquals($res['birth_date'], new DateTime('2010-10-20'));
+            'booking_days' => ['THU', 'SAT']
+        ];
+        $this->assertEquals($expected, $res[0]);
     }
     
+    function test_query_all_with_fields_all_work() {
+        // Prior implementation produced trouble with specific fields
+        $data = $this->get_raw_record();
+        $this->insertParticipant($data);
+        $res = $this->table->query_all(array_keys($data));
+        $this->assertEquals($this->get_parsed_record(), $res[0]);
+    }
+   
     // Query by ID
-    function test_query_by_id_nif_existent_returns_record() {
-        $this->insertParticipant(['nif' => '456']);
-        $this->insertParticipant(['nif' => '123']);
+    function test_query_by_id_nif_existent_returns_record_and_parses() {
+        $data = $this->get_raw_record();
+        $this->insertParticipant($data);
+        $data['nif'] = '456';
+        $this->insertParticipant($data);
         $res = $this->table->query_by_id('nif', '123');
-        $this->assertEquals('123', $res->nif);
-        return $res;
+        $this->assertTrue(is_object($res));
+        $this->assertArraySubset($this->get_parsed_record(), (array)$res);
     }
     
-    function test_query_by_id_numeric_id_existent_returns_record() {
-        $this->insertParticipant(['nif' => '123']);
+    function test_query_by_id_numeric_id_existent_returns_record_and_parses() {
+        $data = $this->get_raw_record();
+        $this->insertParticipant($data);
+        $data['nif'] = '456';
+        $this->insertParticipant($data);
         $res = $this->table->query_by_id('id', 1);
-        $this->assertEquals('123', $res->nif);
-        return $res;
+        $this->assertArraySubset($this->get_parsed_record(), (array)$res);
     }
     
-    /**
-     * @depends test_query_by_id_numeric_id_existent_returns_record
-     */
-    function test_query_by_id_applies_parser($record) {
-        $this->assertTrue(is_int($record->id));
+    function test_query_by_id_with_fields_returns_only_these_fields() {
+        $this->insertParticipant($this->get_raw_record());
+        $res = $this->table->query_by_id('nif', '123', ['nif', 'group']);
+        $expected = (object)[
+            'nif' => '123',
+            'group' => 'mygroup'
+        ];
+        $this->assertEquals($expected, $res);
     }
     
-    function test_query_by_id_specified_fields_returns_only_these_fields() {
-        $this->insertParticipant(['nif' => '123', 'first_name' => 'test']);
-        $res = $this->table->query_by_id('nif', '123', 'nif, first_name');
-        $this->assertTrue(isset($res->nif));
-        $this->assertTrue(isset($res->first_name));
-        $this->assertFalse(isset($res->id));
+    function test_query_by_id_with_fields_all_work() {
+        // Prior implementation produced trouble with specific fields
+        $data = $this->get_raw_record();
+        $this->insertParticipant($data);
+        $res = $this->table->query_by_id('nif', '123', array_keys($data));
+        $this->assertEquals((object)$this->get_parsed_record(), $res);
     }
     
     function test_query_by_id_not_found_returns_null() {
@@ -104,7 +154,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     
     // is_nif_available
     function test_is_nif_available_already_inscribed_returns_false() {
-        $this->insertParticipant(['nif' => '123']);
+        $this->insertParticipant($this->get_raw_record());
         $res = $this->table->is_nif_available('123');
         $this->assertFalse($res);
     }
@@ -116,7 +166,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     
     // nif to id
     function test_nif_to_id_existing_nif_returns_id() {
-        $this->insertParticipant(['nif' => '123']);
+        $this->insertParticipant($this->get_raw_record());
         $res = $this->table->nif_to_id('123');
         $this->assertEquals(1, $res);
     }
@@ -127,10 +177,10 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     }
     
     // insert
-    function test_insert_serializes_booking_days() {
-        $data = ['nif' => '123', 'booking_days' => []];
+    function test_insert_queries_return_inserted_record() {
+        $data = $this->get_parsed_record();
         $this->table->insert($data);
-        $res = $this->table->query_by_id('nif', '123', 'booking_days');
-        $this->assertTrue(is_array($res->booking_days));
+        $res = $this->table->query_by_id('nif', '123', array_keys($data));
+        $this->assertEquals((object)$data, $res);
     }
 }

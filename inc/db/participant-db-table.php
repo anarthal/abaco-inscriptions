@@ -12,10 +12,14 @@ class ABACO_ParticipantParser extends ABACO_Parser {
     public function __construct() {
         parent::__construct([
             'id' => 'intval',
-            'booking_days' => 'abaco_parse_array',
+            'booking_days' => function($value) {
+                $res = @unserialize($value);
+                return is_array($res) ? $res : [];
+            },
             'yes_info' => 'abaco_parse_bool',
             'birth_date' => function($value) {
-                return new DateTime($value);
+                $res = date_create($value);
+                return $res ? $res : null;
             }
         ]);
     }
@@ -26,15 +30,24 @@ class ABACO_ParticipantDbTable {
     private static $m_instance;
     public static function get_instance() {
         if (!self::$m_instance) {
-            self::$m_instance = new self();
+            global $wpdb;
+            $parser = new ABACO_ParticipantParser();
+            self::$m_instance = new self($wpdb, $parser);
         }
         return self::$m_instance;
     }
     
+    private $m_db;
+    private $m_parser;
+    
+    public function __construct($db, $parser) {
+        $this->m_db = $db;
+        $this->m_parser = $parser;
+    }
+    
     // Table name
     public function name() {
-        global $wpdb;
-        return $wpdb->prefix . ABACO_PARTICIPANT_TABLE_NAME;
+        return $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;
     }
     
     // DB table create / drop
@@ -44,49 +57,44 @@ class ABACO_ParticipantDbTable {
         dbDelta($sql);
     }
     public function drop() {
-        global $wpdb;
         $table_name = $this->name();
         $sql = "DROP TABLE IF EXISTS $table_name;";
-        $wpdb->query($sql);
+        $this->m_db->query($sql);
     }
     
     // Query functions
-    public function query_all($fields = '*') { // fields must be string
-        global $wpdb;
+    public function query_all($fields = null) { // null => all fields
+        $fields_query = self::make_fields_query($fields);
         $table = $this->name();
-        $sql = "SELECT $fields FROM $table;";
-        $res = $wpdb->get_results($sql, ARRAY_A);
+        $sql = "SELECT $fields_query FROM $table;";
+        $res = $this->m_db->get_results($sql, ARRAY_A);
         if (!isset($res)) {
             wp_die('Database error');
         }
-        for ($i = 0; $i != count($res); ++$i) {
-            $res[$i] = $this->parse($res[$i]);
-        }
-        return $res;
+        return array_map([$this->m_parser, 'parse'], $res);
     }
-    public function query_by_id($id_name, $id_value, $fields = '*') {
-        global $wpdb;
+    
+    public function query_by_id($id_name, $id_value, $fields = null) { // null => all
+        $fields_query = self::make_fields_query($fields);
         $table = $this->name();
-        $sql = $wpdb->prepare("SELECT $fields FROM $table WHERE $id_name = %s",
+        $sql = $this->m_db->prepare("SELECT $fields_query FROM $table WHERE `$id_name` = %s",
             $id_value);
-        $res = $wpdb->get_row($sql, OBJECT);
-        return $this->parse($res);
+        $res = $this->m_db->get_row($sql, OBJECT);
+        return $this->m_parser->parse($res);
     }
     public function is_nif_available($nif) {
-        global $wpdb;
         $table = $this->name();
-        $sql = $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE nif = %s", $nif);
-        $res = $wpdb->get_var($sql);
+        $sql = $this->m_db->prepare("SELECT COUNT(*) FROM $table WHERE nif = %s", $nif);
+        $res = $this->m_db->get_var($sql);
         if (!isset($res)) {
             wp_die('Database error');
         }
         return $res === '0';
     }
     public function nif_to_id($nif) {
-        global $wpdb;
         $table = $this->name();
-        $sql = $wpdb->prepare("SELECT id FROM $table WHERE nif = %s", $nif);
-        $res = $wpdb->get_var($sql);
+        $sql = $this->m_db->prepare("SELECT id FROM $table WHERE nif = %s", $nif);
+        $res = $this->m_db->get_var($sql);
         if ($res === null) {
             return null;
         } else {
@@ -96,20 +104,11 @@ class ABACO_ParticipantDbTable {
     
     // Insert functions
     public function insert($data) {
-        global $wpdb;
         $data['booking_days'] = serialize($data['booking_days']);
-        if (!$wpdb->insert($this->name(), $data)) {
+        $data['birth_date'] = $data['birth_date']->format('Y-m-d');
+        if (!$this->m_db->insert($this->name(), $data)) {
             wp_die("Database insert error");
         }
-    }
-    
-    // Parse functions
-    private $m_parser;
-    protected function parse($record) {
-        if (!$this->m_parser) {
-            $this->m_parser = new ABACO_ParticipantParser();
-        }
-        return $this->m_parser->parse($record);
     }
     
     // Helpers
@@ -149,5 +148,15 @@ class ABACO_ParticipantDbTable {
         return implode(', ', array_map(function($opt) {
             return "'" . $opt . "'";
         }, array_keys($options)));
+    }
+    
+    private static function make_fields_query($fields) {
+        if ($fields === null) {
+            return '*';
+        } else {
+            return implode(',', array_map(function($value) {
+                return '`' . $value . '`';
+            }, $fields));
+        }
     }
 }

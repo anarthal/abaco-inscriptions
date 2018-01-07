@@ -23,6 +23,11 @@ class ABACO_AdminParticipantEntryController {
             $data->document_type = abaco_enum_to_string(abaco_document_type_options(), $data->document_type);
             $data->booking_days = abaco_enum_to_string(abaco_booking_days(), $data->booking_days);
             $data->yes_info = ($data->yes_info ? __('Yes', 'abaco') : __('No', 'abaco'));
+            if ($data->birth_date !== null) {
+                $data->birth_date = $data->birth_date->format('Y-m-d');
+            } else {
+                $data->birth_date = __('No birth date available.');
+            }
         }
         $this->m_data = $data;
     }
