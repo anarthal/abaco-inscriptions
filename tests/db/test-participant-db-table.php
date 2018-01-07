@@ -8,6 +8,41 @@
 
 _abaco_require('inc/db/participant-db-table.php');
 
+// Parser test
+class ParticipantParser extends PHPUnit_Framework_TestCase {
+    function setUp() {
+        $this->parser = new ABACO_ParticipantParser();
+    }
+    
+    function test_birth_date_null_returns_null() {
+        $data = ['birth_date' => null];
+        $res = $this->parser->parse($data);
+        $expected = ['birth_date' => null];
+        $this->assertEquals($expected, $res);
+    }
+    
+    function test_birth_date_invalid_returns_null() {
+        $data = ['birth_date' => 'invalid'];
+        $res = $this->parser->parse($data);
+        $expected = ['birth_date' => null];
+        $this->assertEquals($expected, $res);
+    }
+    
+    function test_booking_days_invalid_returns_empty() {
+        $data = ['booking_days' => 'invalid'];
+        $res = $this->parser->parse($data);
+        $expected = ['booking_days' => []];
+        $this->assertEquals($expected, $res);
+    }
+    
+    function test_booking_days_not_array_returns_empty() {
+        $data = ['booking_days' => serialize(78)];
+        $res = $this->parser->parse($data);
+        $expected = ['booking_days' => []];
+        $this->assertEquals($expected, $res);
+    }
+}
+
 // Test with real DB
 class ParticipantDbTableTest extends WP_UnitTestCase {
     function setUp() {
