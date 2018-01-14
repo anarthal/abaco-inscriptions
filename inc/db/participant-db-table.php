@@ -104,11 +104,10 @@ class ABACO_ParticipantDbTable {
     
     // Insert functions
     public function insert($data) {
-        if (isset($data['last_name']) && $data['last_name'] === '') {
-            $data['last_name'] = null;
-        }
         $data['booking_days'] = serialize($data['booking_days']);
-        $data['birth_date'] = $data['birth_date']->format('Y-m-d');
+        if(isset($data['birth_date'])) {
+            $data['birth_date'] = $data['birth_date']->format('Y-m-d');
+        }
         if (!$this->m_db->insert($this->name(), $data)) {
             wp_die("Database insert error");
         }
