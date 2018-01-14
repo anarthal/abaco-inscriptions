@@ -168,7 +168,8 @@ $(document).ready(function() {
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         changeYear: true,
-        maxDate: 0
+        maxDate: 0,
+        yearRange: '-100:+0'
     });
     ActivityController.createDefault();
     new DocumentTypeController();
