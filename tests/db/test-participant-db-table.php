@@ -41,6 +41,27 @@ class ParticipantParser extends PHPUnit_Framework_TestCase {
         $expected = ['booking_days' => []];
         $this->assertEquals($expected, $res);
     }
+    
+    function test_contact_participant_id_null_returns_null() {
+        $data = ['contact_participant_id' => null];
+        $res = $this->parser->parse($data);
+        $expected = ['contact_participant_id' => null];
+        $this->assertEquals($expected, $res);
+    }
+    
+    function test_contact_participant_id_not_int_returns_null() {
+        $data = ['contact_participant_id' => 'invalid'];
+        $res = $this->parser->parse($data);
+        $expected = ['contact_participant_id' => null];
+        $this->assertEquals($expected, $res);
+    }
+    
+    function test_contact_participant_int_returns_int() {
+        $data = ['contact_participant_id' => '123'];
+        $res = $this->parser->parse($data);
+        $expected = ['contact_participant_id' => 123];
+        $this->assertEquals($expected, $res);
+    }
 }
 
 // Test with real DB

@@ -20,6 +20,9 @@ class ABACO_ParticipantParser extends ABACO_Parser {
             'birth_date' => function($value) {
                 $res = date_create($value);
                 return $res ? $res : null;
+            },
+            'contact_participant_id' => function($value) {
+                return is_numeric($value) ? intval($value) : null;
             }
         ]);
     }
