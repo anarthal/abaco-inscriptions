@@ -16,6 +16,10 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
                     ->will($this->returnCallback(function($value) {
                         return $value !== 'existent';
                     }));
+        $this->table->method('nif_to_id')
+                    ->will($this->returnCallback(function($value) {
+                        return $value === 'nonexistent' ? null : 19;
+                    }));
         $this->form = new ABACO_CompanyForm($this->table);
         $this->sub = new ABACO_Submission($this->form);
         $this->result = $this->getMockBuilder(ABACO_InvalidatableResult::class)
@@ -24,6 +28,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $this->input = [
             'first_name' => 'my_first_name',
             'nif' => '123',
+            'contact_nif' => '789',
             'phone' => '670',
             'email' => 'test@test.com',
             'province' => 'NAVARRA',
@@ -55,6 +60,17 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
     function test_existent_nif_invalid() {
         $this->input['nif'] = 'existent';
         $this->do_test_invalid('nif');
+    }
+    
+    // Invalid contact NIF
+    function test_missing_contact_nif_invalid() {
+        $this->input['contact_nif'] = '';
+        $this->do_test_invalid('contact_nif');
+    }
+    
+    function test_nonexistent_contact_nif_invalid() {
+        $this->input['contact_nif'] = 'nonexistent';
+        $this->do_test_invalid('contact_nif');
     }
     
     // Invalid phone
@@ -91,6 +107,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $expected = [
             'first_name' => 'my_first_name',
             'nif' => '123',
+            'contact_participant_id' => 19,
             'phone' => '670',
             'email' => 'test@test.com',
             'province' => 'NAVARRA',
@@ -105,6 +122,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $data = [
             'first_name' => 'my_first_name',
             'nif' => '123',
+            'contact_nif' => '789',
             'phone' => '670',
             'email' => 'test@test.com',
             'province' => 'NAVARRA',
@@ -115,6 +133,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $expected = [
             'first_name' => 'my_first_name',
             'nif' => '123',
+            'contact_participant_id' => 19,
             'phone' => '670',
             'email' => 'test@test.com',
             'province' => 'NAVARRA',
