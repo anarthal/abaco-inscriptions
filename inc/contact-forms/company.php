@@ -13,7 +13,8 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
     
     public function __construct(ABACO_ParticipantDbTable $participant_table) {
         $validators = [
-            'nif' => [$this, 'validate_nif']
+            'nif' => [$this, 'validate_nif'],
+            'contact_nif' => [$this, 'validate_contact_nif']
         ];
         parent::__construct(self::make_field_list(), $validators);
         $this->m_participant_table = $participant_table;
@@ -26,6 +27,19 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
                 __('This NIF has already been registered.','abaco')
             );
         }
+        return $data;
+    }
+    
+    public function validate_contact_nif($data) {
+        $nif = $data['contact_nif'];
+        $id = $this->m_participant_table->nif_to_id($nif);
+        if ($id === null) {
+            throw new ABACO_ValidationError(
+                __('You must be inscribed as a regular participant first.', 'abaco')
+            );
+        }
+        $data['contact_participant_id'] = $id;
+        unset($data['contact_nif']);
         return $data;
     }
     
@@ -44,6 +58,7 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
         return array(
             new ABACO_TextField('first_name', __('Company name', 'abaco'), true),
             new ABACO_TextField('nif', __('NIF', 'abaco'), true, true),
+            new ABACO_TextField('contact_nif', __('Contact person\'s NIF (you must be inscribed as a regular participant first)', 'abaco'), true, true),
             new ABACO_TelField('phone', __('Phone', 'abaco'), true),
             new ABACO_EmailField('email', __('Email', 'abaco'), true),
             new ABACO_SelectField('province', __('Province', 'abaco'), array_keys(abaco_province_options())),

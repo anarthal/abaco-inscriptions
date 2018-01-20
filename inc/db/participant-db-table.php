@@ -141,6 +141,7 @@ class ABACO_ParticipantDbTable {
             `tutor_nif` varchar(20) DEFAULT NULL,
             `inscription_day` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             `yes_info` TINYINT(1) DEFAULT 0,
+            `contact_participant_id` INT DEFAULT NULL,
             PRIMARY KEY (`id`),
             UNIQUE KEY (`nif`)
         ) $charset_collate;";
