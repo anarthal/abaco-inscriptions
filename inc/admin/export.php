@@ -47,7 +47,7 @@ class ABACO_AdminExportData {
     public $data;
     public function __construct(ABACO_ParticipantDbTable $part_table,
             ABACO_ActivityDbTable $act_table) {
-        $participant_data = $part_table->query_all('*');
+        $participant_data = $part_table->query_all();
         $activity_data = $act_table->query_all();
         $this->data = [
             'participants' => $participant_data,
