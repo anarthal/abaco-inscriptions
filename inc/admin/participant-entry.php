@@ -61,7 +61,15 @@ class ABACO_AdminParticipantEntryView extends ABACO_AdminView {
     
     private function table() {
         $data = $this->m_controller->data();
-        return new ABACO_AdminKeyValueTable([
+        $fields = isset($data->contact_participant_id) ?
+            self::company_fields($data) :
+            self::physical_participant_fields($data);
+        return new ABACO_AdminKeyValueTable($fields);
+    }
+    
+    private static function physical_participant_fields($data) {
+        return [
+            [__('Participant type'), __('Physical participant', 'abaco')],
             [__('First name', 'abaco'), $data->first_name],
             [__('Last name', 'abaco'), $data->last_name],
             [__('Alias', 'abaco'), $data->alias],
@@ -78,6 +86,27 @@ class ABACO_AdminParticipantEntryView extends ABACO_AdminView {
             [__('Booking days', 'abaco'), $data->booking_days],
             [__('Tutor\'s identifier document', 'abaco'), $data->tutor_nif],
             [__('Participant wishes to receive spam from ABACO', 'abaco'), $data->yes_info]
-        ]);
+        ];
+    }
+    
+    private static function company_fields($data) {
+        return [
+            [__('Participant type'), __('Company', 'abaco')],
+            [__('Company name', 'abaco'), $data->first_name],
+            [__('NIF', 'abaco'), $data->nif],
+            [__('Phone', 'abaco'), $data->phone],
+            [__('Email', 'abaco'), $data->email],
+            [__('Province', 'abaco'), $data->province],
+            [__('City', 'abaco'), $data->city],
+            [__('Observations', 'abaco'), $data->observations],
+            [__('Participant wishes to receive spam from ABACO', 'abaco'), $data->yes_info],
+            [__('Contact person'), self::participant_button(
+                $data->contact_participant_id, __('See contact person', 'abaco'))]
+        ];
+    }
+    
+    private static function participant_button($id, $text) {
+        return new ABACO_AdminButtonLink(
+            abaco_admin_participant_link($id), $text);
     }
 }
