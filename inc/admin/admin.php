@@ -27,6 +27,14 @@ class ABACO_Admin {
         );
         add_submenu_page(
             ABACO_ADMIN_MAIN_SLUG,
+            __('Companies', 'abaco'),
+            __('Companies', 'abaco'),
+            'manage_options',
+            ABACO_ADMIN_COMPANY_SLUG,
+            [$this, 'company_table']
+        );
+        add_submenu_page(
+            ABACO_ADMIN_MAIN_SLUG,
             __('Settings', 'abaco'),
             __('Settings', 'abaco'),
             'manage_options',
@@ -55,6 +63,12 @@ class ABACO_Admin {
         $part_table = abaco_participant_db_table();
         $data = new ABACO_AdminParticipantTableController($part_table);
         (new ABACO_AdminParticipantTableView($data))->draw();
+    }
+    public function company_table() {
+        require_once __DIR__ . '/company-table.php';
+        $part_table = abaco_participant_db_table();
+        $data = new ABACO_AdminCompanyTableController($part_table);
+        (new ABACO_AdminCompanyTableView($data))->draw();
     }
     public function participant_entry($id) {
         require_once __DIR__ . '/participant-entry.php';

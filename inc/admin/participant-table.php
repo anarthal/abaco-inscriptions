@@ -13,7 +13,7 @@ class ABACO_AdminParticipantTableController {
     public function __construct(ABACO_ParticipantDbTable $part_table) {
         $this->data = $part_table->query_all(
             ['id', 'nif', 'first_name', 'last_name', 'alias', 
-                'email', 'booking_days']);
+                'email', 'booking_days'], 'contact_participant_id IS NULL');
     }
     public function booking_data_per_day() {
         $res = [];
@@ -43,7 +43,8 @@ class ABACO_AdminParticipantTableView extends ABACO_AdminView {
     public function code() {
         $booking_table = $this->booking_table();
         $part_table = $this->part_table();
-        $res = '<div style="width:50%">' . $booking_table->code() .
+        $res = '<h1>' . esc_html__('Participants', 'abaco') . '</h1><br />' .
+            '<div style="width:50%">' . $booking_table->code() .
             '</div><br />' .
             $part_table->code();
         return self::wrap($res);

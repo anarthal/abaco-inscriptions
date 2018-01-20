@@ -66,10 +66,10 @@ class ABACO_ParticipantDbTable {
     }
     
     // Query functions
-    public function query_all($fields = null) { // null => all fields
+    public function query_all($fields = null, $where = '1=1') { // null => all fields
         $fields_query = self::make_fields_query($fields);
         $table = $this->name();
-        $sql = "SELECT $fields_query FROM $table;";
+        $sql = "SELECT $fields_query FROM $table WHERE $where;";
         $res = $this->m_db->get_results($sql, ARRAY_A);
         if (!isset($res)) {
             wp_die('Database error');

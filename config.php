@@ -22,6 +22,7 @@ define('ABACO_ACTIVITY_POST_TYPE_NAME', 'abaco_activity');
 // Admin
 define('ABACO_ADMIN_MAIN_SLUG', 'abaco');
 define('ABACO_ADMIN_PARTICIPANT_SLUG', 'participants');
+define('ABACO_ADMIN_COMPANY_SLUG', 'companies');
 define('ABACO_ADMIN_SETTINGS_SLUG', 'abaco-settings');
 define('ABACO_ADMIN_SETTINGS_SECTION', 'abaco-settings-section');
 define('ABACO_SETTING_MINOR_AUTHORIZATION_URL', 'minor-authorization-url');
