@@ -124,7 +124,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
         ];
     }
     
-    function insertParticipant($data) {
+    function insert_participant($data) {
         $this->db->insert($this->table->name(), $data);
     }
     
@@ -136,10 +136,10 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     
     function test_query_all_returns_all_records_and_parses() {
         $data1 = $this->get_raw_record();
-        $this->insertParticipant($data1);
+        $this->insert_participant($data1);
         $data2 = $data1;
         $data2['nif'] = '456';
-        $this->insertParticipant($data2);
+        $this->insert_participant($data2);
         $res = $this->table->query_all();
         $this->assertEquals(2, count($res));
         $expected1 = $this->get_parsed_record();
@@ -150,7 +150,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     }
     
     function test_query_all_with_fields_returns_only_specified_fields() {
-        $this->insertParticipant($this->get_raw_record());
+        $this->insert_participant($this->get_raw_record());
         $res = $this->table->query_all(['nif', 'booking_days']);
         $expected = [
             'nif' => '123',
@@ -162,7 +162,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     function test_query_all_with_fields_all_work() {
         // Prior implementation produced trouble with specific fields
         $data = $this->get_raw_record();
-        $this->insertParticipant($data);
+        $this->insert_participant($data);
         $res = $this->table->query_all(array_keys($data));
         $this->assertEquals($this->get_parsed_record(), $res[0]);
     }
@@ -170,9 +170,9 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     // Query by ID
     function test_query_by_id_nif_existent_returns_record_and_parses() {
         $data = $this->get_raw_record();
-        $this->insertParticipant($data);
+        $this->insert_participant($data);
         $data['nif'] = '456';
-        $this->insertParticipant($data);
+        $this->insert_participant($data);
         $res = $this->table->query_by_id('nif', '123');
         $this->assertTrue(is_object($res));
         $this->assertArraySubset($this->get_parsed_record(), (array)$res);
@@ -180,15 +180,15 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     
     function test_query_by_id_numeric_id_existent_returns_record_and_parses() {
         $data = $this->get_raw_record();
-        $this->insertParticipant($data);
+        $this->insert_participant($data);
         $data['nif'] = '456';
-        $this->insertParticipant($data);
+        $this->insert_participant($data);
         $res = $this->table->query_by_id('id', 1);
         $this->assertArraySubset($this->get_parsed_record(), (array)$res);
     }
     
     function test_query_by_id_with_fields_returns_only_these_fields() {
-        $this->insertParticipant($this->get_raw_record());
+        $this->insert_participant($this->get_raw_record());
         $res = $this->table->query_by_id('nif', '123', ['nif', 'group']);
         $expected = (object)[
             'nif' => '123',
@@ -200,7 +200,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     function test_query_by_id_with_fields_all_work() {
         // Prior implementation produced trouble with specific fields
         $data = $this->get_raw_record();
-        $this->insertParticipant($data);
+        $this->insert_participant($data);
         $res = $this->table->query_by_id('nif', '123', array_keys($data));
         $this->assertEquals((object)$this->get_parsed_record(), $res);
     }
@@ -212,7 +212,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     
     // is_nif_available
     function test_is_nif_available_already_inscribed_returns_false() {
-        $this->insertParticipant($this->get_raw_record());
+        $this->insert_participant($this->get_raw_record());
         $res = $this->table->is_nif_available('123');
         $this->assertFalse($res);
     }
@@ -224,7 +224,7 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
     
     // nif to id
     function test_nif_to_id_existing_nif_returns_id() {
-        $this->insertParticipant($this->get_raw_record());
+        $this->insert_participant($this->get_raw_record());
         $res = $this->table->nif_to_id('123');
         $this->assertEquals(1, $res);
     }
