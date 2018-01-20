@@ -97,7 +97,8 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
             'observations' => 'myobs',
             'booking_days' => serialize(['THU', 'SAT']),
             'tutor_nif' => '456',
-            'yes_info' => 0
+            'yes_info' => 0,
+            'contact_participant_id' => 42
         ];
     }
     
@@ -118,7 +119,8 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
             'observations' => 'myobs',
             'booking_days' => ['THU', 'SAT'],
             'tutor_nif' => '456',
-            'yes_info' => false
+            'yes_info' => false,
+            'contact_participant_id' => 42
         ];
     }
     
