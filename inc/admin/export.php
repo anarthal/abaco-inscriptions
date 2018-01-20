@@ -24,7 +24,7 @@ class ABACO_AdminExportView extends ABACO_AdminView {
             $res .= '<li>' . esc_html($item) . '</li>';
         }
         $res .= '<br />' . $this->export_button()->code() . '</div>';
-        return self::wrap($res);
+        return $res;
     }
     
     protected function export_url() {

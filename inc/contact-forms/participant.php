@@ -160,7 +160,12 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             '<p>' . ABACO_Field::escape(__('We have detected you are a minor.
                Please introduce here your tutor data.
                Your tutor must already be inscribed and stay the same nights as you, at least.
-               You must bring us --LINK HERE-- this authorization signed by your tutor.'), 'abaco') .
-            '</p><br /> ';
+               You must bring us the authorization below signed by your tutor.'), 'abaco') .
+            '</p><p><a href="'
+            . esc_url(self::get_minor_authorization()) . '">Download authorization (PDF)</a></p><br /> ';
+    }
+    
+    private static function get_minor_authorization() {
+        return get_option(ABACO_SETTING_MINOR_AUTHORIZATION_URL, '/404');
     }
 }

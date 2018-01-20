@@ -6,6 +6,8 @@
  * and open the template in the editor.
  */
 
+require_once __DIR__ . '/settings.php';
+
 class ABACO_Admin {  
     public function register_hooks() {
         $hook = add_menu_page(
@@ -16,13 +18,24 @@ class ABACO_Admin {
             [$this, 'main_page']
         );
         add_submenu_page(
-            'abaco',
+            ABACO_ADMIN_MAIN_SLUG,
             __('Participants', 'abaco'),
             __('Participants', 'abaco'),
             'manage_options',
             ABACO_ADMIN_PARTICIPANT_SLUG,
             [$this, 'participant_page']
         );
+        add_submenu_page(
+            ABACO_ADMIN_MAIN_SLUG,
+            __('Settings', 'abaco'),
+            __('Settings', 'abaco'),
+            'manage_options',
+            ABACO_ADMIN_SETTINGS_SLUG,
+            [ABACO_SettingsPage::class, 'draw']
+        );
+        ABACO_SettingsPage::register_settings();
+        
+
         add_action("load-$hook", [$this, 'export_action']);
         if (function_exists('register_field_group')) {
             register_field_group(abaco_activity_acf_config());
@@ -93,8 +106,3 @@ class ABACO_Admin {
         abaco_admin_export($data);
     }
 }
-
-function abaco_main_menu_page() {
-
-}
-
