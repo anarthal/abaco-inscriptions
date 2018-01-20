@@ -166,6 +166,16 @@ class ParticipantDbTableTest extends WP_UnitTestCase {
         $res = $this->table->query_all(array_keys($data));
         $this->assertEquals($this->get_parsed_record(), $res[0]);
     }
+    
+    function test_query_all_where_clause_filters() {
+        $data = $this->get_raw_record();
+        $this->insert_participant($data);
+        $data['nif'] = '456';
+        $this->insert_participant($data);
+        $res = $this->table->query_all(null, 'nif=456');
+        $this->assertEquals(1, count($res));
+        $this->assertEquals('456', $res[0]['nif']);
+    }
    
     // Query by ID
     function test_query_by_id_nif_existent_returns_record_and_parses() {
