@@ -34,6 +34,7 @@ function abaco_activate_plugin () {
         wp_die(__('Contact Form 7 plugin is needed to run this plugin.', 'abaco'));
     }
     abaco_participant_db_table()->create();
+    abaco_preinscription_db_table()->create();
 }
 register_activation_hook(__FILE__, 'abaco_activate_plugin');
 
@@ -80,6 +81,17 @@ add_action('plugins_loaded', function() {
                 abaco_activity_db_table());
         }
     );
+    $manager->add_form(
+        ABACO_PREINSCRIPTION_FORM_TITLE,
+        function() {
+            require_once __DIR__ . '/inc/contact-forms/preinscription.php';
+            return new ABACO_PreinscriptionForm(
+                abaco_participant_db_table(),
+                abaco_activity_db_table(),
+                abaco_preinscription_db_table()
+            );
+        }
+    );
     $manager->add_selects([
         'gender' => 'abaco_gender_options',
         'document_type' => 'abaco_document_type_options',
@@ -87,7 +99,8 @@ add_action('plugins_loaded', function() {
         'booking_days' => 'abaco_booking_days_select_options',
         'kind' => 'abaco_activity_kind_options',
         'duration' => 'abaco_activity_duration_options',
-        'requested_time' => 'abaco_activity_requested_time_options'
+        'requested_time' => 'abaco_activity_requested_time_options',
+        'preinscription_activity' => 'abaco_preinscription_activities_select_options'
     ]);
 });
 

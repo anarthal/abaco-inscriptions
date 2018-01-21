@@ -63,6 +63,25 @@ class ABACO_ActivityDbTable {
             return $this->parse($act);
         }, $res);
     }
+    
+    public function query_preinscription_activities() {
+        global $wpdb;
+        $post_type = ABACO_ACTIVITY_POST_TYPE_NAME;
+        $meta_table = $wpdb->prefix . 'postmeta';
+        $post_table = $wpdb->prefix . 'posts';
+        $sql = "SELECT posts.ID AS 'id', 
+            posts.post_title as 'name_'
+            FROM $meta_table meta INNER JOIN $post_table posts ON meta.post_id = posts.ID
+            WHERE posts.post_type = '$post_type'
+            AND meta.meta_key = 'allows_preinscription'
+            AND meta.meta_value = '1'
+            AND posts.post_status = 'publish';";
+        $res = $wpdb->get_results($sql, ARRAY_A);
+        if ($res === null) {
+            wp_die('Database error.');
+        }
+        return $res;
+    }
 
     // Insertion
     public function insert($data) {
@@ -249,4 +268,29 @@ class ABACO_ActivityDbTable {
             throw new Exception("Error setting thumbnail");
         }
     }
+}
+
+function abaco_preinscription_activities() {
+    static $res = null;
+    if ($res === null) {
+        $table = abaco_activity_db_table();
+        $res = $table->query_preinscription_activities();
+    }
+    return $res;
+}
+
+function abaco_preinscription_activities_select_options() {
+    $acts = abaco_preinscription_activities();
+    $res = [];
+    foreach ($acts as $act) {
+        $res[$act['id']] = $act['name_'];
+    }
+    return $res;
+}
+
+function abaco_preinscription_activities_keys() {
+    $acts = abaco_preinscription_activities();
+    return array_map(function($act) {
+        return (string)$act['id'];
+    }, $acts);
 }

@@ -35,6 +35,11 @@ function abaco_activity_db_table() {
     return ABACO_ActivityDbTable::get_instance();
 }
 
+function abaco_preinscription_db_table() {
+    require_once __DIR__ . '/inc/db/preinscription-db-table.php';
+    return ABACO_PreinscriptionDbTable::get_instance();
+}
+
 function abaco_parse_bool($value) {
     return (bool)$value;
 }

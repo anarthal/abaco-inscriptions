@@ -20,6 +20,8 @@ define('ABACO_ACTIVITY_FORM_TITLE', 'activity');
 define('ABACO_ACTIVITY_DURATION_MIN', 1); // in half an hours
 define('ABACO_ACTIVITY_DURATION_MAX', 12); // this is 6h
 define('ABACO_ACTIVITY_POST_TYPE_NAME', 'abaco_activity');
+define('ABACO_PREINSCRIPTION_FORM_TITLE', 'preinscription');
+define('ABACO_PREINSCRIPTION_TABLE_NAME', 'abaco_preinscriptions');
 
 // Admin
 define('ABACO_ADMIN_MAIN_SLUG', 'abaco');
