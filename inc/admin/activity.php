@@ -14,7 +14,8 @@ class ABACO_AdminActivityController {
     public $organizer;
     
     public function __construct($act_id, ABACO_ParticipantDbTable $participant_table,
-            ABACO_ActivityDbTable $activity_table) {
+            ABACO_ActivityDbTable $activity_table,
+            ABACO_PreinscriptionDbTable $preinsc_table) {
         $this->activity_id = $act_id;
         $this->activity = $activity_table->query_by_id($act_id,
             ['participant_id', 'requested_time', 'observations']);
@@ -24,6 +25,7 @@ class ABACO_AdminActivityController {
                 $this->activity->participant_id,
                 ['id', 'first_name', 'last_name', 'email']
             );
+            $this->preinscriptions = $preinsc_table->query_participants($act_id);
         }
     }
     
@@ -44,7 +46,11 @@ class ABACO_AdminActivityView extends ABACO_AdminView {
     public function code() {
         $res = '<h2>' . esc_html__('Other activity data', 'abaco') . '</h2>';
         if ($this->m_controller->has_data()) {
-            $res .= $this->table()->code();
+            $res .= $this->organizer_table()->code();
+            if (!empty($this->m_controller->preinscriptions)) {
+                $res .= '<br /><h2>' . esc_html__('Preinscriptions', 'abaco') . '</h2>';
+                $res .= $this->preinscription_table()->code();
+            }
         } else {
             $res .= '<p>' .
                 esc_html__('No information found about this activity.', 'abaco') .
@@ -53,7 +59,7 @@ class ABACO_AdminActivityView extends ABACO_AdminView {
         return $res;
     }
     
-    private function table() {
+    private function organizer_table() {
         $act = $this->m_controller->activity;
         $organizer = $this->m_controller->organizer;
         $req_time = abaco_enum_to_string(
@@ -66,6 +72,19 @@ class ABACO_AdminActivityView extends ABACO_AdminView {
         ];
         $table_data = array_merge($table_data,
             self::organizer_table_data($organizer));
+        return new ABACO_AdminKeyValueTable($table_data);
+    }
+    
+    private function preinscription_table() {
+        $parts = $this->m_controller->preinscriptions;
+        $table_data = array_map(function($part) {
+            $name = $part['first_name'] . ' ' . $part['last_name'];
+            $button =  new ABACO_AdminButtonLink(
+                abaco_admin_participant_link($part['id']),
+                __('See details', 'abaco')
+            );
+            return [$name, $button];
+        }, $parts);
         return new ABACO_AdminKeyValueTable($table_data);
     }
     

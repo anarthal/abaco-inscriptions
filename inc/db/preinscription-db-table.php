@@ -65,6 +65,22 @@ class ABACO_PreinscriptionDbTable {
         return array_map([$this->m_parser, 'parse'], $res);
     }
     
+    public function query_participants($act_id) {
+        $table = $this->name();
+        $part_table = $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;
+        $sql = $this->m_db->prepare(
+                "SELECT part.first_name AS first_name, part.last_name as last_name,
+                    part.id AS id
+                 FROM $table pre
+                 INNER JOIN $part_table part ON pre.participant_id = part.id
+                 WHERE pre.activity_id = %d", $act_id);
+        $res = $this->m_db->get_results($sql, ARRAY_A);
+        if ($res === null) {
+            wp_die('Database error');
+        }
+        return $res;
+    }
+    
     public function query_slots($act_id) {
         $table = $this->name();
         $part_table = $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;

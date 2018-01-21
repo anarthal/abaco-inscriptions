@@ -92,8 +92,9 @@ class ABACO_Admin {
         global $post;
         $participant_table = abaco_participant_db_table();
         $activity_table = abaco_activity_db_table();
+        $preinsc_table = abaco_preinscription_db_table();
         $data = new ABACO_AdminActivityController($post->ID,
-            $participant_table, $activity_table);
+            $participant_table, $activity_table, $preinsc_table);
         (new ABACO_AdminActivityView($data))->draw();
     }
     public function export_action() {
