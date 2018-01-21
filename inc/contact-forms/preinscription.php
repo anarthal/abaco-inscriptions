@@ -116,6 +116,9 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
     
     
     public function insert(array $data) {
+        if ($data['observations'] === '') {
+            unset($data['observations']);
+        }
         $this->m_preinscription_table->insert($data);
     }
     
