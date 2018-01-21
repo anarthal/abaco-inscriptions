@@ -56,3 +56,8 @@ function abaco_parse_array($value) {
 function abaco_full_upload_dir() {
     return wp_upload_dir()['basedir'] . '/' . ABACO_UPLOAD_DIR;
 }
+
+function abaco_compute_age($birth) {
+    $now = new DateTime();
+    return $now->diff($birth)->y;
+}

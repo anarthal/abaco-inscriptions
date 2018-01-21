@@ -29,7 +29,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     public function validate_document_type($data) {
         $doctype = $data['document_type'];
         if ($doctype === 'UUID' &&
-            self::compute_age($data['birth_date']) >= ABACO_NIF_MANDATORY_AGE) {
+            abaco_compute_age($data['birth_date']) >= ABACO_NIF_MANDATORY_AGE) {
             throw new ABACO_ValidationError(
                 __('You are eager enough to have a NIF.', 'abaco')
             );
@@ -63,7 +63,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     }
     public function validate_tutor($data) {
         // Check if it's minor
-        $age = self::compute_age($data['birth_date']);
+        $age = abaco_compute_age($data['birth_date']);
         if ($age >= ABACO_MINORITY_AGE) {
             return $data;
         }
@@ -86,7 +86,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         }
 
         // Check if tutor is over age
-        $tutor_age = self::compute_age($tutor->birth_date);
+        $tutor_age = abaco_compute_age($tutor->birth_date);
         if ($tutor_age < ABACO_MINORITY_AGE) {
             throw new ABACO_ValidationError(
                 __('Your tutor must be an adult.', 'abaco')
@@ -115,12 +115,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         $this->m_participant_table->insert($data);
     }
     
-    // Helpers
-    public static function compute_age($birth) {
-        $now = new DateTime();
-        return $now->diff($birth)->y;
-    }
-    
+    // Helpers   
     public static function booking_days_include($this_days, $other_days) {
         foreach ($this_days as $day) {
             if (!in_array($day, $other_days)) {

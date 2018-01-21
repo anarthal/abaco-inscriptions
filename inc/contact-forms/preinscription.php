@@ -27,21 +27,54 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
     
     public function validate_nif($data) {
         $nif = $data['nif'];
-        $part = $this->m_participant_table->nif_to_id($nif);
+        $part = $this->m_participant_table->query_by_id('nif', $nif,
+            ['id', 'birth_date', 'gender']);
+        
+        // Check it actually exists
         if ($part === null) {
             throw new ABACO_ValidationError(
                 __('You must be inscribed before pre-inscribing to activities.','abaco')
             );
         }
-        $data['participant_id'] = $part;
+        
+        // Check it is a physical participant
+        if ($part->birth_date === null) {
+            throw new ABACO_ValidationError(
+                __('Only physical participants can preinscribe to activities.', 'abaco')
+            );
+        }
+        
+        /*$act_id = $data['preinscription_activity'];
+        $act = $this->m_activity_table->query_by_id($act_id,
+            ['allows_preinscription', 'adult_content']);
+        
+        // Check activity actually allows preinscription
+        if ($act === null || !$act->allows_preinscription) {
+            throw new ABACO_ValidationError(
+                __('This activity does not allow preinscription.', 'abaco')
+            );
+        }*/
+        
+        // If participant is under age, check for adult content
+        $age = abaco_compute_age($part->birth_date);
+        if ($age < ABACO_MINORITY_AGE && $act->adult_content) {
+            throw new ABACO_ValidationError(
+                __('Minors cannot inscribe to this activity because it has adult content.', 'abaco')
+            );
+        }
+        
+        // TODO: check for already inscribed and free slots
+        
+        $data['participant_id'] = $part->id;
+        $data['activity_id'] = $data['preinscription_activity'];
         unset($data['nif']);
+        unset($data['preinscription_activity']);
+        
         return $data;
     }
     
     
     public function insert(array $data) {
-        $data['activity_id'] = $data['preinscription_activity'];
-        unset($data['preinscription_activity']);
         $this->m_preinscription_table->insert($data);
     }
     
