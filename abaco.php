@@ -4,7 +4,7 @@
  * Description: Manages inscriptions for ABACO events.
  * Author: Anarthal
  * Author URI: https://github.com/anarthal
- * Version: 0.1.0
+ * Version: 1.0.0
  * Text Domain: abaco
  * Domain Path: /languages
  * License: GPL2
