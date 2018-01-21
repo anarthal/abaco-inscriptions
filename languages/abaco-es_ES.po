@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ABACO Inscriptions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 18:41+0000\n"
-"PO-Revision-Date: 2018-01-21 18:46+0000\n"
+"POT-Creation-Date: 2018-01-21 21:16+0000\n"
+"PO-Revision-Date: 2018-01-21 21:19+0000\n"
 "Last-Translator: Admin <testingabacowordpress@gmail.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es-ES\n"
@@ -13,111 +13,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: inc/contact-forms/field.php:229
-msgid "Invalid date format."
-msgstr "Formato de fecha inválido."
-
-#: inc/contact-forms/preinscription.php:64
-msgid "You must be inscribed before pre-inscribing to activities."
-msgstr ""
-"Debes estar inscrito en jornadas antes de pre-inscribirte a una actividad."
-
-#: inc/contact-forms/preinscription.php:71
-msgid "Only physical participants can preinscribe to activities."
-msgstr "Sólo los participantes físicos pueden pre-inscribirse a actividades."
-
-#: inc/contact-forms/preinscription.php:82
-msgid "Sorry, this activity is unavailable."
-msgstr "Lo sentimos, esta actividad no está disponible."
-
-#: inc/contact-forms/preinscription.php:89
-msgid "You already are inscribed to this activity."
-msgstr "Ya estás pre-inscrito a esta actividad."
-
-#: inc/contact-forms/preinscription.php:97
-msgid "Minors cannot inscribe to this activity because it has adult content."
-msgstr ""
-"Los menores no pueden pre-inscribirse a esta actividad porque tiene "
-"contenido adulto."
-
-#: inc/contact-forms/preinscription.php:105
-msgid "Sorry, there are no remaining slots for this activity."
-msgstr "Lo sentimos, no quedan plazas para esta actividad."
-
-#: inc/contact-forms/preinscription.php:127
-msgid "NIF or passport"
-msgstr "DNI o pasaporte (con el que te inscribiste)"
-
-#: inc/contact-forms/company.php:38
-msgid "You must be inscribed as a regular participant first."
-msgstr "Debes inscribirte en jornadas primero."
-
-#: inc/contact-forms/company.php:61
+#: inc/contact-forms/participant.php:156
 msgid ""
-"Contact person's NIF (you must be inscribed as a regular participant first)"
+"We have detected you are a minor.\n"
+"               Please introduce here your tutor data.\n"
+"               Your tutor must already be inscribed and stay the same nights "
+"as you, at least.\n"
+"               You must bring us the authorization below signed by your "
+"tutor."
 msgstr ""
-"DNI de la persona de contacto (debes haberte inscrito en jornadas "
-"previamente)"
-
-#: inc/admin/settings.php:14 inc/admin/admin.php:38 inc/admin/admin.php:39
-msgid "Settings"
-msgstr "Ajustes"
-
-#: inc/admin/settings.php:35
-msgid "Minor authorization URL"
-msgstr "URL de la autorización para menores"
-
-#: inc/admin/settings.php:50
-msgid "Link"
-msgstr "Enlace"
-
-#: inc/admin/export.php:34
-msgid "Export (JSON)"
-msgstr "Exportar (JSON)"
-
-#: inc/admin/export.php:47
-msgid "Export participants (physical ones and companies)"
-msgstr "Exportar participantes (físicos y empresas colaboradoras)"
-
-#: inc/admin/export.php:50
-msgid "Export (CSV) - Compatible with Microsoft Excel"
-msgstr "Exportar (CSV) - Compatible con Microsoft Excel"
-
-#: inc/admin/admin.php:30 inc/admin/admin.php:31 inc/admin/company-table.php:20
-msgid "Companies"
-msgstr "Empresas colaboradoras"
-
-#: inc/admin/activity.php:51
-msgid "Preinscriptions"
-msgstr "Preinscripciones"
-
-#: inc/admin/participant-entry.php:72
-msgid "Physical participant"
-msgstr "Participante físico"
-
-#: inc/admin/participant-entry.php:94
-msgid "Company"
-msgstr "Empresa colaboradora"
-
-#: inc/admin/participant-entry.php:104
-msgid "See contact person"
-msgstr "Ver persona de contacto"
-
-#: inc/admin/company-table.php:37
-msgid "Name"
-msgstr "Nombre"
-
-#. Description of the plugin
-msgid "Manages inscriptions for ABACO events."
-msgstr "Gestión de inscripciones para eventos de ABACO."
-
-#. Author of the plugin
-msgid "Anarthal"
-msgstr "Anarthal"
-
-#. Author URI of the plugin
-msgid "https://github.com/anarthal"
-msgstr "https://github.com/anarthal"
+"Hemos detectado que eres un menor.\n"
+"Por favor, introduce los datos de tu tutor.\n"
+"Tu tutor debe haberse inscrito en jornadas previamente, y debe quedarse a "
+"dormir las mismas noches que tú, al menos.\n"
+"Debes traer a jornadas una autorización firmada por tu tutor. Puedes "
+"descargar la autorización en el enlace de abajo."
 
 #: config.php:38 config.php:192
 msgid "Thursday"
@@ -306,9 +216,44 @@ msgstr "Este campo debe ser un número."
 msgid "An invalid option was selected."
 msgstr "La opción seleccionada no es válida."
 
+#: inc/contact-forms/field.php:229
+msgid "Invalid date format."
+msgstr "Formato de fecha inválido."
+
 #: inc/contact-forms/field.php:300
 msgid "Submit"
 msgstr "Enviar"
+
+#: inc/contact-forms/preinscription.php:64
+msgid "You must be inscribed before pre-inscribing to activities."
+msgstr ""
+"Debes estar inscrito en jornadas antes de pre-inscribirte a una actividad."
+
+#: inc/contact-forms/preinscription.php:71
+msgid "Only physical participants can preinscribe to activities."
+msgstr "Sólo los participantes físicos pueden pre-inscribirse a actividades."
+
+#: inc/contact-forms/preinscription.php:82
+msgid "Sorry, this activity is unavailable."
+msgstr "Lo sentimos, esta actividad no está disponible."
+
+#: inc/contact-forms/preinscription.php:89
+msgid "You already are inscribed to this activity."
+msgstr "Ya estás pre-inscrito a esta actividad."
+
+#: inc/contact-forms/preinscription.php:97
+msgid "Minors cannot inscribe to this activity because it has adult content."
+msgstr ""
+"Los menores no pueden pre-inscribirse a esta actividad porque tiene "
+"contenido adulto."
+
+#: inc/contact-forms/preinscription.php:105
+msgid "Sorry, there are no remaining slots for this activity."
+msgstr "Lo sentimos, no quedan plazas para esta actividad."
+
+#: inc/contact-forms/preinscription.php:127
+msgid "NIF or passport"
+msgstr "DNI o pasaporte (con el que te inscribiste)"
 
 #: inc/contact-forms/preinscription.php:129 inc/contact-forms/company.php:66
 #: inc/contact-forms/participant.php:142 inc/admin/participant-entry.php:85
@@ -320,9 +265,20 @@ msgstr "Observaciones"
 msgid "This NIF has already been registered."
 msgstr "Este NIF ya está registrado."
 
+#: inc/contact-forms/company.php:38
+msgid "You must be inscribed as a regular participant first."
+msgstr "Debes inscribirte en jornadas primero."
+
 #: inc/contact-forms/company.php:59 inc/admin/participant-entry.php:95
 msgid "Company name"
 msgstr "Nombre de la compañía"
+
+#: inc/contact-forms/company.php:61
+msgid ""
+"Contact person's NIF (you must be inscribed as a regular participant first)"
+msgstr ""
+"DNI de la persona de contacto (debes haberte inscrito en jornadas "
+"previamente)"
 
 #: inc/contact-forms/company.php:62 inc/contact-forms/participant.php:137
 #: inc/admin/participant-entry.php:80 inc/admin/participant-entry.php:97
@@ -463,6 +419,18 @@ msgstr "Grupo o asociación"
 msgid "Nights you want to stay"
 msgstr "Días que te quieres alojar"
 
+#: inc/admin/settings.php:14 inc/admin/admin.php:38 inc/admin/admin.php:39
+msgid "Settings"
+msgstr "Ajustes"
+
+#: inc/admin/settings.php:35
+msgid "Minor authorization URL"
+msgstr "URL de la autorización para menores"
+
+#: inc/admin/settings.php:50
+msgid "Link"
+msgstr "Enlace"
+
 #: inc/admin/export.php:28
 msgid "Participant data."
 msgstr "Participantes."
@@ -479,9 +447,21 @@ msgstr "Enumeraciones."
 msgid "Export as JSON"
 msgstr "Exportar en JSON"
 
+#: inc/admin/export.php:34
+msgid "Export (JSON)"
+msgstr "Exportar (JSON)"
+
 #: inc/admin/export.php:35
 msgid "The following data will be exported in JSON format:"
 msgstr "Los siguientes datos serán exportados en formato JSON:"
+
+#: inc/admin/export.php:47
+msgid "Export participants (physical ones and companies)"
+msgstr "Exportar participantes (físicos y empresas colaboradoras)"
+
+#: inc/admin/export.php:50
+msgid "Export (CSV) - Compatible with Microsoft Excel"
+msgstr "Exportar (CSV) - Compatible con Microsoft Excel"
 
 #: inc/admin/admin.php:14 inc/admin/admin.php:15
 msgid "ABACO Events"
@@ -492,9 +472,17 @@ msgstr "Eventos ABACO"
 msgid "Participants"
 msgstr "Participantes"
 
+#: inc/admin/admin.php:30 inc/admin/admin.php:31 inc/admin/company-table.php:20
+msgid "Companies"
+msgstr "Empresas colaboradoras"
+
 #: inc/admin/activity.php:47
 msgid "Other activity data"
 msgstr "Otros datos de la actividad"
+
+#: inc/admin/activity.php:51
+msgid "Preinscriptions"
+msgstr "Preinscripciones"
 
 #: inc/admin/activity.php:56
 msgid "No information found about this activity."
@@ -547,6 +535,10 @@ msgstr "No"
 msgid "No resuls for participant with ID %d"
 msgstr "No se han encontrado participantes con ID %d."
 
+#: inc/admin/participant-entry.php:72
+msgid "Physical participant"
+msgstr "Participante físico"
+
 #: inc/admin/participant-entry.php:76
 msgid "Birth date"
 msgstr "Fecha de nacimiento"
@@ -571,6 +563,18 @@ msgstr "Documento de identificación del tutor"
 msgid "Participant wishes to receive spam from ABACO"
 msgstr "Desea recibir spam de ABACO"
 
+#: inc/admin/participant-entry.php:94
+msgid "Company"
+msgstr "Empresa colaboradora"
+
+#: inc/admin/participant-entry.php:104
+msgid "See contact person"
+msgstr "Ver persona de contacto"
+
+#: inc/admin/company-table.php:37
+msgid "Name"
+msgstr "Nombre"
+
 #: inc/db/activity-db-table.php:255
 msgid "This image was uploaded via the ABACO plugin, by a user."
 msgstr ""
@@ -580,3 +584,15 @@ msgstr ""
 #. Name of the plugin
 msgid "ABACO Inscriptions"
 msgstr "Inscripciones ABACO"
+
+#. Description of the plugin
+msgid "Manages inscriptions for ABACO events."
+msgstr "Gestión de inscripciones para eventos de ABACO."
+
+#. Author of the plugin
+msgid "Anarthal"
+msgstr "Anarthal"
+
+#. Author URI of the plugin
+msgid "https://github.com/anarthal"
+msgstr "https://github.com/anarthal"
