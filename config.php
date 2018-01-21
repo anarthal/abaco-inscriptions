@@ -258,7 +258,7 @@ function abaco_activity_acf_config() {
             array(
                 'key' => 'abaco_activity_male_participants',
                 'label' => __('Number of male participants', 'abaco'),
-                'name' => 'participants_total',
+                'name' => 'participants_male',
                 'type' => 'number',
                 'required' => 1,
                 'default_value' => '',
