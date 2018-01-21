@@ -6,21 +6,35 @@
  * and open the template in the editor.
  */
 
+require_once __DIR__ . '/parser.php';
+
+class ABACO_PreinscriptionParser extends ABACO_Parser {
+    public function __construct() {
+        parent::__construct([
+            'id' => 'intval',
+            'activity_id' => 'intval',
+            'participant_id' => 'intval'
+        ]);
+    }
+}
+
 class ABACO_PreinscriptionDbTable {
     // Singleton management
     private static $m_instance;
     public static function get_instance() {
         if (!self::$m_instance) {
             global $wpdb;
-            self::$m_instance = new self($wpdb);
+            self::$m_instance = new self($wpdb, new ABACO_PreinscriptionParser());
         }
         return self::$m_instance;
     }
     
     private $m_db;
+    private $m_parser;
     
-    public function __construct($db) {
+    public function __construct($db, $parser) {
         $this->m_db = $db;
+        $this->m_parser = $parser;
     }
     
     // Table name
@@ -41,6 +55,16 @@ class ABACO_PreinscriptionDbTable {
     }
     
     // Query
+    public function query_all() {
+        $table_name = $this->name();
+        $sql = "SELECT * FROM $table_name";
+        $res = $this->m_db->get_results($sql, ARRAY_A);
+        if ($res === null) {
+            wp_die('Database error');
+        }
+        return array_map([$this->m_parser, 'parse'], $res);
+    }
+    
     public function query_slots($act_id) {
         $table = $this->name();
         $part_table = $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;

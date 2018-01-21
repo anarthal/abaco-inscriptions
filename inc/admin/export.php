@@ -67,7 +67,8 @@ class ABACO_ExportAction {
         self::verify_nonce();
         $part_table = abaco_participant_db_table();
         $act_table = abaco_activity_db_table();
-        $data = self::get_json_data($part_table, $act_table);
+        $preinsc_table = abaco_preinscription_db_table();
+        $data = self::get_json_data($part_table, $act_table, $preinsc_table);
         self::do_export(json_encode($data), 'application/json', 'export.json');
     }
     
@@ -100,12 +101,15 @@ class ABACO_ExportAction {
     
     // Implementation - JSON
     private static function get_json_data(ABACO_ParticipantDbTable $part_table,
-                ABACO_ActivityDbTable $act_table) {
+                ABACO_ActivityDbTable $act_table,
+                ABACO_PreinscriptionDbTable $preinsc_table) {
         $participant_data = $part_table->query_all();
         $activity_data = $act_table->query_all();
+        $preinsc_data = $preinsc_table->query_all();
         return ['data' => [
             'participants' => $participant_data,
             'activities' => $activity_data,
+            'preinscriptions' => $preinsc_data,
             'booking_days' => array_keys(abaco_booking_days()),
             'genders' => array_keys(abaco_gender_options()),
             'document_types' => array_keys(abaco_document_type_options()),
