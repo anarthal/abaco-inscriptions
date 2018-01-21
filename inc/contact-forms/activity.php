@@ -82,6 +82,7 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
             new ABACO_EchoField('acceptance', self::acceptance_entry()),
             new ABACO_CheckboxField('allows_preinscription', __('Allows web preinscription', 'abaco')),
             new ABACO_CheckboxField('adult_content', __('This activity has adult content', 'abaco')),
+            new ABACO_CaptchaField(),
             new ABACO_SubmitField()
         );
     }

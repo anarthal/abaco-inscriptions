@@ -65,6 +65,7 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
             new ABACO_TextField('city', __('City', 'abaco'), true, true),
             new ABACO_TextareaField('observations', __('Observations', 'abaco'), false),
             new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco'), ['cf7_options' => 'default:1']),
+            new ABACO_CaptchaField(),
             new ABACO_SubmitField()
         );
     }

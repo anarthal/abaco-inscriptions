@@ -150,6 +150,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             new ABACO_TextField('tutor_nif', __('Your tutor\'s identity document'), false, true, ['asterisk' => true]),
             new ABACO_EchoField('tutor_nif_after', '<hr /></div>'),
             new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco'), ['cf7_options' => 'default:1']),
+            new ABACO_CaptchaField(),
             new ABACO_SubmitField()
         ];
     }

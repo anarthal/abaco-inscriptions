@@ -301,3 +301,16 @@ class ABACO_SubmitField extends ABACO_Field {
             '"]</label>';
     }
 }
+
+class ABACO_CaptchaField extends ABACO_Field {
+    public function __construct() {
+        parent::__construct('captcha');
+    }
+    public function code() {
+        if (ABACO_ENABLE_CAPTCHA) {
+            return '[recaptcha]';
+        } else {
+            return '';
+        }
+    }
+}
