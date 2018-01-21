@@ -83,6 +83,13 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
             );
         }
         
+        // Check the participant is not already inscribed
+        if ($this->m_preinscription_table->is_already_inscribed($part->id, $act_id)) {
+            throw new ABACO_ValidationError(
+                __('You already are inscribed to this activity.', 'abaco')
+            );
+        }
+        
         // If participant is under age, check for adult content
         $age = abaco_compute_age($part->birth_date);
         if ($age < ABACO_MINORITY_AGE && $act->adult_content) {
@@ -98,9 +105,6 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
                 __('Sorry, there are no remaining slots for this activity.', 'abaco')  
             );
         }
-        
-        
-        // TODO: check for already inscribed
         
         $data['participant_id'] = $part->id;
         $data['activity_id'] = $data['preinscription_activity'];

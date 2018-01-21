@@ -67,6 +67,17 @@ class ABACO_PreinscriptionDbTable {
         return $res;
     }
     
+    public function is_already_inscribed($part_id, $act_id) {
+        $table = $this->name();
+        $sql = $this->m_db->prepare("SELECT COUNT(*) FROM $table WHERE 
+            participant_id=%d AND activity_id=%d", $part_id, $act_id);
+        $res = $this->m_db->get_var($sql);
+        if ($res === null) {
+            wp_die('Database error');
+        }
+        return $res !== '0';
+    }
+    
     // Insert
     public function insert(array $data) {
         if (!$this->m_db->insert($this->name(), $data)) {
