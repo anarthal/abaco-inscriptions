@@ -69,7 +69,7 @@ class ABACO_ActivityDbTable {
         $post_id = wp_insert_post(array(
             'post_title' => $data['name_'], // already sanitized
             'post_content' => $data['description'], // already sanitized
-            'post_status' => 'pending',
+            'post_status' => (ABACO_ACTIVITY_AUTOPUBLISH ? 'publish' : 'pending'),
             'post_type' => ABACO_ACTIVITY_POST_TYPE_NAME,
             'meta_input' => self::generate_insert_meta_data($data)
         ));

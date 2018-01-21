@@ -9,6 +9,7 @@
 // General
 define('ABACO_SKIP_MAIL', true);
 define('ABACO_ENABLE_CAPTCHA', false);
+define('ABACO_ACTIVITY_AUTOPUBLISH', false);
 define('ABACO_PARTICIPANT_TABLE_NAME', 'abaco_participants');
 define('ABACO_PARTICIPANT_FORM_TITLE', 'participant');
 define('ABACO_NIF_MANDATORY_AGE', 14);
