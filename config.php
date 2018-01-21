@@ -30,6 +30,7 @@ define('ABACO_ADMIN_COMPANY_SLUG', 'companies');
 define('ABACO_ADMIN_SETTINGS_SLUG', 'abaco-settings');
 define('ABACO_ADMIN_SETTINGS_SECTION', 'abaco-settings-section');
 define('ABACO_SETTING_MINOR_AUTHORIZATION_URL', 'minor-authorization-url');
+define('ABACO_REQUIRED_CAPABILITY', 'publish_pages');
 
 // Booking day config
 function abaco_booking_days() {
@@ -147,8 +148,6 @@ function abaco_activity_custom_post_config() {
             'thumbnail',
             'post-formats'
         ),
-        'capability_type' => array(ABACO_ACTIVITY_POST_TYPE_NAME, 'abaco_activities'),
-        'map_meta_cap' => true,
         'show_in_menu' => 'abaco'
     );
 }

@@ -61,3 +61,9 @@ function abaco_compute_age($birth) {
     $now = new DateTime();
     return $now->diff($birth)->y;
 }
+
+function abaco_check_capability($cap = ABACO_REQUIRED_CAPABILITY) {
+    if (!current_user_can($cap)) {
+        wp_die('You do not have sufficient permissions to access this page.');
+    }
+}

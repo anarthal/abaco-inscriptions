@@ -13,7 +13,7 @@ class ABACO_Admin {
         $hook = add_menu_page(
             __('ABACO Events', 'abaco'),
             __('ABACO Events', 'abaco'),
-            'manage_options',
+            ABACO_REQUIRED_CAPABILITY,
             ABACO_ADMIN_MAIN_SLUG,
             [$this, 'main_page']
         );
@@ -21,7 +21,7 @@ class ABACO_Admin {
             ABACO_ADMIN_MAIN_SLUG,
             __('Participants', 'abaco'),
             __('Participants', 'abaco'),
-            'manage_options',
+            ABACO_REQUIRED_CAPABILITY,
             ABACO_ADMIN_PARTICIPANT_SLUG,
             [$this, 'participant_page']
         );
@@ -29,7 +29,7 @@ class ABACO_Admin {
             ABACO_ADMIN_MAIN_SLUG,
             __('Companies', 'abaco'),
             __('Companies', 'abaco'),
-            'manage_options',
+            ABACO_REQUIRED_CAPABILITY,
             ABACO_ADMIN_COMPANY_SLUG,
             [$this, 'company_table']
         );
@@ -52,13 +52,12 @@ class ABACO_Admin {
     }
 
     public function main_page() {
-        if (!current_user_can('manage_options')) {
-            wp_die('You do not have sufficient permissions to access this page.');
-        }
+        abaco_check_capability();
         require_once __DIR__ . '/export.php';
         (new ABACO_AdminExportView())->draw();
     }
     public function participant_table() {
+        abaco_check_capability();
         require_once __DIR__ . '/participant-table.php';
         $part_table = abaco_participant_db_table();
         $data = new ABACO_AdminParticipantTableController($part_table);
@@ -77,10 +76,7 @@ class ABACO_Admin {
         (new ABACO_AdminParticipantEntryView($data))->draw();
     }
     public function participant_page() {
-        if (!current_user_can('manage_options')) {
-            wp_die('You do not have sufficient permissions to access this page.');
-        }
-
+        abaco_check_capability();
         $participant_id = filter_input(INPUT_GET, 'participant_id');
         if (!isset($participant_id) ||
             !is_string($participant_id) ||
@@ -101,10 +97,7 @@ class ABACO_Admin {
         (new ABACO_AdminActivityView($data))->draw();
     }
     public function export_action() {
-        if (!current_user_can('manage_options')) {
-            wp_die('You do not have sufficient permissions to access this page.');
-        }
-        
+        abaco_check_capability();
         require_once __DIR__ . '/export.php';
         ABACO_ExportAction::export_action();
     }
