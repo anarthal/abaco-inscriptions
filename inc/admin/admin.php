@@ -105,18 +105,7 @@ class ABACO_Admin {
             wp_die('You do not have sufficient permissions to access this page.');
         }
         
-        $action = filter_input(INPUT_GET, 'export');
-        if ($action !== 'json') {
-            return;
-        }
-        $nonce = filter_input(INPUT_GET, '_abaco_nonce');
-        if (!isset($nonce) || !wp_verify_nonce($nonce, 'abaco')) {
-            wp_die('Invalid nonce');
-        }
         require_once __DIR__ . '/export.php';
-        $part_table = abaco_participant_db_table();
-        $act_table = abaco_activity_db_table();
-        $data = new ABACO_AdminExportData($part_table, $act_table);
-        abaco_admin_export($data);
+        ABACO_ExportAction::export_action();
     }
 }
