@@ -40,6 +40,33 @@ class ABACO_PreinscriptionDbTable {
         $this->m_db->query($sql);
     }
     
+    // Query
+    public function query_slots($act_id) {
+        $table = $this->name();
+        $part_table = $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;
+        $sql = $this->m_db->prepare(
+                "SELECT part.gender AS gender, COUNT(*) AS `count`
+                 FROM $table pre
+                 INNER JOIN $part_table part ON pre.participant_id = part.id
+                 WHERE pre.activity_id = %d
+                 GROUP BY part.gender", $act_id);
+        $counts = $this->m_db->get_results($sql, OBJECT);
+        if ($counts === null) {
+            wp_die('Database error');
+        }
+        $res = new stdClass();
+        foreach ($counts as $count) {
+            $gender = $count->gender;
+            $res->$gender = intval($count->count);
+        }
+        foreach (array_keys(abaco_gender_options()) as $gender) {
+            if (!isset($res->$gender)) {
+                $res->$gender = 0;
+            }
+        }
+        return $res;
+    }
+    
     // Insert
     public function insert(array $data) {
         if (!$this->m_db->insert($this->name(), $data)) {

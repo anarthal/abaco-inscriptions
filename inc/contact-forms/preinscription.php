@@ -8,6 +8,34 @@
 
 require_once __DIR__ . '/contact-form.php';
 
+class ABACO_SlotControl {   
+    public static function is_slot($activity, $slot_count, $gender) {
+        $slots_male = $activity->participants_male;
+        $slots_female = $activity->participants_female;
+        $slots_indiff = $activity->participants_total
+            - $slots_male - $slots_female;
+        $parts_male = $slot_count->MALE;
+        $parts_female = $slot_count->FEMALE;
+        $parts_nonbinary = $slot_count->NONBINARY;
+        
+        $excess_male = max($parts_male - $slots_male, 0); // males that don't fit in male-specific slots
+        $excess_female = max($parts_female - $slots_female, 0); // same
+        
+        if ($gender === 'MALE') {
+            $total_slots = $slots_male + $slots_indiff;
+            $total_parts = $parts_male + $excess_female + $parts_nonbinary;
+        } elseif ($gender === 'FEMALE') {
+            $total_slots = $slots_female + $slots_indiff;
+            $total_parts = $parts_female + $excess_male + $parts_nonbinary;
+        } else {
+            $total_slots = $slots_indiff;
+            $total_parts = $excess_male + $excess_female + $parts_nonbinary;
+        }
+        
+        return $total_slots > $total_parts;
+    }
+}
+
 class ABACO_PreinscriptionForm extends ABACO_ContactForm {
     private $m_participant_table;
     private $m_activity_table;
@@ -44,16 +72,16 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
             );
         }
         
-        /*$act_id = $data['preinscription_activity'];
+        // Get the activity
+        $act_id = $data['preinscription_activity'];
         $act = $this->m_activity_table->query_by_id($act_id,
-            ['allows_preinscription', 'adult_content']);
-        
-        // Check activity actually allows preinscription
-        if ($act === null || !$act->allows_preinscription) {
+            ['adult_content', 'participants_male',
+             'participants_female', 'participants_total']);
+        if ($act === null) {
             throw new ABACO_ValidationError(
-                __('This activity does not allow preinscription.', 'abaco')
+                __('Sorry, this activity is unavailable.', 'abaco')
             );
-        }*/
+        }
         
         // If participant is under age, check for adult content
         $age = abaco_compute_age($part->birth_date);
@@ -63,7 +91,16 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
             );
         }
         
-        // TODO: check for already inscribed and free slots
+        // Check for free slots
+        $slots = $this->m_preinscription_table->query_slots($act_id);
+        if (!ABACO_SlotControl::is_slot($act, $slots, $part->gender)) {
+            throw new ABACO_ValidationError(
+                __('Sorry, there are no remaining slots for this activity.', 'abaco')  
+            );
+        }
+        
+        
+        // TODO: check for already inscribed
         
         $data['participant_id'] = $part->id;
         $data['activity_id'] = $data['preinscription_activity'];
@@ -78,7 +115,6 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
         $this->m_preinscription_table->insert($data);
     }
     
-    // Helpers
     private static function make_field_list() {
         return [
             new ABACO_TextField('nif', __('NIF or passport', 'abaco'), true, true),
