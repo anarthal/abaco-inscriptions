@@ -70,7 +70,7 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
             new ABACO_TextField('name_', __('Activity name', 'abaco'), true),
             new ABACO_SelectField('kind', __('Activity kind', 'abaco'), array_keys(abaco_activity_kind_options())),
             new ABACO_TextareaField('description', __('Description to be published on our website', 'abaco'), true, true, ['cf7_options' => 'maxlength:500']),
-            new ABACO_FileField('img', __('Image to be published on our website', 'abaco'), true, ['cf7_options' => 'limit:1mb filetypes:gif|png|jpg|jpeg']),
+            new ABACO_FileField('img', __('Image to be published on our website', 'abaco'), true, false, ['cf7_options' => 'limit:1mb filetypes:gif|png|jpg|jpeg']),
             new ABACO_SelectField('duration', __('Activity approximate duration', 'abaco'), abaco_activity_duration_keys()),
             new ABACO_MulticheckboxField('requested_time', __('Days you may organize the activity (subject to availability)', 'abaco'), true, array_keys(abaco_activity_requested_time_options())),
             new ABACO_NumberField('participants_total', __('Total number of participants', 'abaco'), true, ['cf7_options' => 'id:activity-participants-total min:1']),
