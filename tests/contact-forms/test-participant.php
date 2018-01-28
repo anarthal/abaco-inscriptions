@@ -10,8 +10,8 @@ _abaco_require('inc/contact-forms/participant.php');
 _abaco_require('inc/db/participant-db-table.php');
 
 function make_birth_date($age) {
-    $res = (new DateTime())->sub(new DateInterval("P${age}Y"));
-    return new DateTime($res->format('Y-01-01'));
+    $ref = new DateTime(ABACO_AGE_REFERENCE_DATE);
+    return $ref->sub(new DateInterval("P${age}Y"));
 }
 
 function make_birth_date_string($age) {
@@ -262,6 +262,13 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->assertNotEmpty($data['nif']);
         unset($data['nif']);
         $this->assertEquals($expected, $data);
+    }
+    
+    function test_booking_days_none_valid_removes_none() {
+        $this->input['booking_days'] = ['NONE'];
+        $expected = $this->get_expected();
+        $expected['booking_days'] = [];
+        $this->do_test_valid($expected);
     }
 }
 

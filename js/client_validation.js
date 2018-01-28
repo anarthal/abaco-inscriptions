@@ -92,7 +92,9 @@ AgeController.prototype.showMinor = function(show) {
 };
 // Computes age in years; birth must be a Date
 AgeController.isMinor = function(birth) {
-    var age = moment().diff(birth, 'years');
+    var refdate = moment(
+            abacoClientValidationParams.ageReferenceDate, 'DD-MM-YYYY');
+    var age = refdate.diff(birth, 'years');
     return age < abacoClientValidationParams.minorityAge;
 };
 AgeController.create = function() {

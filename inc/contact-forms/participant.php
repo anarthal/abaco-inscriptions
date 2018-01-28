@@ -14,6 +14,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     // Construction
     public function __construct($participant_table) {
         $validators = [
+            'booking_days' => [$this, 'sanitize_booking_days'],
             'document_type' => [$this, 'validate_document_type'],
             'nif' => [$this, 'validate_nif'],
             'tutor_nif' => [$this, 'validate_tutor']
@@ -26,6 +27,14 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     }
     
     // Validate functions
+    public function sanitize_booking_days($data) {
+        $value = $data['booking_days'];
+        if (count($value) === 1 && $value[0] === 'NONE') {
+            $data['booking_days'] = [];
+        }
+        return $data;
+    }
+    
     public function validate_document_type($data) {
         $doctype = $data['document_type'];
         if ($doctype === 'UUID' &&

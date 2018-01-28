@@ -58,8 +58,8 @@ function abaco_full_upload_dir() {
 }
 
 function abaco_compute_age($birth) {
-    $now = new DateTime();
-    return $now->diff($birth)->y;
+    $ref = new DateTime(ABACO_AGE_REFERENCE_DATE);
+    return $ref->diff($birth)->y;
 }
 
 function abaco_check_capability($cap = ABACO_REQUIRED_CAPABILITY) {

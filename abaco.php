@@ -134,7 +134,8 @@ add_action('wpcf7_enqueue_scripts', function() {
     $params = array(
         'totalParticipantsNegative' => esc_html(
                 abaco_negative_participants_message()),
-        'minorityAge' => ABACO_MINORITY_AGE
+        'minorityAge' => ABACO_MINORITY_AGE,
+        'ageReferenceDate' => ABACO_AGE_REFERENCE_DATE
     );
     wp_localize_script(
         'abaco_client_validation',
