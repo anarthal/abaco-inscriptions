@@ -78,13 +78,21 @@ class ABACO_Admin {
     public function participant_page() {
         abaco_check_capability();
         $participant_id = filter_input(INPUT_GET, 'participant_id');
-        if (!isset($participant_id) ||
-            !is_string($participant_id) ||
-            trim($participant_id) === '') {
-            $this->participant_table();
-        } else {
-            $participant_id = trim($participant_id);
+        $participant_nif = filter_input(INPUT_GET, 'participant_nif');
+        if (isset($participant_id) && is_string($participant_id)) {
+            $participant_id = intval(trim($participant_id));
             $this->participant_entry($participant_id);
+        } elseif (isset($participant_nif) && is_string($participant_nif)) {
+            $participant_id = abaco_participant_db_table()->nif_to_id(
+                trim($participant_nif));
+            if (!isset($participant_id)) {
+                echo esc_html(sprintf(__('Participant with NIF "%s" not found.', 'abaco'),
+                    $participant_nif));
+            } else {
+                $this->participant_entry($participant_id);
+            }
+        } else {
+            $this->participant_table();
         }
     }
     public function activity_edit_custom_fields() {
