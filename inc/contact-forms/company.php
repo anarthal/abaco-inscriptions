@@ -56,14 +56,14 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
     // Helpers
     private static function make_field_list() {
         return array(
-            new ABACO_TextField('first_name', __('Company name', 'abaco'), true),
-            new ABACO_TextField('nif', __('NIF', 'abaco'), true, true),
+            new ABACO_TextField('first_name', __('Company name', 'abaco'), true, false, ['cf7_options' => 'maxlength:50']),
+            new ABACO_TextField('nif', __('NIF', 'abaco'), true, true, ['cf7_options' => 'maxlength:20']),
             new ABACO_TextField('contact_nif', __('Contact person\'s NIF (you must be inscribed as a regular participant first)', 'abaco'), true, true),
-            new ABACO_TelField('phone', __('Phone', 'abaco'), true),
-            new ABACO_EmailField('email', __('Email', 'abaco'), true),
+            new ABACO_TelField('phone', __('Phone', 'abaco'), true, false, ['cf7_options' => 'maxlength:50']),
+            new ABACO_EmailField('email', __('Email', 'abaco'), true, ['cf7_options' => 'maxlength:50']),
             new ABACO_SelectField('province', __('Province', 'abaco'), array_keys(abaco_province_options())),
-            new ABACO_TextField('city', __('City', 'abaco'), true, true),
-            new ABACO_TextareaField('observations', __('Observations', 'abaco'), false),
+            new ABACO_TextField('city', __('City', 'abaco'), true, true, ['cf7_options' => 'maxlength:25']),
+            new ABACO_TextareaField('observations', __('Observations', 'abaco'), false, false, ['cf7_options' => 'maxlength:140']),
             new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco'), ['cf7_options' => 'default:1']),
             new ABACO_CaptchaField(),
             new ABACO_SubmitField()

@@ -126,7 +126,7 @@ class ABACO_PreinscriptionForm extends ABACO_ContactForm {
         return [
             new ABACO_TextField('nif', __('NIF or passport', 'abaco'), true, true),
             new ABACO_SelectField('preinscription_activity', __('Activity', 'abaco'), abaco_preinscription_activities_keys()),
-            new ABACO_TextareaField('observations', __('Observations', 'abaco'), false),
+            new ABACO_TextareaField('observations', __('Observations', 'abaco'), false, false,  ['cf7_options' => 'maxlength:140']),
             new ABACO_CaptchaField(),
             new ABACO_SubmitField()
         ];
