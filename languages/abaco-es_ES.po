@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ABACO Inscriptions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 21:16+0000\n"
-"PO-Revision-Date: 2018-01-21 21:19+0000\n"
+"POT-Creation-Date: 2018-01-28 11:21+0000\n"
+"PO-Revision-Date: 2018-01-28 11:22+0000\n"
 "Last-Translator: Admin <testingabacowordpress@gmail.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es-ES\n"
@@ -13,21 +13,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: inc/contact-forms/participant.php:156
-msgid ""
-"We have detected you are a minor.\n"
-"               Please introduce here your tutor data.\n"
-"               Your tutor must already be inscribed and stay the same nights "
-"as you, at least.\n"
-"               You must bring us the authorization below signed by your "
-"tutor."
-msgstr ""
-"Hemos detectado que eres un menor.\n"
-"Por favor, introduce los datos de tu tutor.\n"
-"Tu tutor debe haberse inscrito en jornadas previamente, y debe quedarse a "
-"dormir las mismas noches que tú, al menos.\n"
-"Debes traer a jornadas una autorización firmada por tu tutor. Puedes "
-"descargar la autorización en el enlace de abajo."
+#: inc/contact-forms/participant.php:145
+msgid "Your tutor's identity document"
+msgstr "Documento de identidad de tu tutor"
+
+#: inc/contact-forms/participant.php:162
+msgid "Download authorization (PDF)"
+msgstr "Descargar autorización (PDF)."
+
+#: inc/admin/admin.php:89
+#, php-format
+msgid "Participant with NIF \"%s\" not found."
+msgstr "No existe ningún participante con NIF \"%s\"."
 
 #: config.php:38 config.php:192
 msgid "Thursday"
@@ -418,6 +415,22 @@ msgstr "Grupo o asociación"
 #: inc/contact-forms/participant.php:143
 msgid "Nights you want to stay"
 msgstr "Días que te quieres alojar"
+
+#: inc/contact-forms/participant.php:156
+msgid ""
+"We have detected you are a minor.\n"
+"               Please introduce here your tutor data.\n"
+"               Your tutor must already be inscribed and stay the same nights "
+"as you, at least.\n"
+"               You must bring us the authorization below signed by your "
+"tutor."
+msgstr ""
+"Hemos detectado que eres un menor.\n"
+"Por favor, introduce los datos de tu tutor.\n"
+"Tu tutor debe haberse inscrito en jornadas previamente, y debe quedarse a "
+"dormir las mismas noches que tú, al menos.\n"
+"Debes traer a jornadas una autorización firmada por tu tutor. Puedes "
+"descargar la autorización en el enlace de abajo."
 
 #: inc/admin/settings.php:14 inc/admin/admin.php:38 inc/admin/admin.php:39
 msgid "Settings"

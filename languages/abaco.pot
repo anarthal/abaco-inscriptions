@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 21:16+0000\n"
+"POT-Creation-Date: 2018-01-28 11:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -390,6 +390,10 @@ msgstr ""
 msgid "Nights you want to stay"
 msgstr ""
 
+#: inc/contact-forms/participant.php:145
+msgid "Your tutor's identity document"
+msgstr ""
+
 #: inc/contact-forms/participant.php:156
 msgid ""
 "We have detected you are a minor.\n"
@@ -398,6 +402,10 @@ msgid ""
 "as you, at least.\n"
 "               You must bring us the authorization below signed by your "
 "tutor."
+msgstr ""
+
+#: inc/contact-forms/participant.php:162
+msgid "Download authorization (PDF)"
 msgstr ""
 
 #: inc/admin/settings.php:14 inc/admin/admin.php:38 inc/admin/admin.php:39
@@ -455,6 +463,11 @@ msgstr ""
 
 #: inc/admin/admin.php:30 inc/admin/admin.php:31 inc/admin/company-table.php:20
 msgid "Companies"
+msgstr ""
+
+#: inc/admin/admin.php:89
+#, php-format
+msgid "Participant with NIF \"%s\" not found."
 msgstr ""
 
 #: inc/admin/activity.php:47

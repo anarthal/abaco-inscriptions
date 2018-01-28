@@ -142,7 +142,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             new ABACO_TextareaField('observations', __('Observations', 'abaco'), false),
             new ABACO_MulticheckboxField('booking_days', __('Nights you want to stay', 'abaco'), false, array_keys(abaco_booking_days_select_options()), ['element_id' => 'booking-days-container']),
             new ABACO_EchoField('tutor_nif_before', self::tutor_nif_before_html()),
-            new ABACO_TextField('tutor_nif', __('Your tutor\'s identity document'), false, true, ['asterisk' => true]),
+            new ABACO_TextField('tutor_nif', __('Your tutor\'s identity document', 'abaco'), false, true, ['asterisk' => true]),
             new ABACO_EchoField('tutor_nif_after', '<hr /></div>'),
             new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco'), ['cf7_options' => 'default:1']),
             new ABACO_CaptchaField(),
@@ -157,8 +157,9 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
                Please introduce here your tutor data.
                Your tutor must already be inscribed and stay the same nights as you, at least.
                You must bring us the authorization below signed by your tutor.', 'abaco')) .
-            '</p><p><a href="'
-            . esc_url(self::get_minor_authorization()) . '">Download authorization (PDF)</a></p><br /> ';
+            '</p><p><a href="' .
+            esc_url(self::get_minor_authorization()) . '">' .
+            esc_html__('Download authorization (PDF)', 'abaco') . '</a></p><br /> ';
     }
     
     private static function get_minor_authorization() {
