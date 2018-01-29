@@ -3,294 +3,509 @@ msgstr ""
 "Project-Id-Version: ABACO Inscriptions\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-21 18:41+0000\n"
-"PO-Revision-Date: 2018-01-21 18:47+0000\n"
+"PO-Revision-Date: 2018-01-29 20:16+0000\n"
 "Last-Translator: Admin <testingabacowordpress@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: Basque\n"
 "Language: eu\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Loco - https://localise.biz/"
 
-#: config.php:38 config.php:192
-msgid "Thursday"
-msgstr ""
+#: inc/admin/company-table.php:32 inc/admin/activity.php:84
+#: inc/admin/activity.php:96 inc/admin/participant-table.php:73
+msgid "See details"
+msgstr "Xehetasunak"
 
-#: config.php:39 config.php:193
-msgid "Friday"
-msgstr ""
+#: inc/admin/admin.php:89
+#, php-format
+msgid "Participant with NIF \"%s\" not found."
+msgstr "Ez dago IFZ \"%s\" horrekin parte hartzailerik."
 
-#: config.php:40 config.php:194
-msgid "Saturday"
-msgstr ""
+#: inc/contact-forms/participant.php:145
+msgid "Your tutor's identity document"
+msgstr "Zure tutorearen nortasun agiria"
 
-#: config.php:46
-msgid "None"
-msgstr ""
-
-#: config.php:53
-msgid "Male"
-msgstr ""
-
-#: config.php:54
-msgid "Female"
-msgstr ""
-
-#: config.php:55
-msgid "Non binary"
-msgstr ""
-
-#: config.php:61 inc/contact-forms/company.php:60
-#: inc/admin/participant-entry.php:96 inc/admin/company-table.php:36
-msgid "NIF"
-msgstr ""
-
-#: config.php:62
-msgid "Passport"
-msgstr ""
-
-#: config.php:63
-msgid "I do not have a NIF"
-msgstr ""
-
-#: config.php:69 config.php:168
-msgid "Other"
-msgstr ""
-
-#: config.php:131
-msgid "Activities"
-msgstr ""
-
-#: config.php:132 inc/contact-forms/preinscription.php:128
-msgid "Activity"
-msgstr ""
-
-#: config.php:133
-msgid "Add new activity"
-msgstr ""
-
-#: config.php:134
-msgid "Edit activity"
-msgstr ""
-
-#: config.php:135
-msgid "New activity"
-msgstr ""
-
-#: config.php:136
-msgid "View activity"
-msgstr ""
-
-#: config.php:137
-msgid "View activities"
-msgstr ""
-
-#: config.php:138
-msgid "Search activities"
-msgstr ""
-
-#: config.php:139
-msgid "No activities found"
-msgstr ""
-
-#: config.php:140
-msgid "No activities found in thrash"
-msgstr ""
-
-#: config.php:141
-msgid "Activity list"
-msgstr ""
-
-#: config.php:157
-msgid "Board role game"
-msgstr ""
-
-#: config.php:158
-msgid "Live role game"
-msgstr ""
-
-#: config.php:159
-msgid "Strategy game"
-msgstr ""
-
-#: config.php:160
-msgid "Board games"
-msgstr ""
-
-#: config.php:161
-msgid "Outdoor activity"
-msgstr ""
-
-#: config.php:162
-msgid "Soft Combat"
-msgstr ""
-
-#: config.php:163
-msgid "Contest"
-msgstr ""
-
-#: config.php:164
-msgid "Workshop"
-msgstr ""
-
-#: config.php:165
-msgid "Card game"
-msgstr ""
-
-#: config.php:166
-msgid "Tournament"
-msgstr ""
-
-#: config.php:167
-msgid "Conference"
-msgstr ""
-
-#: config.php:195
-msgid "Sunday"
-msgstr ""
-
-#: config.php:214
-msgid "Indifferent number of participants cannot be negative!"
-msgstr ""
-
-#: config.php:225 inc/contact-forms/activity.php:71
-msgid "Activity kind"
-msgstr ""
-
-#: config.php:235 inc/contact-forms/activity.php:74
-msgid "Activity approximate duration"
-msgstr ""
-
-#: config.php:245 inc/contact-forms/activity.php:76
-msgid "Total number of participants"
-msgstr ""
-
-#: config.php:259 inc/contact-forms/activity.php:77
-msgid "Number of male participants"
-msgstr ""
-
-#: config.php:273 inc/contact-forms/activity.php:78
-msgid "Number of female participants"
-msgstr ""
-
-#: config.php:287 inc/contact-forms/activity.php:83
-msgid "Allows web preinscription"
-msgstr ""
-
-#: config.php:295 inc/contact-forms/activity.php:84
-msgid "This activity has adult content"
-msgstr ""
+#: inc/contact-forms/participant.php:162
+msgid "Download authorization (PDF)"
+msgstr "Baimena deskargatu (PDF)"
 
 #: abaco.php:34
 msgid "Contact Form 7 plugin is needed to run this plugin."
-msgstr ""
+msgstr "Contact Form 7 plugina behar duzu hau erazteko"
 
-#: inc/contact-forms/field.php:123 inc/contact-forms/field.php:225
-#: inc/contact-forms/field.php:277 inc/contact-forms/participant.php:52
+#: config.php:38 config.php:192
+msgid "Thursday"
+msgstr "Osteguna"
+
+#: config.php:39 config.php:193
+msgid "Friday"
+msgstr "Ostirala"
+
+#: config.php:40 config.php:194
+msgid "Saturday"
+msgstr "Larunbata"
+
+#: config.php:46
+msgid "None"
+msgstr "Bat ez"
+
+#: config.php:53
+msgid "Male"
+msgstr "Gizona"
+
+#: config.php:54
+msgid "Female"
+msgstr "Emakumea"
+
+#: config.php:55
+msgid "Non binary"
+msgstr "Ez binarioa"
+
+#: config.php:61 inc/admin/company-table.php:36
+#: inc/admin/participant-entry.php:96 inc/contact-forms/company.php:60
+msgid "NIF"
+msgstr "IFZ"
+
+#: config.php:62
+msgid "Passport"
+msgstr "Pasaportea"
+
+#: config.php:63
+msgid "I do not have a NIF"
+msgstr "Ez daukat IFZ"
+
+#: config.php:69 config.php:168
+msgid "Other"
+msgstr "Beste"
+
+#: config.php:131
+msgid "Activities"
+msgstr "Ekintzak"
+
+#: config.php:132 inc/contact-forms/preinscription.php:128
+msgid "Activity"
+msgstr "Ekintza"
+
+#: config.php:133
+msgid "Add new activity"
+msgstr "Ekintza berria"
+
+#: config.php:134
+msgid "Edit activity"
+msgstr "Ekintza aldatu"
+
+#: config.php:135
+msgid "New activity"
+msgstr "Ekintza berria"
+
+#: config.php:136
+msgid "View activity"
+msgstr "Ekintza ikusi"
+
+#: config.php:137
+msgid "View activities"
+msgstr "Ekintza guztiak ikusi"
+
+#: config.php:138
+msgid "Search activities"
+msgstr "Ekintzak bilatu"
+
+#: config.php:139
+msgid "No activities found"
+msgstr "Ez da ekintzarik aurkitu"
+
+#: config.php:140
+msgid "No activities found in thrash"
+msgstr "Ez da paperontzian ekintzarik aurkitu"
+
+#: config.php:141
+msgid "Activity list"
+msgstr "Ekintzen zerrenda"
+
+#: config.php:157
+msgid "Tabletop role game"
+msgstr "Mahai rol jokoa"
+
+#: config.php:158
+msgid "Live action role playing game"
+msgstr "Rol bizia"
+
+#: config.php:159
+msgid "Strategy game"
+msgstr "Estrategia jokoa"
+
+#: config.php:160
+msgid "Board games"
+msgstr "Mahai jokoak"
+
+#: config.php:161
+msgid "Outdoor activity"
+msgstr "Kanpoko ekintza"
+
+#: config.php:162
+msgid "Soft Combat"
+msgstr "Soft Combat"
+
+#: config.php:163
+msgid "Contest"
+msgstr "Konkurtsoa"
+
+#: config.php:164
+msgid "Workshop"
+msgstr "Tailerra"
+
+#: config.php:165
+msgid "Card game"
+msgstr "Karten jokoa"
+
+#: config.php:166
+msgid "Tournament"
+msgstr "Lehiaketa"
+
+#: config.php:167
+msgid "Conference"
+msgstr "Konferentzia"
+
+#: config.php:195
+msgid "Sunday"
+msgstr "Igandea"
+
+#: config.php:214
+msgid "Indifferent number of participants cannot be negative!"
+msgstr "Edozeingo generoko partaideen zenbakia ezin da negatiboa izan"
+
+#: config.php:225 inc/contact-forms/activity.php:71
+msgid "Activity kind"
+msgstr "Ekintza mota"
+
+#: config.php:235 inc/contact-forms/activity.php:74
+msgid "Activity approximate duration"
+msgstr "Ekintzaren gutxi gora beherako iraupena"
+
+#: config.php:245 inc/contact-forms/activity.php:76
+msgid "Total number of participants"
+msgstr "Partaideen zenbaki totala"
+
+#: config.php:259 inc/contact-forms/activity.php:77
+msgid "Number of male participants"
+msgstr "Gizonezko partaideak"
+
+#: config.php:273 inc/contact-forms/activity.php:78
+msgid "Number of female participants"
+msgstr "Emakumezko partaideak"
+
+#: config.php:287 inc/contact-forms/activity.php:83
+msgid "Allows web preinscription"
+msgstr "Web bidezko izen ematea onartzen du"
+
+#: config.php:295 inc/contact-forms/activity.php:84
+msgid "This activity has adult content"
+msgstr "Adin nagusientzako ekintza"
+
+#: inc/db/activity-db-table.php:255
+msgid "This image was uploaded via the ABACO plugin, by a user."
+msgstr "Irudi hau parte hartzaile batek igo du ABACO pluginaren bidez"
+
+#: inc/admin/export.php:28
+msgid "Participant data."
+msgstr "Partaideak"
+
+#: inc/admin/export.php:29
+msgid "Activity data. Images will be exported as hyperlinks."
+msgstr "Ekintzak. Irudiak hiperesteka izango dira"
+
+#: inc/admin/export.php:30
+msgid "Enumerations."
+msgstr "Ennumerazioak"
+
+#: inc/admin/export.php:32
+msgid "Export as JSON"
+msgstr "Exportatu JSONen"
+
+#: inc/admin/export.php:34
+msgid "Export (JSON)"
+msgstr "Exportatu (JSON)"
+
+#: inc/admin/export.php:35
+msgid "The following data will be exported in JSON format:"
+msgstr "Datu hauek JSON formatuan exportartuko dira"
+
+#: inc/admin/export.php:47
+msgid "Export participants (physical ones and companies)"
+msgstr "Partaideak (pertsonak eta enpresak) exportartu"
+
+#: inc/admin/export.php:50
+msgid "Export (CSV) - Compatible with Microsoft Excel"
+msgstr "Exportatu (CSV) - Microsoft Excelekin bateragarria"
+
+#: inc/admin/settings.php:14 inc/admin/admin.php:38 inc/admin/admin.php:39
+msgid "Settings"
+msgstr "Aukerak"
+
+#: inc/admin/settings.php:35
+msgid "Minor authorization URL"
+msgstr "Adin txikikoentzako baimenen URL"
+
+#: inc/admin/settings.php:50
+msgid "Link"
+msgstr "Lotura"
+
+#: inc/admin/company-table.php:20 inc/admin/admin.php:30 inc/admin/admin.php:31
+msgid "Companies"
+msgstr "Enpresa laguntzaileak"
+
+#: inc/admin/company-table.php:37
+msgid "Name"
+msgstr "Izena"
+
+#: inc/admin/company-table.php:38 inc/admin/participant-entry.php:81
+#: inc/admin/participant-entry.php:98 inc/admin/participant-table.php:81
+#: inc/contact-forms/participant.php:138 inc/contact-forms/company.php:63
+msgid "Email"
+msgstr "Email"
+
+#: inc/admin/admin.php:14 inc/admin/admin.php:15
+msgid "ABACO Events"
+msgstr "ABACOren ekitaldiak"
+
+#: inc/admin/admin.php:22 inc/admin/admin.php:23
+#: inc/admin/participant-table.php:46
+msgid "Participants"
+msgstr "Parte hartzaileak"
+
+#: inc/admin/participant-entry.php:25
+msgid "Yes"
+msgstr "Bai"
+
+#: inc/admin/participant-entry.php:25
+msgid "No"
+msgstr "Ez"
+
+#: inc/admin/participant-entry.php:55
+#, php-format
+msgid "No resuls for participant with ID %d"
+msgstr "Ez da ID %d parte hartzailerik aurkitu"
+
+#: inc/admin/participant-entry.php:72
+msgid "Physical participant"
+msgstr "Parte hartzaile fisikoa"
+
+#: inc/admin/participant-entry.php:73 inc/admin/participant-table.php:78
+#: inc/contact-forms/participant.php:130
+msgid "First name"
+msgstr "Izena"
+
+#: inc/admin/participant-entry.php:74 inc/admin/participant-table.php:79
+#: inc/contact-forms/participant.php:131
+msgid "Last name"
+msgstr "Abizenak"
+
+#: inc/admin/participant-entry.php:75 inc/admin/participant-table.php:80
+#: inc/contact-forms/participant.php:132
+msgid "Alias"
+msgstr "Ezizena"
+
+#: inc/admin/participant-entry.php:76
+msgid "Birth date"
+msgstr "Jaiotze eguna"
+
+#: inc/admin/participant-entry.php:77
+msgid "Document type"
+msgstr "Dokumentu mota"
+
+#: inc/admin/participant-entry.php:78 inc/admin/participant-table.php:77
+#: inc/contact-forms/participant.php:135
+msgid "Identifier document"
+msgstr "Nortasun agiria"
+
+#: inc/admin/participant-entry.php:79 inc/contact-forms/participant.php:136
+msgid "Gender"
+msgstr "Generoa"
+
+#: inc/admin/participant-entry.php:80 inc/admin/participant-entry.php:97
+#: inc/contact-forms/participant.php:137 inc/contact-forms/company.php:62
+msgid "Phone"
+msgstr "Telefonoa"
+
+#: inc/admin/participant-entry.php:82
+msgid "Group"
+msgstr "Taldea"
+
+#: inc/admin/participant-entry.php:83 inc/admin/participant-entry.php:99
+#: inc/contact-forms/participant.php:140 inc/contact-forms/company.php:64
+msgid "Province"
+msgstr "Probintzia"
+
+#: inc/admin/participant-entry.php:84 inc/admin/participant-entry.php:100
+#: inc/contact-forms/participant.php:141 inc/contact-forms/company.php:65
+msgid "City"
+msgstr "Herria"
+
+#: inc/admin/participant-entry.php:85 inc/admin/participant-entry.php:101
+#: inc/contact-forms/participant.php:142 inc/contact-forms/company.php:66
+#: inc/contact-forms/preinscription.php:129
+msgid "Observations"
+msgstr "Oharrak"
+
+#: inc/admin/participant-entry.php:86
+msgid "Booking days"
+msgstr "Alokatze egunak"
+
+#: inc/admin/participant-entry.php:87
+msgid "Tutor's identifier document"
+msgstr "Tutorearen nortasu agiria"
+
+#: inc/admin/participant-entry.php:88 inc/admin/participant-entry.php:102
+msgid "Participant wishes to receive spam from ABACO"
+msgstr "ABACOren spam jaso nahi duzu"
+
+#: inc/admin/participant-entry.php:94
+msgid "Company"
+msgstr "Enpresa laguntzailea"
+
+#: inc/admin/participant-entry.php:95 inc/contact-forms/company.php:59
+msgid "Company name"
+msgstr "Enpresaren izena"
+
+#: inc/admin/participant-entry.php:104
+msgid "See contact person"
+msgstr "Kontaktozko pertsona"
+
+#: inc/admin/activity.php:47
+msgid "Other activity data"
+msgstr "Ekintzaren bese daturik"
+
+#: inc/admin/activity.php:51
+msgid "Preinscriptions"
+msgstr "Aurre izen emateak"
+
+#: inc/admin/activity.php:56
+msgid "No information found about this activity."
+msgstr "Ez dugu ekintza honi buruzko informaziorik aurkitu"
+
+#: inc/admin/activity.php:70
+msgid "Requested activity time"
+msgstr "Noiz zaude prest ekintza hau egiteko"
+
+#: inc/admin/activity.php:71
+msgid "Observations and needs"
+msgstr "Oharrak eta beharrak"
+
+#: inc/admin/activity.php:99
+msgid "Organizes"
+msgstr "Antolatzailea"
+
+#: inc/admin/activity.php:100
+msgid "Organizer email"
+msgstr "Antolatzailearen emaila"
+
+#: inc/admin/activity.php:105
+msgid "Could not find information about organizer."
+msgstr "Ez dugu antolatzaileare informazioarik aurkitu"
+
+#: inc/admin/participant-table.php:55
+msgid "Total participants"
+msgstr "Parte hartzaileak"
+
+#: inc/admin/participant-table.php:62
+#, php-format
+msgid "Participants staying on %s"
+msgstr "%sen alokatzen diren parte hartzaileak"
+
+#: inc/contact-forms/participant.php:34
+msgid "You are eager enough to have a NIF."
+msgstr "Zure adinarekin NAN, AIZ edo pasaportea eduki behar duzu."
+
+#: inc/contact-forms/participant.php:52 inc/contact-forms/field.php:123
+#: inc/contact-forms/field.php:225 inc/contact-forms/field.php:277
 msgid "This field is mandatory."
+msgstr "Eremu hau beharrezkoa da."
+
+#: inc/contact-forms/participant.php:59
+msgid "This document has already been registered."
+msgstr "Nortasun agiri hau lehendik erregistratuta bait dago."
+
+#: inc/contact-forms/participant.php:75
+msgid "This field is required because you are under age."
+msgstr "Eremu hau beharrezkoa da adingabekoa zarelako."
+
+#: inc/contact-forms/participant.php:84
+msgid ""
+"Your tutor must be inscribed in the event. Please check her document is "
+"correct."
 msgstr ""
+"Zure arduraduna ebentokan inskribatuta egon behar da. Zihurtatu horrela dela."
+
+#: inc/contact-forms/participant.php:92
+msgid "Your tutor must be an adult."
+msgstr "Zure arduraduna adin nagusiko izan behar da."
+
+#: inc/contact-forms/participant.php:99
+msgid "Your tutor must stay at least the same days as you."
+msgstr "Zure arduraduna zu zauden egun beretan egon behar da alokatuta."
+
+#: inc/contact-forms/participant.php:133
+msgid "Birth date (aaaa-mm-dd)"
+msgstr "Jaiotze eguna (uuuu-hh-ee)"
+
+#: inc/contact-forms/participant.php:134
+msgid "Identifier document type"
+msgstr "Nortasun agiri mota"
+
+#: inc/contact-forms/participant.php:139
+msgid "Group or association"
+msgstr "Taldea edo elkartea"
+
+#: inc/contact-forms/participant.php:143
+msgid "Nights you want to stay"
+msgstr "Zeintzuk egun nahi duzu alokatzea"
+
+#: inc/contact-forms/participant.php:147 inc/contact-forms/company.php:67
+msgid ""
+"I want to receive information about other activities organized by ABACO."
+msgstr "ABACOk antolatutako beste ekintzei buruzko informazioa jaso nahi nuke."
+
+#: inc/contact-forms/participant.php:156
+msgid ""
+"We have detected you are a minor.\n"
+"               Please introduce here your tutor data.\n"
+"               Your tutor must already be inscribed and stay the same nights "
+"as you, at least.\n"
+"               You must bring us the authorization below signed by your "
+"tutor."
+msgstr ""
+"Adin txikikoa zarela ikusi dugu.\n"
+"Mesedez, zure arduradunaren datuak sartu.\n"
+"Zure arduraduna jardunaldietan insrkibatuta egon behar da, eta alokatuta, zu "
+"bezala. Behintzat egun beretan.\n"
+"Zure tutoreak sinatutako baimena ekarri behar duzu.Baimena beheko loturan "
+"aurkitu dezakezu."
 
 #: inc/contact-forms/field.php:192
 msgid "This field must be a number."
-msgstr ""
+msgstr "Eremua zenbaki bat izan behar da."
 
 #: inc/contact-forms/field.php:212
 msgid "An invalid option was selected."
-msgstr ""
+msgstr "Hautatutako aukera ez da zuzena."
 
 #: inc/contact-forms/field.php:229
 msgid "Invalid date format."
-msgstr ""
+msgstr "Eremu hau zenbaki bat izan behar da"
 
 #: inc/contact-forms/field.php:300
 msgid "Submit"
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:64
-msgid "You must be inscribed before pre-inscribing to activities."
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:71
-msgid "Only physical participants can preinscribe to activities."
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:82
-msgid "Sorry, this activity is unavailable."
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:89
-msgid "You already are inscribed to this activity."
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:97
-msgid "Minors cannot inscribe to this activity because it has adult content."
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:105
-msgid "Sorry, there are no remaining slots for this activity."
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:127
-msgid "NIF or passport"
-msgstr ""
-
-#: inc/contact-forms/preinscription.php:129 inc/contact-forms/company.php:66
-#: inc/contact-forms/participant.php:142 inc/admin/participant-entry.php:85
-#: inc/admin/participant-entry.php:101
-msgid "Observations"
-msgstr ""
-
-#: inc/contact-forms/company.php:27
-msgid "This NIF has already been registered."
-msgstr ""
-
-#: inc/contact-forms/company.php:38
-msgid "You must be inscribed as a regular participant first."
-msgstr ""
-
-#: inc/contact-forms/company.php:59 inc/admin/participant-entry.php:95
-msgid "Company name"
-msgstr ""
-
-#: inc/contact-forms/company.php:61
-msgid ""
-"Contact person's NIF (you must be inscribed as a regular participant first)"
-msgstr ""
-
-#: inc/contact-forms/company.php:62 inc/contact-forms/participant.php:137
-#: inc/admin/participant-entry.php:80 inc/admin/participant-entry.php:97
-msgid "Phone"
-msgstr ""
-
-#: inc/contact-forms/company.php:63 inc/contact-forms/participant.php:138
-#: inc/admin/participant-table.php:81 inc/admin/participant-entry.php:81
-#: inc/admin/participant-entry.php:98 inc/admin/company-table.php:38
-msgid "Email"
-msgstr ""
-
-#: inc/contact-forms/company.php:64 inc/contact-forms/participant.php:140
-#: inc/admin/participant-entry.php:83 inc/admin/participant-entry.php:99
-msgid "Province"
-msgstr ""
-
-#: inc/contact-forms/company.php:65 inc/contact-forms/participant.php:141
-#: inc/admin/participant-entry.php:84 inc/admin/participant-entry.php:100
-msgid "City"
-msgstr ""
-
-#: inc/contact-forms/company.php:67 inc/contact-forms/participant.php:147
-msgid ""
-"I want to receive information about other activities organized by ABACO."
-msgstr ""
+msgstr "Bidali"
 
 #: inc/contact-forms/activity.php:31
 msgid "You must be inscribed before registering activities."
-msgstr ""
+msgstr "Ekintza bat igotzeko jardunaldietan inskribatuta egon behar duzu."
 
 #: inc/contact-forms/activity.php:58
 msgid "Number of gender-indifferent participants:"
-msgstr ""
+msgstr "Edozeingo partaideen zenbakia:"
 
 #: inc/contact-forms/activity.php:65
 msgid ""
@@ -298,269 +513,90 @@ msgid ""
 "responsible for making adequate use of the facilities where it takes place "
 "and for keeping the organization informed of any incidence"
 msgstr ""
+"Ekintzaren antolatzailea ekintza ekarriko du, eta lekuaren erabilketa "
+"arduraduna egingo du.Halere, jardunaldien antolatzailei jakinaraziko die "
+"gerta zitzakeen edozeingo gertakizunei buruz."
 
 #: inc/contact-forms/activity.php:70
 msgid "Activity name"
-msgstr ""
+msgstr "Ekintzaren izena"
 
 #: inc/contact-forms/activity.php:72
 msgid "Description to be published on our website"
-msgstr ""
+msgstr "Gure web orrian agertzeko deskribapena"
 
 #: inc/contact-forms/activity.php:73
 msgid "Image to be published on our website"
-msgstr ""
+msgstr "Irudia, web orrian agertzeko"
 
 #: inc/contact-forms/activity.php:75
 msgid "Days you may organize the activity (subject to availability)"
 msgstr ""
+"Zein egunetan zaude prest ekintza antolatzeko (erabilgarritasunaren arabera)"
 
 #: inc/contact-forms/activity.php:80
 msgid "Observations and needs (space, materials...)"
-msgstr ""
+msgstr "Oharrak eta beharrak 8lekua, materialak...)"
 
 #: inc/contact-forms/activity.php:81
 msgid "Organizer NIF or passport"
-msgstr ""
+msgstr "Antolatzailearen IFZ edo pasaportea"
 
-#: inc/contact-forms/participant.php:34
-msgid "You are eager enough to have a NIF."
-msgstr ""
+#: inc/contact-forms/company.php:27
+msgid "This NIF has already been registered."
+msgstr "IFZ hau aurretik erregistratuta baitago."
 
-#: inc/contact-forms/participant.php:59
-msgid "This document has already been registered."
-msgstr ""
+#: inc/contact-forms/company.php:38
+msgid "You must be inscribed as a regular participant first."
+msgstr "Lehenengo jardunaldietan izena eman behar duzu."
 
-#: inc/contact-forms/participant.php:75
-msgid "This field is required because you are under age."
-msgstr ""
-
-#: inc/contact-forms/participant.php:84
+#: inc/contact-forms/company.php:61
 msgid ""
-"Your tutor must be inscribed in the event. Please check her document is "
-"correct."
+"Contact person's NIF (you must be inscribed as a regular participant first)"
 msgstr ""
+"Kontaktu pertsonaren IFZ (lehendik jardunaldietan izena eman izan behar du)"
 
-#: inc/contact-forms/participant.php:92
-msgid "Your tutor must be an adult."
+#: inc/contact-forms/preinscription.php:64
+msgid "You must be inscribed before pre-inscribing to activities."
 msgstr ""
+"Aurretik inskribatzeko lehenengo jardunaldietan izena eman behar izan duzu."
 
-#: inc/contact-forms/participant.php:99
-msgid "Your tutor must stay at least the same days as you."
-msgstr ""
+#: inc/contact-forms/preinscription.php:71
+msgid "Only physical participants can preinscribe to activities."
+msgstr "Parte hartaile fisikoek baino ezin dute ekintzetan parte hartu."
 
-#: inc/contact-forms/participant.php:130 inc/admin/participant-table.php:78
-#: inc/admin/participant-entry.php:73
-msgid "First name"
-msgstr ""
+#: inc/contact-forms/preinscription.php:82
+msgid "Sorry, this activity is unavailable."
+msgstr "Sentitzen dugu, ekintza hau ez dago libre."
 
-#: inc/contact-forms/participant.php:131 inc/admin/participant-table.php:79
-#: inc/admin/participant-entry.php:74
-msgid "Last name"
-msgstr ""
+#: inc/contact-forms/preinscription.php:89
+msgid "You already are inscribed to this activity."
+msgstr "Bazude ekintza honetan inskribatuta."
 
-#: inc/contact-forms/participant.php:132 inc/admin/participant-table.php:80
-#: inc/admin/participant-entry.php:75
-msgid "Alias"
-msgstr ""
+#: inc/contact-forms/preinscription.php:97
+msgid "Minors cannot inscribe to this activity because it has adult content."
+msgstr "Adingabekoak ezin dute ekintza honetan parte hartu."
 
-#: inc/contact-forms/participant.php:133
-msgid "Birth date (aaaa-mm-dd)"
-msgstr ""
+#: inc/contact-forms/preinscription.php:105
+msgid "Sorry, there are no remaining slots for this activity."
+msgstr "Sentitzen dugu, ekintza honetarako ez dago lekurik."
 
-#: inc/contact-forms/participant.php:134
-msgid "Identifier document type"
-msgstr ""
-
-#: inc/contact-forms/participant.php:135 inc/admin/participant-table.php:77
-#: inc/admin/participant-entry.php:78
-msgid "Identifier document"
-msgstr ""
-
-#: inc/contact-forms/participant.php:136 inc/admin/participant-entry.php:79
-msgid "Gender"
-msgstr ""
-
-#: inc/contact-forms/participant.php:139
-msgid "Group or association"
-msgstr ""
-
-#: inc/contact-forms/participant.php:143
-msgid "Nights you want to stay"
-msgstr ""
-
-#: inc/admin/settings.php:14 inc/admin/admin.php:38 inc/admin/admin.php:39
-msgid "Settings"
-msgstr ""
-
-#: inc/admin/settings.php:35
-msgid "Minor authorization URL"
-msgstr ""
-
-#: inc/admin/settings.php:50
-msgid "Link"
-msgstr ""
-
-#: inc/admin/export.php:28
-msgid "Participant data."
-msgstr ""
-
-#: inc/admin/export.php:29
-msgid "Activity data. Images will be exported as hyperlinks."
-msgstr ""
-
-#: inc/admin/export.php:30
-msgid "Enumerations."
-msgstr ""
-
-#: inc/admin/export.php:32
-msgid "Export as JSON"
-msgstr ""
-
-#: inc/admin/export.php:34
-msgid "Export (JSON)"
-msgstr ""
-
-#: inc/admin/export.php:35
-msgid "The following data will be exported in JSON format:"
-msgstr ""
-
-#: inc/admin/export.php:47
-msgid "Export participants (physical ones and companies)"
-msgstr ""
-
-#: inc/admin/export.php:50
-msgid "Export (CSV) - Compatible with Microsoft Excel"
-msgstr ""
-
-#: inc/admin/admin.php:14 inc/admin/admin.php:15
-msgid "ABACO Events"
-msgstr ""
-
-#: inc/admin/admin.php:22 inc/admin/admin.php:23
-#: inc/admin/participant-table.php:46
-msgid "Participants"
-msgstr ""
-
-#: inc/admin/admin.php:30 inc/admin/admin.php:31 inc/admin/company-table.php:20
-msgid "Companies"
-msgstr ""
-
-#: inc/admin/activity.php:47
-msgid "Other activity data"
-msgstr ""
-
-#: inc/admin/activity.php:51
-msgid "Preinscriptions"
-msgstr ""
-
-#: inc/admin/activity.php:56
-msgid "No information found about this activity."
-msgstr ""
-
-#: inc/admin/activity.php:70
-msgid "Requested activity time"
-msgstr ""
-
-#: inc/admin/activity.php:71
-msgid "Observations and needs"
-msgstr ""
-
-#: inc/admin/activity.php:84 inc/admin/activity.php:96
-#: inc/admin/participant-table.php:73 inc/admin/company-table.php:32
-msgid "See details"
-msgstr ""
-
-#: inc/admin/activity.php:99
-msgid "Organizes"
-msgstr ""
-
-#: inc/admin/activity.php:100
-msgid "Organizer email"
-msgstr ""
-
-#: inc/admin/activity.php:105
-msgid "Could not find information about organizer."
-msgstr ""
-
-#: inc/admin/participant-table.php:55
-msgid "Total participants"
-msgstr ""
-
-#: inc/admin/participant-table.php:62
-#, php-format
-msgid "Participants staying on %s"
-msgstr ""
-
-#: inc/admin/participant-entry.php:25
-msgid "Yes"
-msgstr ""
-
-#: inc/admin/participant-entry.php:25
-msgid "No"
-msgstr ""
-
-#: inc/admin/participant-entry.php:55
-#, php-format
-msgid "No resuls for participant with ID %d"
-msgstr ""
-
-#: inc/admin/participant-entry.php:72
-msgid "Physical participant"
-msgstr ""
-
-#: inc/admin/participant-entry.php:76
-msgid "Birth date"
-msgstr ""
-
-#: inc/admin/participant-entry.php:77
-msgid "Document type"
-msgstr ""
-
-#: inc/admin/participant-entry.php:82
-msgid "Group"
-msgstr ""
-
-#: inc/admin/participant-entry.php:86
-msgid "Booking days"
-msgstr ""
-
-#: inc/admin/participant-entry.php:87
-msgid "Tutor's identifier document"
-msgstr ""
-
-#: inc/admin/participant-entry.php:88 inc/admin/participant-entry.php:102
-msgid "Participant wishes to receive spam from ABACO"
-msgstr ""
-
-#: inc/admin/participant-entry.php:94
-msgid "Company"
-msgstr ""
-
-#: inc/admin/participant-entry.php:104
-msgid "See contact person"
-msgstr ""
-
-#: inc/admin/company-table.php:37
-msgid "Name"
-msgstr ""
-
-#: inc/db/activity-db-table.php:255
-msgid "This image was uploaded via the ABACO plugin, by a user."
-msgstr ""
+#: inc/contact-forms/preinscription.php:127
+msgid "NIF or passport"
+msgstr "IFZ edo pasaportea (inskribatzeko erabili zenuena)"
 
 #. Name of the plugin
 msgid "ABACO Inscriptions"
-msgstr ""
+msgstr "ABACO izen emateak"
 
 #. Description of the plugin
 msgid "Manages inscriptions for ABACO events."
-msgstr ""
+msgstr "ABACOren ekintzerako izen emateen kudeaketa."
 
 #. Author of the plugin
 msgid "Anarthal"
-msgstr ""
+msgstr "Anarthal"
 
 #. Author URI of the plugin
 msgid "https://github.com/anarthal"
-msgstr ""
+msgstr "https://github.com/anarthal"

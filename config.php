@@ -155,8 +155,8 @@ function abaco_activity_custom_post_config() {
 
 function abaco_activity_kind_options() {
     return array(
-        'BOARD_ROLE' => __('Board role game', 'abaco'),
-        'LIVE_ROLE' => __('Live role game', 'abaco'),
+        'BOARD_ROLE' => __('Tabletop role game', 'abaco'),
+        'LIVE_ROLE' => __('Live action role playing game', 'abaco'),
         'STRATEGY' => __('Strategy game', 'abaco'),
         'BOARD_GAMES' => __('Board games', 'abaco'),
         'OUTDOOR' => __('Outdoor activity', 'abaco'),
