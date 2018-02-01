@@ -62,6 +62,13 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             );
         }
         
+        // Check for an actual NIF
+        if ($doctype === 'NIF' && !abaco_is_valid_nif($nif)) {
+            throw new ABACO_ValidationError(
+                __('Invalid NIF.', 'abaco')
+            );
+        }
+        
         // Check if already registered
         if (!$this->m_participant_table->is_nif_available($nif)) {
             throw new ABACO_ValidationError(

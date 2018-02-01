@@ -22,11 +22,19 @@ class ABACO_CompanyForm extends ABACO_ContactForm {
     
     public function validate_nif($data) {
         $nif = $data['nif'];
+        // Check for an actual NIF
+        if (!abaco_is_valid_nif($nif)) {
+            throw new ABACO_ValidationError(
+                __('Invalid NIF.', 'abaco')
+            );
+        }
+        
         if (!$this->m_participant_table->is_nif_available($nif)) {
             throw new ABACO_ValidationError(
                 __('This NIF has already been registered.','abaco')
             );
         }
+
         return $data;
     }
     

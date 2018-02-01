@@ -23,7 +23,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->table = $this->createMock(ABACO_ParticipantDbTable::class);
         $this->table->method('is_nif_available')
                     ->will($this->returnCallback(function($value) {
-                        return $value !== 'existent';
+                        return $value !== '99999999z';
                     }));
         $this->form = new ABACO_ParticipantForm($this->table);
         $this->sub = new ABACO_Submission($this->form);
@@ -36,7 +36,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
             'alias' => 'my_alias',
             'birth_date' => make_birth_date_string(19),
             'document_type' => 'NIF',
-            'nif' => '123',
+            'nif' => '12345678a',
             'gender' => 'MALE',
             'phone' => '670',
             'email' => 'test@test.com',
@@ -57,7 +57,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
             'alias' => 'my_alias',
             'birth_date' => make_birth_date(19),
             'document_type' => 'NIF',
-            'nif' => '123',
+            'nif' => '12345678a',
             'gender' => 'MALE',
             'phone' => '670',
             'email' => 'test@test.com',
@@ -132,7 +132,12 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
     }
     
     function test_existent_nif_invalid() {
-        $this->input['nif'] = 'existent';
+        $this->input['nif'] = '99999999z';
+        $this->do_test_invalid('nif');
+    }
+    
+    function test_invalid_nif_invalid() {
+        $this->input['nif'] = '1234567A';
         $this->do_test_invalid('nif');
     }
     
@@ -221,8 +226,10 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
     
     function test_document_type_passport_nif_present_valid() {
         $this->input['document_type'] = 'PASSPORT';
+        $this->input['nif'] = 'hjsbdjajkasd'; // no validation
         $expected = $this->get_expected();
         $expected['document_type'] = 'PASSPORT';
+        $expected['nif'] = 'hjsbdjajkasd';
         $this->do_test_valid($expected);
     }
     

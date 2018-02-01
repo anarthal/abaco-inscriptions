@@ -14,11 +14,11 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $this->table = $this->createMock(ABACO_ParticipantDbTable::class);
         $this->table->method('is_nif_available')
                     ->will($this->returnCallback(function($value) {
-                        return $value !== 'existent';
+                        return $value !== '00000000z';
                     }));
         $this->table->method('nif_to_id')
                     ->will($this->returnCallback(function($value) {
-                        return $value === 'nonexistent' ? null : 19;
+                        return $value === '00000000z' ? null : 19;
                     }));
         $this->form = new ABACO_CompanyForm($this->table);
         $this->sub = new ABACO_Submission($this->form);
@@ -27,8 +27,8 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
                              ->getMock();
         $this->input = [
             'first_name' => 'my_first_name',
-            'nif' => '123',
-            'contact_nif' => '789',
+            'nif' => '12345678a',
+            'contact_nif' => '87654321a',
             'phone' => '670',
             'email' => 'test@test.com',
             'province' => 'NAVARRA',
@@ -58,7 +58,12 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
     }
     
     function test_existent_nif_invalid() {
-        $this->input['nif'] = 'existent';
+        $this->input['nif'] = '00000000z';
+        $this->do_test_invalid('nif');
+    }
+    
+    function test_invalid_nif_invalid() {
+        $this->input['nif'] = 'udahkshduhwk';
         $this->do_test_invalid('nif');
     }
     
@@ -69,7 +74,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
     }
     
     function test_nonexistent_contact_nif_invalid() {
-        $this->input['contact_nif'] = 'nonexistent';
+        $this->input['contact_nif'] = '00000000z';
         $this->do_test_invalid('contact_nif');
     }
     
@@ -106,7 +111,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         $this->sub->setup_data($this->input, $this->result);
         $expected = [
             'first_name' => 'my_first_name',
-            'nif' => '123',
+            'nif' => '12345678a',
             'contact_participant_id' => 19,
             'phone' => '670',
             'email' => 'test@test.com',
@@ -121,7 +126,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
     function test_optional_fields_missing_valid() {
         $data = [
             'first_name' => 'my_first_name',
-            'nif' => '123',
+            'nif' => '12345678a',
             'contact_nif' => '789',
             'phone' => '670',
             'email' => 'test@test.com',
@@ -132,7 +137,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase {
         ];
         $expected = [
             'first_name' => 'my_first_name',
-            'nif' => '123',
+            'nif' => '12345678a',
             'contact_participant_id' => 19,
             'phone' => '670',
             'email' => 'test@test.com',

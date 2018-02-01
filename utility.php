@@ -67,3 +67,37 @@ function abaco_check_capability($cap = ABACO_REQUIRED_CAPABILITY) {
         wp_die('You do not have sufficient permissions to access this page.');
     }
 }
+
+function abaco_is_number($c) {
+    return ord($c) >= ord('0') && ord($c) <= ord('9');
+}
+
+function abaco_is_letter($c) {
+    $ord = ord($c);
+    return $ord >= ord('A') && $ord <= ord('Z'); // no Ñ in NIF
+}
+
+function abaco_is_valid_nif($value) {
+    if (!is_string($value) || strlen($value) !== 9) {
+        return false;
+    }
+    
+    // Characters 1-7 should be numbers
+    $value_upper = strtoupper($value);
+    for ($i = 1; $i < 8; ++$i) {
+        if (!abaco_is_number($value_upper[$i])) {
+            return false;
+        }
+    }
+    
+    // DNI => NNNNNNNNL
+    // Other nifs => LNNNNNNNX
+    $first_number = abaco_is_number($value_upper[0]);
+    $first_letter = abaco_is_letter($value_upper[0]);
+    $last_number = abaco_is_number($value_upper[8]);
+    $last_letter = abaco_is_letter($value_upper[8]);
+    return
+        ($first_number && $last_letter) || // DNI
+        ($first_letter && ($last_letter || $last_number)); // other NIFs
+    
+}
