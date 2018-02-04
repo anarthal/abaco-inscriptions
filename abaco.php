@@ -63,7 +63,8 @@ add_action('plugins_loaded', function() {
         ABACO_PARTICIPANT_FORM_TITLE,
         function() {
             require_once __DIR__ . '/inc/contact-forms/participant.php';
-            return new ABACO_ParticipantForm(abaco_participant_db_table());
+            return new ABACO_ParticipantForm(abaco_participant_db_table(),
+                abaco_full_booking_days());
         }
     );
     $manager->add_form(

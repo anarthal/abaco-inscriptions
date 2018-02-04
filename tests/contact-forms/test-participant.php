@@ -25,7 +25,7 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
                     ->will($this->returnCallback(function($value) {
                         return $value !== '99999999z';
                     }));
-        $this->form = new ABACO_ParticipantForm($this->table);
+        $this->form = new ABACO_ParticipantForm($this->table, ['SAT']);
         $this->sub = new ABACO_Submission($this->form);
         $this->result = $this->getMockBuilder(ABACO_InvalidatableResult::class)
                              ->setMethods(['invalidate'])
@@ -218,6 +218,17 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->do_test_invalid('tutor_nif');
     }
     
+    // Invalid booking days
+    function test_booking_days_full_invalid() {
+        $this->input['booking_days'] = ['FRI', 'SAT'];
+        $this->do_test_invalid('booking_days');
+    }
+    
+    function test_booking_days_full2_invalid() {
+        $this->input['booking_days'] = ['SAT'];
+        $this->do_test_invalid('booking_days');
+    }
+    
     // Valid cases
     function test_trivial_valid() {
         $expected = $this->get_expected();
@@ -236,11 +247,11 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
     function test_minor_valid() {
         $this->input['birth_date'] = make_birth_date_string(ABACO_MINORITY_AGE - 3);
         $this->input['tutor_nif'] = '678';
-        $this->input['booking_days'] = ['SAT'];
+        $this->input['booking_days'] = ['FRI'];
         $expected = $this->get_expected();
         $expected['birth_date'] = make_birth_date(ABACO_MINORITY_AGE - 3);
         $expected['tutor_nif'] = '678';
-        $expected['booking_days'] = ['SAT'];
+        $expected['booking_days'] = ['FRI'];
         $this->table->method('query_by_id')->willReturn((object)[
             'birth_date' => make_birth_date(19),
             'booking_days' => ['FRI', 'SAT']
@@ -253,12 +264,12 @@ class ParticipantTest extends PHPUnit_Framework_TestCase {
         $this->input['nif'] = '';
         $this->input['birth_date'] = make_birth_date_string(ABACO_NIF_MANDATORY_AGE - 3);
         $this->input['tutor_nif'] = '678';
-        $this->input['booking_days'] = ['SAT'];
+        $this->input['booking_days'] = ['FRI'];
         $expected = $this->get_expected();
         $expected['document_type'] = 'UUID';
         $expected['birth_date'] = make_birth_date(ABACO_NIF_MANDATORY_AGE - 3);
         $expected['tutor_nif'] = '678';
-        $expected['booking_days'] = ['SAT'];
+        $expected['booking_days'] = ['FRI'];
         unset($expected['nif']);
         $this->table->method('query_by_id')->willReturn((object)[
             'birth_date' => make_birth_date(19),

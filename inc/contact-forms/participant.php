@@ -10,9 +10,10 @@ require_once __DIR__ . '/contact-form.php';
 
 class ABACO_ParticipantForm extends ABACO_ContactForm {
     private $m_participant_table;
+    private $m_full_days;
   
     // Construction
-    public function __construct($participant_table) {
+    public function __construct($participant_table, $full_days = []) {
         $validators = [
             'booking_days' => [$this, 'sanitize_booking_days'],
             'document_type' => [$this, 'validate_document_type'],
@@ -24,6 +25,7 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             $validators
         );
         $this->m_participant_table = $participant_table;
+        $this->m_full_days = $full_days;
     }
     
     // Validate functions
@@ -32,6 +34,17 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         if (count($value) === 1 && $value[0] === 'NONE') {
             $data['booking_days'] = [];
         }
+        
+        // Check for unavailable booking days
+        if (!self::booking_days_exclude($data['booking_days'], $this->m_full_days)) {
+            throw new ABACO_ValidationError(
+                sprintf(
+                    __('Sorry, we have no more places to stay for the following days: %s.', 'abaco'),
+                    abaco_enum_to_string(abaco_booking_days(), $this->m_full_days)
+                )
+            );
+        }
+        
         return $data;
     }
     
@@ -135,6 +148,15 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
     public static function booking_days_include($this_days, $other_days) {
         foreach ($this_days as $day) {
             if (!in_array($day, $other_days)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static function booking_days_exclude($this_days, $excluded_days) {
+        foreach ($this_days as $day) {
+            if (in_array($day, $excluded_days)) {
                 return false;
             }
         }

@@ -41,6 +41,11 @@ function abaco_booking_days() {
         'SAT' => __('Saturday', 'abaco')
     );
 }
+function abaco_full_booking_days() {
+    return [
+        'THU'
+    ];
+}
 
 function abaco_booking_days_select_options() {
     $res = abaco_booking_days();
