@@ -61,7 +61,7 @@ class ABACO_NirvanaActivity {
     protected static function format_meta_data($activity) {
         $kind = abaco_enum_to_string(abaco_activity_kind_options(),
             $activity->kind);
-        $participants = sprintf(__('%s participants'),
+        $participants = sprintf(__('%s participants', 'abaco'),
             $activity->participants_total);
         $duration = abaco_enum_to_string(abaco_activity_duration_options(),
             (string)$activity->duration);
@@ -71,7 +71,7 @@ class ABACO_NirvanaActivity {
             [$duration, 'time']
         ];
         if ($activity->adult_content) {
-            $res[] = [__('Adult content'), 'warning'];
+            $res[] = [__('Adult content', 'abaco'), 'warning'];
         }
         return $res;
     }

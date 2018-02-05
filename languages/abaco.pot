@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-04 16:26+0000\n"
+"POT-Creation-Date: 2018-02-05 20:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -185,6 +185,15 @@ msgstr ""
 
 #: abaco.php:34
 msgid "Contact Form 7 plugin is needed to run this plugin."
+msgstr ""
+
+#: inc/frontend/activity.php:64
+#, php-format
+msgid "%s participants"
+msgstr ""
+
+#: inc/frontend/activity.php:74
+msgid "Adult content"
 msgstr ""
 
 #: inc/contact-forms/field.php:123 inc/contact-forms/field.php:225

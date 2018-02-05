@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ABACO Inscriptions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-04 16:27+0000\n"
-"PO-Revision-Date: 2018-02-04 16:27+0000\n"
+"POT-Creation-Date: 2018-02-05 20:18+0000\n"
+"PO-Revision-Date: 2018-02-05 20:19+0000\n"
 "Last-Translator: Admin <testingabacowordpress@gmail.com>\n"
 "Language-Team: Basque\n"
 "Language: eu\n"
@@ -13,10 +13,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: inc/contact-forms/participant.php:42
+#: inc/frontend/activity.php:64
 #, php-format
-msgid "Sorry, we have no more places to stay for the following days: %s."
-msgstr "Sentitzen dugu, ez dugu ostatua eskuragarri hurrengo egunetan: %s."
+msgid "%s participants"
+msgstr "%s parte-hartzaile"
+
+#: inc/frontend/activity.php:74
+msgid "Adult content"
+msgstr "Helduen edukia"
 
 #: config.php:39 config.php:198
 msgid "Thursday"
@@ -337,6 +341,11 @@ msgstr "Oharrak eta beharrak 8lekua, materialak...)"
 #: inc/contact-forms/activity.php:81
 msgid "Organizer NIF or passport"
 msgstr "Antolatzailearen IFZ edo pasaportea"
+
+#: inc/contact-forms/participant.php:42
+#, php-format
+msgid "Sorry, we have no more places to stay for the following days: %s."
+msgstr "Sentitzen dugu, ez dugu ostatua eskuragarri hurrengo egunetan: %s."
 
 #: inc/contact-forms/participant.php:56
 msgid "You are eager enough to have a NIF."
