@@ -161,3 +161,8 @@ add_action('wp_head', function() {
     ABACO_NirvanaActivity::register_hooks();
 });
 
+add_action('pre_get_posts', function($query) {
+    if ($query->is_main_query() && $query->is_front_page()) {
+        $query->set('post_type', array('post', ABACO_ACTIVITY_POST_TYPE_NAME));
+    }
+});
