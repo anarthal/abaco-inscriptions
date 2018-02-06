@@ -35,8 +35,10 @@ function abaco_activate_plugin () {
     }
     abaco_participant_db_table()->create();
     abaco_preinscription_db_table()->create();
+    flush_rewrite_rules(); // So activities can be queried
 }
 register_activation_hook(__FILE__, 'abaco_activate_plugin');
+register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 
 // Uninstall
 function abaco_uninstall_plugin() {
