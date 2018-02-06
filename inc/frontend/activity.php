@@ -49,7 +49,7 @@ class ABACO_NirvanaActivity {
     
     // Registers the above functions as hooks
     public static function register_hooks() {
-        add_filter('the_content', [__CLASS__, 'show_img']);
+        //add_filter('the_content', [__CLASS__, 'show_img']);
         add_action('cryout_before_content_hook',
             [__CLASS__, 'remove_unwanted_meta_data']);
         add_action('cryout_post_meta_hook', 
