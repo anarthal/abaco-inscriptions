@@ -154,7 +154,8 @@ function abaco_activity_custom_post_config() {
             'thumbnail',
             'post-formats'
         ),
-        'show_in_menu' => 'abaco'
+        'show_in_menu' => 'abaco',
+        'taxonomies' => ['category', 'post_tag']
     );
 }
 
