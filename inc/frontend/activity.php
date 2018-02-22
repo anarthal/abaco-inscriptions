@@ -63,8 +63,9 @@ class ABACO_NirvanaActivity {
             $activity->kind);
         $participants = sprintf(__('%s participants', 'abaco'),
             $activity->participants_total);
-        $duration = abaco_enum_to_string(abaco_activity_duration_options(),
-            (string)$activity->duration);
+        $duration = sprintf(__('Duration: %s', 'abaco'),
+            abaco_enum_to_string(abaco_activity_duration_options(),
+                (string)$activity->duration));
         $res = [
             [$kind, 'tag'],
             [$participants, 'author'],
