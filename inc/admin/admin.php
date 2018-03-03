@@ -41,6 +41,14 @@ class ABACO_Admin {
             ABACO_ADMIN_SETTINGS_SLUG,
             [ABACO_SettingsPage::class, 'draw']
         );
+        add_submenu_page(
+            ABACO_ADMIN_MAIN_SLUG,
+            __('Preinscriptions', 'abaco'),
+            __('Preinscriptions', 'abaco'),
+            ABACO_REQUIRED_CAPABILITY,
+            ABACO_ADMIN_PREINSCRIPTION_SLUG,
+            [$this, 'preinscription_page']
+        );
         ABACO_SettingsPage::register_settings();
         
 
@@ -94,6 +102,13 @@ class ABACO_Admin {
         } else {
             $this->participant_table();
         }
+    }
+    public function preinscription_page() {
+        abaco_check_capability();
+        require_once __DIR__ . '/preinscriptions.php';
+        $data = new ABACO_AdminPreinscriptionController(
+            abaco_preinscription_db_table());
+        (new ABACO_AdminPreinscriptionView($data))->draw();
     }
     public function activity_edit_custom_fields() {
         require_once __DIR__ . '/activity.php';

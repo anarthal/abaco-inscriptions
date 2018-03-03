@@ -30,6 +30,7 @@ define('ABACO_ADMIN_PARTICIPANT_SLUG', 'participants');
 define('ABACO_ADMIN_COMPANY_SLUG', 'companies');
 define('ABACO_ADMIN_SETTINGS_SLUG', 'abaco-settings');
 define('ABACO_ADMIN_SETTINGS_SECTION', 'abaco-settings-section');
+define('ABACO_ADMIN_PREINSCRIPTION_SLUG', 'preinscription');
 define('ABACO_SETTING_MINOR_AUTHORIZATION_URL', 'minor-authorization-url');
 define('ABACO_REQUIRED_CAPABILITY', 'publish_pages');
 
@@ -42,9 +43,7 @@ function abaco_booking_days() {
     );
 }
 function abaco_full_booking_days() {
-    return [
-        'THU'
-    ];
+    return [];
 }
 
 function abaco_booking_days_select_options() {

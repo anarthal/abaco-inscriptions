@@ -65,6 +65,29 @@ class ABACO_PreinscriptionDbTable {
         return array_map([$this->m_parser, 'parse'], $res);
     }
     
+    public function query_all_readable() {
+        $pre_table = $this->name();
+        $part_table = $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;
+        $posts_table = $this->m_db->prefix . 'posts';
+        $sql = "SELECT part.id AS participant_id,
+                part.first_name AS first_name,
+                part.last_name AS last_name,
+                part.nif AS nif,
+                act.ID AS activity_id,
+                act.post_title AS activity_name,
+                pre.inscription_day AS inscription_day,
+                pre.observations AS observations
+                FROM $pre_table pre
+                INNER JOIN $part_table part ON part.id = pre.participant_id
+                INNER JOIN $posts_table act ON act.ID = pre.activity_id
+                ORDER BY pre.inscription_day;";
+        $res = $this->m_db->get_results($sql, ARRAY_A);
+        if ($res === null) {
+            wp_die('Database error');
+        }
+        return $res;
+    }
+    
     public function query_participants($act_id) {
         $table = $this->name();
         $part_table = $this->m_db->prefix . ABACO_PARTICIPANT_TABLE_NAME;
@@ -142,4 +165,5 @@ class ABACO_PreinscriptionDbTable {
             FOREIGN KEY (`activity_id`) REFERENCES $post_table(ID)
         ) $charset_collate;";
     }
+    
 }

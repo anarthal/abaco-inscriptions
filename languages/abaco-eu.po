@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ABACO Inscriptions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 17:38+0000\n"
-"PO-Revision-Date: 2018-02-22 17:43+0000\n"
+"POT-Creation-Date: 2018-03-03 14:36+0000\n"
+"PO-Revision-Date: 2018-03-03 14:37+0000\n"
 "Last-Translator: Admin <testingabacowordpress@gmail.com>\n"
 "Language-Team: Basque\n"
 "Language: eu\n"
@@ -13,177 +13,184 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: inc/frontend/activity.php:66
-#, php-format
-msgid "Duration: %s"
-msgstr "Iraupena: %s"
+#: inc/admin/preinscriptions.php:33
+msgid "Participant name"
+msgstr "Parte-hartzailearen izena"
 
-#: config.php:39 config.php:199
+#: inc/admin/preinscriptions.php:34
+msgid "Participant identifier document"
+msgstr "Parte-hartzailearen identifikazio dokumentua"
+
+#: inc/admin/preinscriptions.php:35
+msgid "Preinscription date"
+msgstr "Izena emateko data"
+
+#: config.php:40 config.php:198
 msgid "Thursday"
 msgstr "Osteguna"
 
-#: config.php:40 config.php:200
+#: config.php:41 config.php:199
 msgid "Friday"
 msgstr "Ostirala"
 
-#: config.php:41 config.php:201
+#: config.php:42 config.php:200
 msgid "Saturday"
 msgstr "Larunbata"
 
-#: config.php:52
+#: config.php:51
 msgid "None"
 msgstr "Bat ez"
 
-#: config.php:59
+#: config.php:58
 msgid "Male"
 msgstr "Gizona"
 
-#: config.php:60
+#: config.php:59
 msgid "Female"
 msgstr "Emakumea"
 
-#: config.php:61
+#: config.php:60
 msgid "Non binary"
 msgstr "Ez binarioa"
 
-#: config.php:67 inc/contact-forms/company.php:68
+#: config.php:66 inc/contact-forms/company.php:68
 #: inc/admin/participant-entry.php:96 inc/admin/company-table.php:36
 msgid "NIF"
 msgstr "IFZ"
 
-#: config.php:68
+#: config.php:67
 msgid "Passport"
 msgstr "Pasaportea"
 
-#: config.php:69
+#: config.php:68
 msgid "I do not have a NIF"
 msgstr "Ez daukat IFZ"
 
-#: config.php:75 config.php:175
+#: config.php:74 config.php:174
 msgid "Other"
 msgstr "Beste"
 
-#: config.php:137
+#: config.php:136
 msgid "Activities"
 msgstr "Ekintzak"
 
-#: config.php:138 inc/contact-forms/preinscription.php:128
+#: config.php:137 inc/contact-forms/preinscription.php:128
 msgid "Activity"
 msgstr "Ekintza"
 
-#: config.php:139
+#: config.php:138
 msgid "Add new activity"
 msgstr "Ekintza berria"
 
-#: config.php:140
+#: config.php:139
 msgid "Edit activity"
 msgstr "Ekintza aldatu"
 
-#: config.php:141
+#: config.php:140
 msgid "New activity"
 msgstr "Ekintza berria"
 
-#: config.php:142
+#: config.php:141
 msgid "View activity"
 msgstr "Ekintza ikusi"
 
-#: config.php:143
+#: config.php:142
 msgid "View activities"
 msgstr "Ekintza guztiak ikusi"
 
-#: config.php:144
+#: config.php:143
 msgid "Search activities"
 msgstr "Ekintzak bilatu"
 
-#: config.php:145
+#: config.php:144
 msgid "No activities found"
 msgstr "Ez da ekintzarik aurkitu"
 
-#: config.php:146
+#: config.php:145
 msgid "No activities found in thrash"
 msgstr "Ez da paperontzian ekintzarik aurkitu"
 
-#: config.php:147
+#: config.php:146
 msgid "Activity list"
 msgstr "Ekintzen zerrenda"
 
-#: config.php:164
+#: config.php:163
 msgid "Tabletop role game"
 msgstr "Mahai rol jokoa"
 
-#: config.php:165
+#: config.php:164
 msgid "Live action role playing game"
 msgstr "Rol bizia"
 
-#: config.php:166
+#: config.php:165
 msgid "Strategy game"
 msgstr "Estrategia jokoa"
 
-#: config.php:167
+#: config.php:166
 msgid "Board games"
 msgstr "Mahai jokoak"
 
-#: config.php:168
+#: config.php:167
 msgid "Outdoor activity"
 msgstr "Kanpoko ekintza"
 
-#: config.php:169
+#: config.php:168
 msgid "Soft Combat"
 msgstr "Soft Combat"
 
-#: config.php:170
+#: config.php:169
 msgid "Contest"
 msgstr "Konkurtsoa"
 
-#: config.php:171
+#: config.php:170
 msgid "Workshop"
 msgstr "Tailerra"
 
-#: config.php:172
+#: config.php:171
 msgid "Card game"
 msgstr "Karten jokoa"
 
-#: config.php:173
+#: config.php:172
 msgid "Tournament"
 msgstr "Lehiaketa"
 
-#: config.php:174
+#: config.php:173
 msgid "Conference"
 msgstr "Konferentzia"
 
-#: config.php:202
+#: config.php:201
 msgid "Sunday"
 msgstr "Igandea"
 
-#: config.php:221
+#: config.php:220
 msgid "Indifferent number of participants cannot be negative!"
 msgstr "Edozeingo generoko partaideen zenbakia ezin da negatiboa izan"
 
-#: config.php:232 inc/contact-forms/activity.php:71
+#: config.php:231 inc/contact-forms/activity.php:71
 msgid "Activity kind"
 msgstr "Ekintza mota"
 
-#: config.php:242 inc/contact-forms/activity.php:74
+#: config.php:241 inc/contact-forms/activity.php:74
 msgid "Activity approximate duration"
 msgstr "Ekintzaren gutxi gora beherako iraupena"
 
-#: config.php:252 inc/contact-forms/activity.php:76
+#: config.php:251 inc/contact-forms/activity.php:76
 msgid "Total number of participants"
 msgstr "Partaideen zenbaki totala"
 
-#: config.php:266 inc/contact-forms/activity.php:77
+#: config.php:265 inc/contact-forms/activity.php:77
 msgid "Number of male participants"
 msgstr "Gizonezko partaideak"
 
-#: config.php:280 inc/contact-forms/activity.php:78
+#: config.php:279 inc/contact-forms/activity.php:78
 msgid "Number of female participants"
 msgstr "Emakumezko partaideak"
 
-#: config.php:294 inc/contact-forms/activity.php:83
+#: config.php:293 inc/contact-forms/activity.php:83
 msgid "Allows web preinscription"
 msgstr "Web bidezko izen ematea onartzen du"
 
-#: config.php:302 inc/contact-forms/activity.php:84
+#: config.php:301 inc/contact-forms/activity.php:84
 msgid "This activity has adult content"
 msgstr "Adin nagusientzako ekintza"
 
@@ -195,6 +202,11 @@ msgstr "Contact Form 7 plugina behar duzu hau erazteko"
 #, php-format
 msgid "%s participants"
 msgstr "%s parte-hartzaile"
+
+#: inc/frontend/activity.php:66
+#, php-format
+msgid "Duration: %s"
+msgstr "Iraupena: %s"
 
 #: inc/frontend/activity.php:75
 msgid "Adult content"
@@ -251,8 +263,8 @@ msgid "NIF or passport"
 msgstr "IFZ edo pasaportea (inskribatzeko erabili zenuena)"
 
 #: inc/contact-forms/preinscription.php:129 inc/contact-forms/company.php:74
-#: inc/contact-forms/participant.php:180 inc/admin/participant-entry.php:85
-#: inc/admin/participant-entry.php:101
+#: inc/contact-forms/participant.php:180 inc/admin/preinscriptions.php:36
+#: inc/admin/participant-entry.php:85 inc/admin/participant-entry.php:101
 msgid "Observations"
 msgstr "Oharrak"
 
@@ -322,7 +334,7 @@ msgstr ""
 "arduraduna egingo du.Halere, jardunaldien antolatzailei jakinaraziko die "
 "gerta zitzakeen edozeingo gertakizunei buruz."
 
-#: inc/contact-forms/activity.php:70
+#: inc/contact-forms/activity.php:70 inc/admin/preinscriptions.php:32
 msgid "Activity name"
 msgstr "Ekintzaren izena"
 
@@ -487,6 +499,11 @@ msgstr "Partaideak (pertsonak eta enpresak) exportartu"
 msgid "Export (CSV) - Compatible with Microsoft Excel"
 msgstr "Exportatu (CSV) - Microsoft Excelekin bateragarria"
 
+#: inc/admin/preinscriptions.php:25 inc/admin/admin.php:46
+#: inc/admin/admin.php:47 inc/admin/activity.php:51
+msgid "Preinscriptions"
+msgstr "Aurre izen emateak"
+
 #: inc/admin/admin.php:14 inc/admin/admin.php:15
 msgid "ABACO Events"
 msgstr "ABACOren ekitaldiak"
@@ -500,7 +517,7 @@ msgstr "Parte hartzaileak"
 msgid "Companies"
 msgstr "Enpresa laguntzaileak"
 
-#: inc/admin/admin.php:89
+#: inc/admin/admin.php:97
 #, php-format
 msgid "Participant with NIF \"%s\" not found."
 msgstr "Ez dago IFZ \"%s\" horrekin parte hartzailerik."
@@ -508,10 +525,6 @@ msgstr "Ez dago IFZ \"%s\" horrekin parte hartzailerik."
 #: inc/admin/activity.php:47
 msgid "Other activity data"
 msgstr "Ekintzaren bese daturik"
-
-#: inc/admin/activity.php:51
-msgid "Preinscriptions"
-msgstr "Aurre izen emateak"
 
 #: inc/admin/activity.php:56
 msgid "No information found about this activity."

@@ -120,3 +120,19 @@ class ABACO_AdminRowTable extends ABACO_AdminTable {
         return $res;
     }
 }
+
+
+class ABACO_AdminLink extends ABACO_AdminView {
+    private $m_url;
+    private $m_text;
+    public function __construct($url, $text) {
+        $this->m_url = $url;
+        $this->m_text = $text;
+    }
+    public function code() {
+        return
+        '<a href="' . esc_url($this->m_url) . '">' .
+            esc_html($this->m_text) .
+        '</a>';
+    }
+}
