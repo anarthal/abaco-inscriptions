@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ABACO Inscriptions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-03 14:36+0000\n"
-"PO-Revision-Date: 2018-03-03 14:37+0000\n"
+"POT-Creation-Date: 2018-03-04 11:49+0000\n"
+"PO-Revision-Date: 2018-03-04 11:50+0000\n"
 "Last-Translator: Admin <testingabacowordpress@gmail.com>\n"
 "Language-Team: Basque\n"
 "Language: eu\n"
@@ -14,16 +14,8 @@ msgstr ""
 "X-Generator: Loco - https://localise.biz/"
 
 #: inc/admin/preinscriptions.php:33
-msgid "Participant name"
-msgstr "Parte-hartzailearen izena"
-
-#: inc/admin/preinscriptions.php:34
-msgid "Participant identifier document"
-msgstr "Parte-hartzailearen identifikazio dokumentua"
-
-#: inc/admin/preinscriptions.php:35
-msgid "Preinscription date"
-msgstr "Izena emateko data"
+msgid "Participant"
+msgstr "Lehiakide"
 
 #: config.php:40 config.php:198
 msgid "Thursday"
@@ -296,8 +288,9 @@ msgid "Phone"
 msgstr "Telefonoa"
 
 #: inc/contact-forms/company.php:71 inc/contact-forms/participant.php:176
-#: inc/admin/participant-table.php:81 inc/admin/participant-entry.php:81
-#: inc/admin/participant-entry.php:98 inc/admin/company-table.php:38
+#: inc/admin/preinscriptions.php:34 inc/admin/participant-table.php:81
+#: inc/admin/participant-entry.php:81 inc/admin/participant-entry.php:98
+#: inc/admin/company-table.php:38
 msgid "Email"
 msgstr "Email"
 
@@ -503,6 +496,10 @@ msgstr "Exportatu (CSV) - Microsoft Excelekin bateragarria"
 #: inc/admin/admin.php:47 inc/admin/activity.php:51
 msgid "Preinscriptions"
 msgstr "Aurre izen emateak"
+
+#: inc/admin/preinscriptions.php:35
+msgid "Preinscription date"
+msgstr "Izena emateko data"
 
 #: inc/admin/admin.php:14 inc/admin/admin.php:15
 msgid "ABACO Events"

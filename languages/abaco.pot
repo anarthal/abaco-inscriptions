@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-03 14:35+0000\n"
+"POT-Creation-Date: 2018-03-04 11:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -283,8 +283,9 @@ msgid "Phone"
 msgstr ""
 
 #: inc/contact-forms/company.php:71 inc/contact-forms/participant.php:176
-#: inc/admin/participant-table.php:81 inc/admin/participant-entry.php:81
-#: inc/admin/participant-entry.php:98 inc/admin/company-table.php:38
+#: inc/admin/preinscriptions.php:34 inc/admin/participant-table.php:81
+#: inc/admin/participant-entry.php:81 inc/admin/participant-entry.php:98
+#: inc/admin/company-table.php:38
 msgid "Email"
 msgstr ""
 
@@ -481,11 +482,7 @@ msgid "Preinscriptions"
 msgstr ""
 
 #: inc/admin/preinscriptions.php:33
-msgid "Participant name"
-msgstr ""
-
-#: inc/admin/preinscriptions.php:34
-msgid "Participant identifier document"
+msgid "Participant"
 msgstr ""
 
 #: inc/admin/preinscriptions.php:35

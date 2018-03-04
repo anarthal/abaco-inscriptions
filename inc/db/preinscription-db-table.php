@@ -72,7 +72,7 @@ class ABACO_PreinscriptionDbTable {
         $sql = "SELECT part.id AS participant_id,
                 part.first_name AS first_name,
                 part.last_name AS last_name,
-                part.nif AS nif,
+                part.email AS email,
                 act.ID AS activity_id,
                 act.post_title AS activity_name,
                 pre.inscription_day AS inscription_day,

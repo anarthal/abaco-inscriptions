@@ -30,16 +30,16 @@ class ABACO_AdminPreinscriptionView extends ABACO_AdminView {
     private function preinscription_table() {
         $headers = [
             __('Activity name', 'abaco'),
-            __('Participant name', 'abaco'),
-            __('Participant identifier document', 'abaco'),
+            __('Participant', 'abaco'),
+            __('Email', 'abaco'),
             __('Preinscription date', 'abaco'),
             __('Observations', 'abaco')
         ];
         $data = array_map(function($row) {
             return [
                 self::activity_link($row),
-                $row['first_name'] . ' ' . $row['last_name'],
                 self::participant_link($row),
+                $row['email'],
                 $row['inscription_day'],
                 $row['observations']
             ];
@@ -50,7 +50,7 @@ class ABACO_AdminPreinscriptionView extends ABACO_AdminView {
     private static function participant_link($row) {
         return new ABACO_AdminLink(
             abaco_admin_participant_link($row['participant_id']),
-            $row['nif']
+            $row['first_name'] . ' ' . $row['last_name']
         );
     }
     
