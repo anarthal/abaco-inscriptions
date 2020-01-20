@@ -22,7 +22,7 @@ define('ABACO_ACTIVITY_DURATION_MAX', 12); // this is 6h
 define('ABACO_ACTIVITY_POST_TYPE_NAME', 'abaco_activity');
 define('ABACO_PREINSCRIPTION_FORM_TITLE', 'preinscription');
 define('ABACO_PREINSCRIPTION_TABLE_NAME', 'abaco_preinscriptions');
-define('ABACO_AGE_REFERENCE_DATE', '29-03-2018');
+define('ABACO_AGE_REFERENCE_DATE', '09-04-2020');
 
 // Admin
 define('ABACO_ADMIN_MAIN_SLUG', 'abaco');
