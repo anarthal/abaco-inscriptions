@@ -255,14 +255,9 @@ class ABACO_ActivityDbTable {
                     __('This image was uploaded via the ABACO plugin, by a user.', 'abaco'))),
             'post_status' => 'inherit'
         );
-        $attach_id = wp_insert_attachment($attachment, $fname_full, $post_id);
+        $attach_id = wp_insert_attachment($attachment, $fname_full, $post_id, true);
         if (is_wp_error($attach_id)) {
             throw new Exception("Error inserting image attachment");
-        }
-        $attach_data = wp_generate_attachment_metadata($attach_id, $fname_full);
-        $attach_meta_id = wp_update_attachment_metadata($attach_id, $attach_data);
-        if (!$attach_meta_id) {
-            throw new Exception("Error inserting attachment metadata");
         }
         if (!set_post_thumbnail($post_id, $attach_id)) {
             throw new Exception("Error setting thumbnail");
