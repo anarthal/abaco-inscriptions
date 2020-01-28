@@ -101,68 +101,6 @@ AgeController.create = function() {
     return new AgeController();
 };
 
-
-
-var ActivityView = function() {
-    this.male = $("#activity-participants-male");
-    this.female = $("#activity-participants-female");
-    this.total = $("#activity-participants-total");
-    this.indifferent = $("#activity-participants-indifferent");
-    this.error = $("#activity-error");
-};
-ActivityView.prototype.setController = function (controller) {
-    this.controller = controller;
-    var self = this;
-    var FIELDS = ['male', 'female', 'total'];
-    for (var i = 0; i !== FIELDS.length; ++i) {
-        this[FIELDS[i]].change(function() {
-            for (var j = 0; j !== FIELDS.length; ++j) {
-                var field = FIELDS[j];
-                self.controller[field] = self[field].val();
-            }
-            self.controller.notify();
-        });
-    }
-    this.controller.notify();
-};
-ActivityView.prototype.setError = function(msg) {
-    this.error.html(msg);
-};
-ActivityView.prototype.setValues = function(values) {
-    this.male.val(values.male);
-    this.female.val(values.female);
-    this.total.val(values.total);
-    this.indifferent.html(values.indifferent);
-    this.setError("");
-};
-
-var ActivityController = function(view) {
-    this.male = 0;
-    this.female = 0;
-    this.total = 0;
-    this.view = view;
-    view.setController(this);
-};
-ActivityController.prototype.indifferent = function() {
-    return this.total - this.male - this.female;
-};
-ActivityController.prototype.notify = function() {
-    var indiff = this.indifferent();
-    if (indiff < 0) {
-        this.view.setError(abacoClientValidationParams.totalParticipantsNegative);
-    } else {
-        this.view.setValues({
-            male: this.male,
-            female: this.female,
-            total: this.total,
-            indifferent: indiff
-        });
-    }
-};
-ActivityController.createDefault = function() {
-    return new ActivityController(new ActivityView());
-};
-
 $(document).ready(function() {
     BookingDaysController.create();
     var ageController = AgeController.create();
@@ -173,6 +111,5 @@ $(document).ready(function() {
         maxDate: 0,
         yearRange: '-100:+0'
     });
-    ActivityController.createDefault();
     new DocumentTypeController();
 });

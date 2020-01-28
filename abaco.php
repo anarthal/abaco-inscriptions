@@ -135,8 +135,6 @@ add_action('wpcf7_enqueue_scripts', function() {
         array('jquery', 'abaco-jquery-ui', 'moment')
     );
     $params = array(
-        'totalParticipantsNegative' => esc_html(
-                abaco_negative_participants_message()),
         'minorityAge' => ABACO_MINORITY_AGE,
         'ageReferenceDate' => ABACO_AGE_REFERENCE_DATE
     );
