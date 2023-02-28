@@ -162,6 +162,10 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
         }
         return true;
     }
+
+    private static function acceptance_privacy() {
+        return '<p> [acceptance acceptance-privacy] He leído y acepto la <a href="https://www.abacobilbao.org/politica-privacidad-participants/">política de privacidad</a>. <span style="color:red">[*]</span> </p>';
+    }
     
     private static function make_field_list() {
         return [
@@ -182,7 +186,8 @@ class ABACO_ParticipantForm extends ABACO_ContactForm {
             new ABACO_EchoField('tutor_nif_before', self::tutor_nif_before_html()),
             new ABACO_TextField('tutor_nif', __('Your tutor\'s identity document', 'abaco'), false, true, ['asterisk' => true]),
             new ABACO_EchoField('tutor_nif_after', '<hr /></div>'),
-            new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco'), ['cf7_options' => 'default:1']),
+            new ABACO_EchoField('acceptance-privacy', self::acceptance_privacy()),
+            new ABACO_CheckboxField('yes_info', __('I want to receive information about other activities organized by ABACO.', 'abaco')),
             new ABACO_CaptchaField(),
             new ABACO_SubmitField()
         ];

@@ -185,7 +185,7 @@ msgstr "Permite preinscripción vía web"
 
 #: config.php:301 inc/contact-forms/activity.php:84
 msgid "This activity has adult content"
-msgstr "Sólo para mayores de edad"
+msgstr "La actividad incluye contenido sólo apto para mayores de edad."
 
 #: abaco.php:34
 msgid "Contact Form 7 plugin is needed to run this plugin."
@@ -330,7 +330,7 @@ msgstr ""
 " El responsable de la actividad se compromete a llevar la actividad y a "
 "responsabilizarse de que se haga un correcto uso de las instalaciones en que "
 "se realice, y a informar a la organización de cualquier incidencia que surja "
-"al respecto"
+"al respecto. "
 
 #: inc/contact-forms/activity.php:70 inc/admin/preinscriptions.php:32
 msgid "Activity name"
