@@ -1,3 +1,4 @@
 *.mo
 *~
 bin/install-tests.sh
+private/
