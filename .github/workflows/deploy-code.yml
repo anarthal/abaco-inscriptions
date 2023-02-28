@@ -12,13 +12,13 @@ jobs:
   deploy-code:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
+    secrets: inherit
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
-      secrets: inherit
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
