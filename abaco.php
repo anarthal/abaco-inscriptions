@@ -131,7 +131,8 @@ add_action('wpcf7_enqueue_scripts', function () {
     wp_register_script(
         'abaco_client_validation',
         plugin_dir_url(__FILE__) . 'js/client_validation.js',
-        array('jquery', 'abaco-jquery-ui', 'moment')
+        array('jquery', 'abaco-jquery-ui', 'moment'),
+        ABACO_VERSION
     );
     $params = array(
         'minorityAge' => ABACO_MINORITY_AGE,
@@ -151,7 +152,9 @@ add_action('wpcf7_enqueue_scripts', function () {
     );
     wp_enqueue_style(
         'abaco-css',
-        plugin_dir_url(__FILE__) . 'css/abaco.css'
+        plugin_dir_url(__FILE__) . 'css/abaco.css',
+        array(),
+        ABACO_VERSION
     );
 });
 
