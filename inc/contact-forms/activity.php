@@ -38,6 +38,7 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
     public function insert(array $data) {
         $data['participants_male'] = 0;
         $data['participants_female'] = 0;
+        $data['allows_preinscription'] = false;
         $this->m_activity_table->insert($data);
     }
     
@@ -59,7 +60,6 @@ class ABACO_ActivityForm extends ABACO_ContactForm {
             new ABACO_TextareaField('observations', __('Observations and needs (space, materials...)', 'abaco'), true, false, ['cf7_options' => 'maxlength:300']),
             new ABACO_TextField('organizer_nif', __('Organizer NIF or passport', 'abaco'), true, true),
             new ABACO_EchoField('acceptance', self::acceptance_entry()),
-            new ABACO_CheckboxField('allows_preinscription', __('Allows web preinscription', 'abaco')),
             new ABACO_CheckboxField('adult_content', __('This activity has adult content', 'abaco')),
             new ABACO_CaptchaField(),
             new ABACO_SubmitField()

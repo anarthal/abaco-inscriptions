@@ -5,24 +5,24 @@
  */
 
 var $ = jQuery;
-var BookingDaysController = function() {
+var BookingDaysController = function () {
     this.none = $("#booking-days-container input[value='NONE']");
     this.others = $("#booking-days-container input:not([value='NONE'])");
     this.daysChecked = {};
     var self = this;
-    this.none.change(function() {
-        if ($(this).attr('checked')) {
+    this.none.change(function () {
+        if ($(this).prop('checked')) {
             self.daysChecked = {};
         }
         self.apply();
     });
-    this.others.change(function() {
-        self.daysChecked[$(this).attr('value')] = $(this).attr('checked');
+    this.others.change(function () {
+        self.daysChecked[$(this).prop('value')] = $(this).prop('checked');
         self.apply();
     });
     this.apply();
 };
-BookingDaysController.prototype.isAnyDayChecked = function() {
+BookingDaysController.prototype.isAnyDayChecked = function () {
     for (var key in this.daysChecked) {
         if (this.daysChecked[key]) {
             return true;
@@ -30,34 +30,34 @@ BookingDaysController.prototype.isAnyDayChecked = function() {
     }
     return false;
 };
-BookingDaysController.prototype.apply = function() {
+BookingDaysController.prototype.apply = function () {
     if (this.isAnyDayChecked()) {
         this.clearNone();
     } else {
         this.setNone();
     }
 };
-BookingDaysController.prototype.clearNone = function() {
-    this.none.attr('checked', false);
+BookingDaysController.prototype.clearNone = function () {
+    this.none.prop('checked', false);
 };
-BookingDaysController.prototype.setNone = function() {
-    this.others.attr('checked', false);
-    this.none.attr('checked', true);
+BookingDaysController.prototype.setNone = function () {
+    this.others.prop('checked', false);
+    this.none.prop('checked', true);
 };
-BookingDaysController.create = function() {
+BookingDaysController.create = function () {
     return new BookingDaysController();
 };
 
-var DocumentTypeController = function() {
+var DocumentTypeController = function () {
     this.documentTypeInput = $('#document-type');
     this.nifInput = $('#nif');
     var self = this;
-    this.documentTypeInput.change(function() {
+    this.documentTypeInput.change(function () {
         self.apply();
     });
     self.apply();
 };
-DocumentTypeController.prototype.apply = function() {
+DocumentTypeController.prototype.apply = function () {
     var value = this.documentTypeInput.val();
     if (value === 'UUID') {
         this.nifInput.prop('disabled', true);
@@ -66,16 +66,16 @@ DocumentTypeController.prototype.apply = function() {
     }
 };
 
-var AgeController = function() {
+var AgeController = function () {
     this.dateInput = $('#booking-birth-date');
     this.minorContainer = $('#booking-under-age');
     var self = this;
-    this.dateInput.change(function() {
+    this.dateInput.change(function () {
         self.apply();
     });
     this.apply();
 };
-AgeController.prototype.apply = function() {
+AgeController.prototype.apply = function () {
     var birth = new Date(this.dateInput.val());
     if (isNaN(birth.getTime())) {
         this.showMinor(false);
@@ -83,7 +83,7 @@ AgeController.prototype.apply = function() {
         this.showMinor(AgeController.isMinor(birth));
     }
 };
-AgeController.prototype.showMinor = function(show) {
+AgeController.prototype.showMinor = function (show) {
     if (show) {
         this.minorContainer.show();
     } else {
@@ -91,17 +91,17 @@ AgeController.prototype.showMinor = function(show) {
     }
 };
 // Computes age in years; birth must be a Date
-AgeController.isMinor = function(birth) {
+AgeController.isMinor = function (birth) {
     var refdate = moment(
-            abacoClientValidationParams.ageReferenceDate, 'DD-MM-YYYY');
+        abacoClientValidationParams.ageReferenceDate, 'DD-MM-YYYY');
     var age = refdate.diff(birth, 'years');
     return age < abacoClientValidationParams.minorityAge;
 };
-AgeController.create = function() {
+AgeController.create = function () {
     return new AgeController();
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     BookingDaysController.create();
     var ageController = AgeController.create();
     ageController.dateInput.datepicker({

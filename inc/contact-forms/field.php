@@ -207,11 +207,16 @@ class ABACO_SelectField extends ABACO_LabelField {
         $this->m_select_opts = $select_opts;
     }
     protected function m_validate($input) {
-        self::check_string($input);
-        if (!in_array($input, $this->m_select_opts, true)) {
+        self::check_array($input);
+        if (count($input) !== 1) {
+            self::error(__('Invalid number of options selected.', 'abaco'));
+        }
+        $actual_value = $input[0];
+        self::check_string($actual_value);
+        if (!in_array($actual_value, $this->m_select_opts, true)) {
             self::error(__('An invalid option was selected.', 'abaco'));
         }
-        return $input;
+        return $actual_value;
     }
     public function tag_type() {
         return 'select';

@@ -116,12 +116,11 @@ function abaco_register_menus() {
 add_action('admin_menu', 'abaco_register_menus', 9);
 
 // Client scripts and styles
-add_action('wpcf7_enqueue_scripts', function() {
+add_action('wpcf7_enqueue_scripts', function () {
     // Script dependencies
-    wp_enqueue_script(
-        'moment',
-        plugin_dir_url(__FILE__) . 'js/moment.min.js'
-    );
+    wp_enqueue_script('moment');
+    wp_enqueue_script('jquery');
+
     wp_enqueue_script(
         'abaco-jquery-ui',
         plugin_dir_url(__FILE__) . 'js/jquery-ui/jquery-ui.min.js',
@@ -161,8 +160,9 @@ add_action('wp_head', function() {
     ABACO_NirvanaActivity::register_hooks();
 });
 
-/*add_action('pre_get_posts', function($query) {
-    if (!is_admin() && $query->is_main_query()) {
-        $query->set('post_type', array('post', ABACO_ACTIVITY_POST_TYPE_NAME));
-    }
-});*/
+add_action('pre_get_posts', function($query) {
+	if ( is_home() && $query->is_main_query() ) {
+		$query->set( 'post_type', array( 'post', ABACO_ACTIVITY_POST_TYPE_NAME ) );
+	}
+	return $query;
+});

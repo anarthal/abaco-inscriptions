@@ -77,6 +77,17 @@ class ABACO_Submission {
         }
     }
 
+    public function add_uploaded_files(array $files) {
+        // $files as stored by WPCF7_Submission::uploaded_files()
+        // field-name => [full-path-1, full-path-2, ...]
+        foreach ($files as $name => $list_of_files) {
+            if (count($list_of_files) !== 1) {
+                wp_die('Expected array of files of length 1');
+            }
+            $this->m_data[$name] = $list_of_files[0];
+        }
+    }
+
     public function insert() {
         $this->contact_form->insert($this->m_data);
     }
@@ -155,8 +166,10 @@ class ABACO_ContactFormManager {
         $abaco_submission = $this->get_submission($contact_form->title());
         if ($abaco_submission) {
             $data = $submission->get_posted_data();
-            foreach ($submission->uploaded_files() as $file_key => $file) {
-                $data[$file_key] = $file;
+            // By default, we don't get files in $data. Add them. They haven't been
+            // processed by wpcf7 at this point
+            foreach ($_FILES as $file_key => $file) {
+                $data[$file_key] = $file['name'];
             }
             $helper = new ABACO_ResultHelper($result, $form_tags);
             $abaco_submission->setup_data($data, $helper);
@@ -165,9 +178,14 @@ class ABACO_ContactFormManager {
         return $result;
     }
     public function insertion_hook($contact_form) {
-        $submission = $this->get_submission($contact_form->title());
-        if ($submission) {
-            $submission->insert();
+        $abaco_submission = $this->get_submission($contact_form->title());
+        if ($abaco_submission) {
+            // At this point, wpcf7 has already processed files (sanitized names, renamed
+            // them to a well-known location, etc). The contents are in WPCF7_Submission::uploaded_files(),
+            // as an array (format described in ABACO_Submission::add_uploaded_files)
+            $submission = WPCF7_Submission::get_instance();
+            $abaco_submission->add_uploaded_files($submission->uploaded_files());
+            $abaco_submission->insert();
         }
     }
     

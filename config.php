@@ -22,7 +22,7 @@ define('ABACO_ACTIVITY_DURATION_MAX', 12); // this is 6h
 define('ABACO_ACTIVITY_POST_TYPE_NAME', 'abaco_activity');
 define('ABACO_PREINSCRIPTION_FORM_TITLE', 'preinscription');
 define('ABACO_PREINSCRIPTION_TABLE_NAME', 'abaco_preinscriptions');
-define('ABACO_AGE_REFERENCE_DATE', '09-04-2020');
+define('ABACO_AGE_REFERENCE_DATE', '06-04-2023');
 
 // Admin
 define('ABACO_ADMIN_MAIN_SLUG', 'abaco');
@@ -154,7 +154,10 @@ function abaco_activity_custom_post_config() {
             'post-formats'
         ),
         'show_in_menu' => 'abaco',
-        'taxonomies' => ['category', 'post_tag']
+        'taxonomies' => ['category', 'post_tag'],
+        'rewrite' => [
+            'slug' => 'activities'
+        ]
     );
 }
 

@@ -13,11 +13,8 @@ class ABACO_NirvanaActivity {
     public static function show_img($content) {
         global $post;
         $img_html = '';
-        if ($post->post_type === ABACO_ACTIVITY_POST_TYPE_NAME &&
-            function_exists('nirvana_set_featured_thumb')) {
-            ob_start();
-            nirvana_set_featured_thumb();
-            $img_html = ob_get_clean();
+        if ($post->post_type === ABACO_ACTIVITY_POST_TYPE_NAME) {
+            $img_html = get_the_post_thumbnail($post, 'large');
         }
         return $img_html . $content;
     }
@@ -29,8 +26,10 @@ class ABACO_NirvanaActivity {
         if ($post->post_type === ABACO_ACTIVITY_POST_TYPE_NAME) {
             $nirvanas['nirvana_single_show']['date'] = false;
             $nirvanas['nirvana_single_show']['author'] = false;
+            $nirvanas['nirvana_single_show']['category'] = false;
             $nirvanas['nirvana_blog_show']['date'] = false;
             $nirvanas['nirvana_blog_show']['author'] = false;
+            $nirvanas['nirvana_blog_show']['category'] = false;
         }
     }
     

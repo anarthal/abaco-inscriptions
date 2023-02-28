@@ -250,7 +250,7 @@ class ABACO_ActivityDbTable {
         $wp_filetype = wp_check_filetype($fname);
         $attachment = array(
             'post_mime_type' => $wp_filetype['type'],
-            'post_title' => $fname,
+            'post_title' => wp_strip_all_tags(strip_shortcodes($fname)),
             'post_content' => wp_strip_all_tags(strip_shortcodes(
                     __('This image was uploaded via the ABACO plugin, by a user.', 'abaco'))),
             'post_status' => 'inherit'
@@ -259,6 +259,13 @@ class ABACO_ActivityDbTable {
         if (is_wp_error($attach_id)) {
             throw new Exception("Error inserting image attachment");
         }
+
+        // Generate metadata for the image. Without this, Wordpress doesn't render images
+        // For some reason, wp_update_attachment_metadata returns a failure code but causes
+        // the desired effects
+        $attach_data = wp_generate_attachment_metadata($attach_id, $fname_full);
+        wp_update_attachment_metadata($attach_id, $attach_data);
+
         if (!set_post_thumbnail($post_id, $attach_id)) {
             throw new Exception("Error setting thumbnail");
         }
