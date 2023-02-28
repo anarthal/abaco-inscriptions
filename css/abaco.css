@@ -11,3 +11,11 @@ and open the template in the editor.
 input:disabled {
     background-color: #e0e0e0 !important;
 }
+
+.wpcf7-checkbox>.wpcf7-list-item.first {
+    margin-left: 0 !important;
+}
+
+.wpcf7-acceptance>.wpcf7-list-item {
+    margin-left: 0 !important;
+}
